@@ -25,8 +25,8 @@ package TrainSimulation
     
     Modelica.Blocks.Interfaces.BooleanInput OnCurve1;
     Modelica.Blocks.Interfaces.BooleanInput OnCurve2;
-    Modelica.Blocks.Interfaces.BooleanInput OnCurve3 =false; 
-    Modelica.Blocks.Interfaces.BooleanInput OnCurve4 =false;
+    Modelica.Blocks.Interfaces.BooleanInput OnCurve3; 
+    Modelica.Blocks.Interfaces.BooleanInput OnCurve4;
     Modelica.Blocks.Interfaces.BooleanInput OnCurve5 =false;
     Modelica.Blocks.Interfaces.BooleanInput OnCurve6 =false;
     Modelica.Blocks.Interfaces.BooleanInput OnCurve7 =false;
@@ -37,8 +37,8 @@ package TrainSimulation
     Modelica.Blocks.Interfaces.RealInput onCurveSpeed;
     parameter Integer size = 10;
     parameter Real Target(unit = "m");
-    parameter Real maxSpeed(unit = "m/s")=100;
-    parameter Real breakingDeceleration(unit = "m/s2") = 1000.0;
+    parameter Real maxSpeed(unit = "m/s")=75;
+    parameter Real breakingDeceleration(unit = "m/s2") = 20.0;
     parameter Real length (unit ="m") = 20;
     Boolean onCurve(start=false);
     parameter Real lap = 250;
@@ -77,9 +77,11 @@ package TrainSimulation
   end Train;
 
   model Sim
-   Train train;
-   Curve c1;
-   Curve c2(Start = 120, End=150);
+   Train train(lap=4023.36);
+   Curve c1(Start= 1, End=402.366);
+   Curve c2(Start = 603.504, End= 1005.84);
+   Curve c3(Start = 2011.68 ,End= 2414.016);
+   Curve c4(Start = 2615.184,End= 3017.52);
   equation
   connect(train.Distance, c1.TrainDistance);
   connect(train.Length, c1.TrainLength);
@@ -90,5 +92,15 @@ package TrainSimulation
   connect(train.Length, c2.TrainLength);
   connect(c2.onCurve, train.OnCurve2);
   //connect(c2.CurveSpeedout, train.onCurveSpeed);
+  
+  connect(train.Distance, c3.TrainDistance);
+  connect(train.Length, c3.TrainLength);
+  connect(c3.onCurve, train.OnCurve3);
+  //connect(c3.CurveSpeedout, train.onCurveSpeed);
+  
+  connect(train.Distance, c4.TrainDistance);
+  connect(train.Length, c4.TrainLength);
+  connect(c4.onCurve, train.OnCurve4);
+  //connect(c3.CurveSpeedout, train.onCurveSpeed);
   end Sim;
 end TrainSimulation;
