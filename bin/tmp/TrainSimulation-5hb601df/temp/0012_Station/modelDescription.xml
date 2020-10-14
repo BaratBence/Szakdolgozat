@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription
+  fmiVersion="2.0"
+  modelName="TrainSimulation.TrainStation"
+  guid="{d12078a6-7325-487b-b12f-1e904328a1ce}"
+  description=""
+  generationTool="OpenModelica Compiler OpenModelica v1.16.0-dev.03 (64-bit)"
+  generationDateAndTime="2020-10-09T14:28:21Z"
+  variableNamingConvention="structured"
+  numberOfEventIndicators="3">
+  <ModelExchange
+    modelIdentifier="TrainSimulation_TrainStation">
+    <SourceFiles>
+      <File name="TrainSimulation_TrainStation.c" />
+      <File name="TrainSimulation_TrainStation_functions.c" />
+      <File name="TrainSimulation_TrainStation_records.c" />
+      <File name="TrainSimulation_TrainStation_01exo.c" />
+      <File name="TrainSimulation_TrainStation_02nls.c" />
+      <File name="TrainSimulation_TrainStation_03lsy.c" />
+      <File name="TrainSimulation_TrainStation_04set.c" />
+      <File name="TrainSimulation_TrainStation_05evt.c" />
+      <File name="TrainSimulation_TrainStation_06inz.c" />
+      <File name="TrainSimulation_TrainStation_07dly.c" />
+      <File name="TrainSimulation_TrainStation_08bnd.c" />
+      <File name="TrainSimulation_TrainStation_09alg.c" />
+      <File name="TrainSimulation_TrainStation_10asr.c" />
+      <File name="TrainSimulation_TrainStation_11mix.c" />
+      <File name="TrainSimulation_TrainStation_12jac.c" />
+      <File name="TrainSimulation_TrainStation_13opt.c" />
+      <File name="TrainSimulation_TrainStation_14lnz.c" />
+      <File name="TrainSimulation_TrainStation_15syn.c" />
+      <File name="TrainSimulation_TrainStation_16dae.c" />
+      <File name="TrainSimulation_TrainStation_17inl.c" />
+      <File name="TrainSimulation_TrainStation_init_fmu.c" />
+      <File name="TrainSimulation_TrainStation_FMU.c" />
+      <File name="./util/read_matlab4.c" />
+      <File name="./util/read_csv.c" />
+      <File name="./util/libcsv.c" />
+      <File name="gc/memory_pool.c" />
+      <File name="gc/omc_gc.c" />
+      <File name="./util/base_array.c" />
+      <File name="./util/boolean_array.c" />
+      <File name="./util/omc_error.c" />
+      <File name="./util/omc_file.c" />
+      <File name="./util/division.c" />
+      <File name="./util/generic_array.c" />
+      <File name="./util/index_spec.c" />
+      <File name="./util/integer_array.c" />
+      <File name="./util/list.c" />
+      <File name="./util/modelica_string.c" />
+      <File name="./util/real_array.c" />
+      <File name="./util/ringbuffer.c" />
+      <File name="./util/string_array.c" />
+      <File name="./util/utility.c" />
+      <File name="./util/varinfo.c" />
+      <File name="./util/ModelicaUtilities.c" />
+      <File name="./util/omc_msvc.c" />
+      <File name="./util/omc_numbers.c" />
+      <File name="./util/parallel_helper.c" />
+      <File name="./util/simulation_options.c" />
+      <File name="./util/rational.c" />
+      <File name="./util/modelica_string_lit.c" />
+      <File name="./util/omc_init.c" />
+      <File name="./util/omc_mmap.c" />
+      <File name="./util/jacobian_util.c" />
+      <File name="./math-support/pivot.c" />
+      <File name="./simulation/simulation_info_json.c" />
+      <File name="./simulation/options.c" />
+      <File name="./simulation/simulation_omc_assert.c" />
+      <File name="./simulation/omc_simulation_util.c" />
+      <File name="./simulation/solver/delay.c" />
+      <File name="./simulation/solver/fmi_events.c" />
+      <File name="./simulation/solver/omc_math.c" />
+      <File name="./simulation/solver/model_help.c" />
+      <File name="./simulation/solver/stateset.c" />
+      <File name="./simulation/solver/synchronous.c" />
+      <File name="./simulation/solver/initialization/initialization.c" />
+      <File name="./meta/meta_modelica_catch.c" />
+    </SourceFiles>
+  </ModelExchange>
+  <CoSimulation
+    modelIdentifier="TrainSimulation_TrainStation"
+    needsExecutionTool="false"
+    canHandleVariableCommunicationStepSize="true"
+    canInterpolateInputs="false"
+    maxOutputDerivativeOrder="0"
+    canRunAsynchronuously = "false"
+    canBeInstantiatedOnlyOncePerProcess="false"
+    canNotUseMemoryManagementFunctions="false"
+    canGetAndSetFMUstate="false"
+    canSerializeFMUstate="false"
+    >
+    <SourceFiles>
+      <File name="TrainSimulation_TrainStation.c" />
+      <File name="TrainSimulation_TrainStation_functions.c" />
+      <File name="TrainSimulation_TrainStation_records.c" />
+      <File name="TrainSimulation_TrainStation_01exo.c" />
+      <File name="TrainSimulation_TrainStation_02nls.c" />
+      <File name="TrainSimulation_TrainStation_03lsy.c" />
+      <File name="TrainSimulation_TrainStation_04set.c" />
+      <File name="TrainSimulation_TrainStation_05evt.c" />
+      <File name="TrainSimulation_TrainStation_06inz.c" />
+      <File name="TrainSimulation_TrainStation_07dly.c" />
+      <File name="TrainSimulation_TrainStation_08bnd.c" />
+      <File name="TrainSimulation_TrainStation_09alg.c" />
+      <File name="TrainSimulation_TrainStation_10asr.c" />
+      <File name="TrainSimulation_TrainStation_11mix.c" />
+      <File name="TrainSimulation_TrainStation_12jac.c" />
+      <File name="TrainSimulation_TrainStation_13opt.c" />
+      <File name="TrainSimulation_TrainStation_14lnz.c" />
+      <File name="TrainSimulation_TrainStation_15syn.c" />
+      <File name="TrainSimulation_TrainStation_16dae.c" />
+      <File name="TrainSimulation_TrainStation_17inl.c" />
+      <File name="TrainSimulation_TrainStation_init_fmu.c" />
+      <File name="TrainSimulation_TrainStation_FMU.c" />
+      <File name="./util/read_matlab4.c" />
+      <File name="./util/read_csv.c" />
+      <File name="./util/libcsv.c" />
+      <File name="gc/memory_pool.c" />
+      <File name="gc/omc_gc.c" />
+      <File name="./util/base_array.c" />
+      <File name="./util/boolean_array.c" />
+      <File name="./util/omc_error.c" />
+      <File name="./util/omc_file.c" />
+      <File name="./util/division.c" />
+      <File name="./util/generic_array.c" />
+      <File name="./util/index_spec.c" />
+      <File name="./util/integer_array.c" />
+      <File name="./util/list.c" />
+      <File name="./util/modelica_string.c" />
+      <File name="./util/real_array.c" />
+      <File name="./util/ringbuffer.c" />
+      <File name="./util/string_array.c" />
+      <File name="./util/utility.c" />
+      <File name="./util/varinfo.c" />
+      <File name="./util/ModelicaUtilities.c" />
+      <File name="./util/omc_msvc.c" />
+      <File name="./util/omc_numbers.c" />
+      <File name="./util/parallel_helper.c" />
+      <File name="./util/simulation_options.c" />
+      <File name="./util/rational.c" />
+      <File name="./util/modelica_string_lit.c" />
+      <File name="./util/omc_init.c" />
+      <File name="./util/omc_mmap.c" />
+      <File name="./util/jacobian_util.c" />
+      <File name="./math-support/pivot.c" />
+      <File name="./simulation/simulation_info_json.c" />
+      <File name="./simulation/options.c" />
+      <File name="./simulation/simulation_omc_assert.c" />
+      <File name="./simulation/omc_simulation_util.c" />
+      <File name="./simulation/solver/delay.c" />
+      <File name="./simulation/solver/fmi_events.c" />
+      <File name="./simulation/solver/omc_math.c" />
+      <File name="./simulation/solver/model_help.c" />
+      <File name="./simulation/solver/stateset.c" />
+      <File name="./simulation/solver/synchronous.c" />
+      <File name="./simulation/solver/initialization/initialization.c" />
+      <File name="./meta/meta_modelica_catch.c" />
+    </SourceFiles>
+  </CoSimulation>
+  <UnitDefinitions>
+    <Unit name ="s">
+      <BaseUnit  s="1"/>
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <SimpleType name="TrainSimulation.StationSignal">
+      <Enumeration>
+        <Item name="green" value="1"/>
+        <Item name="red" value="2"/>
+        <Item name="redWaiting" value="3"/>
+        <Item name="redReady" value="4"/>
+      </Enumeration>
+    </SimpleType>
+  </TypeDefinitions>
+  <LogCategories>
+    <Category name="logEvents" />
+    <Category name="logSingularLinearSystems" />
+    <Category name="logNonlinearSystems" />
+    <Category name="logDynamicStateSelection" />
+    <Category name="logStatusWarning" />
+    <Category name="logStatusDiscard" />
+    <Category name="logStatusError" />
+    <Category name="logStatusFatal" />
+    <Category name="logStatusPending" />
+    <Category name="logAll" />
+    <Category name="logFmi2Call" />
+  </LogCategories>
+  <DefaultExperiment startTime="0.0" stopTime="1.0" tolerance="1e-006"/>
+  <ModelVariables>
+  <!-- Index of variable = "1" -->
+  <ScalarVariable
+    name="GreenToRed.t"
+    valueReference="0"
+    description="= actual waiting time (transition will fire when t &gt; waitTime)"
+    initial="exact">
+    <Real start="0.0" unit="s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "2" -->
+  <ScalarVariable
+    name="GreenToRed.t_dummy"
+    valueReference="1"
+    initial="exact">
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "3" -->
+  <ScalarVariable
+    name="GreenToRed.t_start"
+    valueReference="2"
+    description="Time instant at which the transition would fire, if waitTime would be zero"
+    initial="exact">
+    <Real start="0.0" unit="s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "4" -->
+  <ScalarVariable
+    name="RedToGreen.t"
+    valueReference="3"
+    description="= actual waiting time (transition will fire when t &gt; waitTime)"
+    initial="exact">
+    <Real start="0.0" unit="s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "5" -->
+  <ScalarVariable
+    name="RedToGreen.t_dummy"
+    valueReference="4"
+    initial="exact">
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "6" -->
+  <ScalarVariable
+    name="RedToGreen.t_start"
+    valueReference="5"
+    description="Time instant at which the transition would fire, if waitTime would be zero"
+    initial="exact">
+    <Real start="0.0" unit="s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "7" -->
+  <ScalarVariable
+    name="Safe_Passage"
+    valueReference="6"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "8" -->
+  <ScalarVariable
+    name="green.outerStatePort.subgraphStatePort.activeSteps"
+    valueReference="7"
+    description="Number of active steps in the CompositeStep"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "9" -->
+  <ScalarVariable
+    name="red.outerStatePort.subgraphStatePort.activeSteps"
+    valueReference="8"
+    description="Number of active steps in the CompositeStep"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "10" -->
+  <ScalarVariable
+    name="stateGraphRoot.subgraphStatePort.activeSteps"
+    valueReference="9"
+    description="Number of active steps in the CompositeStep"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "11" -->
+  <ScalarVariable
+    name="stateGraphRoot.subgraphStatePort.activeStepsDummy"
+    valueReference="10"
+    description="Dummy variable in order that connector fulfills restriction of connector"
+    initial="exact">
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "12" -->
+  <ScalarVariable
+    name="GreenToRed.waitTime"
+    valueReference="11"
+    description="Wait time before transition fires"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="0.0" min="0.0" unit="s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "13" -->
+  <ScalarVariable
+    name="RedToGreen.waitTime"
+    valueReference="12"
+    description="Wait time before transition fires"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="0.0" min="0.0" unit="s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "14" -->
+  <ScalarVariable
+    name="green.outerStatePort.subgraphStatePort.activeStepsDummy"
+    valueReference="10"
+    description="Dummy variable in order that connector fulfills restriction of connector"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "15" -->
+  <ScalarVariable
+    name="red.outerStatePort.subgraphStatePort.activeStepsDummy"
+    valueReference="10"
+    description="Dummy variable in order that connector fulfills restriction of connector"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "16" -->
+  <ScalarVariable
+    name="StationState"
+    valueReference="0"
+    variability="discrete"
+    causality="output"
+    >
+    <Integer/>
+  </ScalarVariable>
+  <!-- Index of variable = "17" -->
+  <ScalarVariable
+    name="state"
+    valueReference="1"
+    variability="discrete"
+    >
+    <Enumeration declaredType="TrainSimulation.StationSignal"/>
+  </ScalarVariable>
+  <!-- Index of variable = "18" -->
+  <ScalarVariable
+    name="stateGraphRoot.activeSteps"
+    valueReference="2"
+    description="Number of active steps within the stategraph"
+    variability="discrete"
+    >
+    <Integer/>
+  </ScalarVariable>
+  <!-- Index of variable = "19" -->
+  <ScalarVariable
+    name="green.nIn"
+    valueReference="3"
+    description="Number of input connections"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Integer/>
+  </ScalarVariable>
+  <!-- Index of variable = "20" -->
+  <ScalarVariable
+    name="green.nOut"
+    valueReference="4"
+    description="Number of output connections"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Integer/>
+  </ScalarVariable>
+  <!-- Index of variable = "21" -->
+  <ScalarVariable
+    name="red.nIn"
+    valueReference="5"
+    description="Number of input connections"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Integer/>
+  </ScalarVariable>
+  <!-- Index of variable = "22" -->
+  <ScalarVariable
+    name="red.nOut"
+    valueReference="6"
+    description="Number of output connections"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Integer/>
+  </ScalarVariable>
+  <!-- Index of variable = "23" -->
+  <ScalarVariable
+    name="GreenToRed.condition"
+    valueReference="2"
+    description="= true, if transition may fire (time varying expression)"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "24" -->
+  <ScalarVariable
+    name="GreenToRed.enableFire"
+    valueReference="3"
+    description="= true, if all firing conditions are true"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "25" -->
+  <ScalarVariable
+    name="RedToGreen.condition"
+    valueReference="4"
+    description="= true, if transition may fire (time varying expression)"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "26" -->
+  <ScalarVariable
+    name="RedToGreen.enableFire"
+    valueReference="5"
+    description="= true, if all firing conditions are true"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "27" -->
+  <ScalarVariable
+    name="green.active"
+    valueReference="6"
+    description="= true if step is active, otherwise the step is not active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "28" -->
+  <ScalarVariable
+    name="green.localActive"
+    valueReference="7"
+    description="= true if step is active, otherwise the step is not active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "29" -->
+  <ScalarVariable
+    name="green.newActive"
+    valueReference="8"
+    description="Value of active in the next iteration"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "30" -->
+  <ScalarVariable
+    name="green.oldActive"
+    valueReference="9"
+    description="Value of active when CompositeStep was aborted"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "31" -->
+  <ScalarVariable
+    name="red.active"
+    valueReference="10"
+    description="= true if step is active, otherwise the step is not active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "32" -->
+  <ScalarVariable
+    name="red.localActive"
+    valueReference="11"
+    description="= true if step is active, otherwise the step is not active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "33" -->
+  <ScalarVariable
+    name="red.newActive"
+    valueReference="12"
+    description="Value of active in the next iteration"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "34" -->
+  <ScalarVariable
+    name="red.oldActive"
+    valueReference="13"
+    description="Value of active when CompositeStep was aborted"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "35" -->
+  <ScalarVariable
+    name="stateGraphRoot.resume"
+    valueReference="14"
+    variability="discrete"
+    initial="exact">
+    <Boolean start="false"/>
+  </ScalarVariable>
+  <!-- Index of variable = "36" -->
+  <ScalarVariable
+    name="stateGraphRoot.suspend"
+    valueReference="15"
+    variability="discrete"
+    initial="exact">
+    <Boolean start="false"/>
+  </ScalarVariable>
+  <!-- Index of variable = "37" -->
+  <ScalarVariable
+    name="GreenToRed.enableTimer"
+    valueReference="16"
+    description="= true, if timer is enabled"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "38" -->
+  <ScalarVariable
+    name="RedToGreen.enableTimer"
+    valueReference="17"
+    description="= true, if timer is enabled"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "39" -->
+  <ScalarVariable
+    name="GreenToRed.fire"
+    valueReference="3"
+    description="= true, if transition fires"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "40" -->
+  <ScalarVariable
+    name="GreenToRed.inPort.available"
+    valueReference="6"
+    description="true, if step connected to the transition input is active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "41" -->
+  <ScalarVariable
+    name="GreenToRed.inPort.reset"
+    valueReference="3"
+    description="true, if transition fires and the step connected to the transition input is deactivated"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "42" -->
+  <ScalarVariable
+    name="GreenToRed.localCondition"
+    valueReference="2"
+    description="= true, if transition may fire"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "43" -->
+  <ScalarVariable
+    name="GreenToRed.outPort.occupied"
+    valueReference="10"
+    description="true, if step connected to the transition output is active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "44" -->
+  <ScalarVariable
+    name="GreenToRed.outPort.set"
+    valueReference="3"
+    description="true, if transition fires and step connected to the transition output becomes active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "45" -->
+  <ScalarVariable
+    name="RedToGreen.fire"
+    valueReference="5"
+    description="= true, if transition fires"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "46" -->
+  <ScalarVariable
+    name="RedToGreen.inPort.available"
+    valueReference="10"
+    description="true, if step connected to the transition input is active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "47" -->
+  <ScalarVariable
+    name="RedToGreen.inPort.reset"
+    valueReference="5"
+    description="true, if transition fires and the step connected to the transition input is deactivated"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "48" -->
+  <ScalarVariable
+    name="RedToGreen.localCondition"
+    valueReference="4"
+    description="= true, if transition may fire"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "49" -->
+  <ScalarVariable
+    name="RedToGreen.outPort.occupied"
+    valueReference="6"
+    description="true, if step connected to the transition output is active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "50" -->
+  <ScalarVariable
+    name="RedToGreen.outPort.set"
+    valueReference="5"
+    description="true, if transition fires and step connected to the transition output becomes active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "51" -->
+  <ScalarVariable
+    name="green.inPort[1].occupied"
+    valueReference="6"
+    description="true, if step is active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "52" -->
+  <ScalarVariable
+    name="green.inPort[1].set"
+    valueReference="5"
+    description="true, if transition fires and step is activated"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "53" -->
+  <ScalarVariable
+    name="green.outPort[1].available"
+    valueReference="6"
+    description="true, if step is active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "54" -->
+  <ScalarVariable
+    name="green.outPort[1].reset"
+    valueReference="3"
+    description="true, if transition fires and step is deactivated"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "55" -->
+  <ScalarVariable
+    name="green.outerStatePort.localActive"
+    valueReference="6"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "56" -->
+  <ScalarVariable
+    name="green.outerStatePort.subgraphStatePort.resume"
+    valueReference="14"
+    description="= true, if resume transition of CompositeStep fires"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "57" -->
+  <ScalarVariable
+    name="green.outerStatePort.subgraphStatePort.suspend"
+    valueReference="15"
+    description="= true, if suspend transition of CompositeStep fires"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "58" -->
+  <ScalarVariable
+    name="red.inPort[1].occupied"
+    valueReference="10"
+    description="true, if step is active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "59" -->
+  <ScalarVariable
+    name="red.inPort[1].set"
+    valueReference="3"
+    description="true, if transition fires and step is activated"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "60" -->
+  <ScalarVariable
+    name="red.outPort[1].available"
+    valueReference="10"
+    description="true, if step is active"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "61" -->
+  <ScalarVariable
+    name="red.outPort[1].reset"
+    valueReference="5"
+    description="true, if transition fires and step is deactivated"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "62" -->
+  <ScalarVariable
+    name="red.outerStatePort.localActive"
+    valueReference="10"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "63" -->
+  <ScalarVariable
+    name="red.outerStatePort.subgraphStatePort.resume"
+    valueReference="14"
+    description="= true, if resume transition of CompositeStep fires"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "64" -->
+  <ScalarVariable
+    name="red.outerStatePort.subgraphStatePort.suspend"
+    valueReference="15"
+    description="= true, if suspend transition of CompositeStep fires"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "65" -->
+  <ScalarVariable
+    name="stateGraphRoot.subgraphStatePort.resume"
+    valueReference="14"
+    description="= true, if resume transition of CompositeStep fires"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "66" -->
+  <ScalarVariable
+    name="stateGraphRoot.subgraphStatePort.suspend"
+    valueReference="15"
+    description="= true, if suspend transition of CompositeStep fires"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="16" dependencies="" dependenciesKind="" />
+    </Outputs>
+    <InitialUnknowns>
+      <Unknown index="16" dependencies="" dependenciesKind="" />
+      <Unknown index="19" dependencies="" dependenciesKind="" />
+      <Unknown index="20" dependencies="" dependenciesKind="" />
+      <Unknown index="21" dependencies="" dependenciesKind="" />
+      <Unknown index="22" dependencies="" dependenciesKind="" />
+      <Unknown index="37" dependencies="" dependenciesKind="" />
+      <Unknown index="38" dependencies="" dependenciesKind="" />
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>

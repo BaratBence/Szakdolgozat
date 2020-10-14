@@ -10,6 +10,8 @@ package TrainSimulation
     parameter Real Start(unit = "m") = 40;
     parameter Real End(unit = "m") = 50;
     parameter Integer size = 10;
+    Real CurveSpeedValue(start =0);
+    //Real onCurveValue(start =0);
     //All trains distance(in a lap) as input
     Modelica.Blocks.Interfaces.RealVectorInput TrainDistance[size];
     //All trains length as input
@@ -17,25 +19,19 @@ package TrainSimulation
     //Data for each train to limit their speed
     Modelica.Blocks.Interfaces.RealVectorOutput CurveSpeed[size];
     //Data for each train if they are on the rail
-    Modelica.Blocks.Interfaces.RealVectorOutput onCurve[size];
-    //All trains on the curve
+    Modelica.Blocks.Interfaces.RealVectorOutput onCurve[size] = {
+    if TrainDistance[1] >= Start and TrainDistance[1] <= End + TrainLength[1] then 1 else 0, 
+    if TrainDistance[2] >= Start and TrainDistance[2] <= End + TrainLength[2] then 1 else 0,
+    if TrainDistance[3] >= Start and TrainDistance[3] <= End + TrainLength[3] then 1 else 0,
+    if TrainDistance[4] >= Start and TrainDistance[4] <= End + TrainLength[4] then 1 else 0,
+    if TrainDistance[5] >= Start and TrainDistance[5] <= End + TrainLength[5] then 1 else 0,
+    if TrainDistance[6] >= Start and TrainDistance[6] <= End + TrainLength[6] then 1 else 0,
+    if TrainDistance[7] >= Start and TrainDistance[7] <= End + TrainLength[7] then 1 else 0,
+    if TrainDistance[8] >= Start and TrainDistance[8] <= End + TrainLength[8] then 1 else 0,
+    if TrainDistance[9] >= Start and TrainDistance[9] <= End + TrainLength[9] then 1 else 0,
+    if TrainDistance[10] >= Start and TrainDistance[10] <= End + TrainLength[10] then 1 else 0} ;
 
-    function OnTrack
-      input Integer size;
-      input Real TrainDistance[size];
-      input Real TrainLength[size];
-      output Real Active[size];
-    algorithm
-      for i in 1:size loop
-        if TrainDistance[i] >= Start and TrainDistance[i] <= End + TrainLength[i] then
-          Active[i] := 1;
-        else
-          Active[i] := 0;
-        end if;
-      end for;
-    end OnTrack;
-
-    //multiply calculated data for interfaces
+//multiply calculated data for interfaces
 
     function SpeedCalculations
       input Integer size;
@@ -46,9 +42,11 @@ package TrainSimulation
         curvespeed[i] := value;
       end for;
     end SpeedCalculations;
+    
   equation
-    CurveSpeed = SpeedCalculations(size, sqrt(radius * Gravity * (cant + cantdeficiency) / TrackGauge));
-    onCurve = OnTrack(size, TrainDistance, TrainLength);
+    CurveSpeedValue = sqrt(radius * Gravity * (cant + cantdeficiency) / TrackGauge);
+    CurveSpeed = SpeedCalculations(size,CurveSpeedValue);
+//onCurve = OnTrack(size, TrainDistance, TrainLength);
   end Curve;
 
   class Train
@@ -58,13 +56,13 @@ package TrainSimulation
     Modelica.Blocks.Interfaces.RealInput onCurveSpeed;
     Modelica.Blocks.Interfaces.BooleanInput ActiveUpHill;
     Modelica.Blocks.Interfaces.RealInput onUpHillAcc;
-    Modelica.Blocks.Interfaces.BooleanInput ActiveDownHill;
-    Modelica.Blocks.Interfaces.RealInput onDownHillAcc;
+    //Modelica.Blocks.Interfaces.BooleanInput ActiveDownHill;
+    //Modelica.Blocks.Interfaces.RealInput onDownHillAcc;
     Modelica.Blocks.Interfaces.IntegerInput StationState;
     Modelica.Blocks.Interfaces.RealInput Station;
     Modelica.Blocks.Interfaces.RealInput Sensor1Position;
     Modelica.Blocks.Interfaces.RealInput Sensor2Position;
-    Modelica.Blocks.Interfaces.BooleanOutput Arrived;
+    //Modelica.Blocks.Interfaces.BooleanOutput Arrived;
     StationSignal state;
     parameter Integer size = 10;
     parameter Real maxSpeed(unit = "m/s") = 75;
@@ -80,6 +78,8 @@ package TrainSimulation
     Real BreakingDistance(start = 0);
     Boolean Decelerating(start = false);
     Boolean inStation(start = false);
+    Boolean Arrived(start = false);
+    Boolean Crashed =false;
   equation
     Integer(state) = StationState;
     BreakingDistance = 1 / 2 * (speed / breakingDeceleration) ^ 2 * breakingDeceleration;
@@ -101,71 +101,71 @@ package TrainSimulation
     when speed <= onCurveSpeed and ActiveCurve then
       reinit(acceleration, 0.0);
     end when;
-    when change(ActiveCurve) and not ActiveCurve then
+    when speed<=maxSpeed and not ActiveCurve and not ActiveUpHill and not inStation then
+//change(ActiveCurve) and not ActiveCurve then
       reinit(acceleration, breakingDeceleration);
     end when;
-    when speed >= maxSpeed and not ActiveCurve and not ActiveUpHill and not change(ActiveCurve) and not change(ActiveUpHill) and not Decelerating and not inStation then
-//and not ActiveDownHill
-//and not change(ActiveDownHill)
+    when speed>=maxSpeed and not inStation then
       reinit(acceleration, 0.0);
     end when;
-    when Decelerating and speed <= maxSpeed and not ActiveCurve and not ActiveUpHill and not change(ActiveCurve) and not change(ActiveUpHill) and not inStation then
+    /*when speed >= maxSpeed and not ActiveCurve and not ActiveUpHill and not change(ActiveCurve) and not change(ActiveUpHill) and not Decelerating and not inStation then
+      reinit(acceleration, 0.0);
+    end when;*/
+    /*when Decelerating and speed <= maxSpeed and not ActiveCurve and not ActiveUpHill and not change(ActiveCurve) and not change(ActiveUpHill) and not inStation then
 //and not ActiveDownHill and not change(ActiveDownHill)
       reinit(acceleration, 0.0);
-    end when;
+    end when;*/
     when ActiveUpHill then
       reinit(acceleration, onUpHillAcc);
     end when;
     when change(ActiveUpHill) and not ActiveUpHill then
       reinit(acceleration, breakingDeceleration);
     end when;
-/*when ActiveDownHill then 
-        reinit(acceleration,onDownHillAcc); 
-    end when; 
-    when change(ActiveDownHill) and not ActiveDownHill then
+  
+    when inStation and speed > 0 and lapDistance + BreakingDistance + 5 >= Sensor1Position - 10 and lapDistance + BreakingDistance - 5 <= Sensor1Position - 10 and state == StationSignal.red then
       reinit(acceleration, -breakingDeceleration);
+    end when;
+    when inStation and speed <=0  and lapDistance + BreakingDistance + 5 >= Sensor1Position -10 and lapDistance + BreakingDistance - 5 <= Sensor1Position -10 and state == StationSignal.red then
+      reinit(acceleration, 0.0);
+    end when;
+    when inStation and speed < 45 and lapDistance + BreakingDistance + 5 >= Sensor1Position -10 and lapDistance + BreakingDistance - 5 <= Sensor1Position -10 and state == StationSignal.green then
+      reinit(acceleration, breakingDeceleration+10);
+    end when;
+    
+    when inStation and speed > 0 and lapDistance + BreakingDistance + 10>= Station and lapDistance + BreakingDistance  -10 <= Station and not Arrived then
+      reinit(acceleration, -breakingDeceleration);
+    end when;
+    when inStation and speed <= 0 and Arrived then
+      reinit(acceleration, breakingDeceleration);
+    end when;
+    /*when inStation and speed <= 0 and lapDistance <= Sensor1Position then
+      reinit(acceleration, 0.0);
     end when;*/
-    when inStation and speed > 0 and lapDistance + BreakingDistance + 5 >= Sensor1Position and lapDistance + BreakingDistance - 5 <= Sensor1Position and not state == StationSignal.green then
-      reinit(acceleration, -breakingDeceleration);
-    end when;
-    when inStation and speed < maxSpeed and lapDistance + BreakingDistance + 5 >= Sensor1Position and lapDistance + BreakingDistance - 5 <= Sensor1Position and state == StationSignal.green then
-      reinit(acceleration, breakingDeceleration);
-    end when;
-    when inStation and speed > 0 and lapDistance + BreakingDistance + 5 >= Station and lapDistance + BreakingDistance - 5 <= Station and state == StationSignal.red then
-      reinit(acceleration, -breakingDeceleration);
-    end when;
-    when inStation and speed <= 0 then
-      reinit(acceleration, 0.0);
-    end when;
-    when inStation and speed >= maxSpeed then
-      reinit(acceleration, 0.0);
-    end when;
-    when inStation and state == StationSignal.redReady and lapDistance + BreakingDistance + 5 >= Station then
-      reinit(acceleration, breakingDeceleration);
-    end when;
-    if inStation and speed <= 0 and lapDistance + 10 >= Station and not state == StationSignal.redReady then
+    when speed>=45 then 
+    reinit(acceleration,0.0);
+    end when; 
+    Arrived = if inStation and lapDistance > Sensor1Position and lapDistance< Sensor2Position and lapDistance + 11 >=Station then true else false;
+    /*if inStation and speed <= 0 and lapDistance + 10 >= Station and state == StationSignal.red then
       Arrived = true;
     else
       Arrived = false;
-    end if;
+    end if;*/
   end Train;
 
   model Sim
     Train train(lap = 44230.36, length = 30, StationState = 1, Sensor1Position = 100000000, Sensor2Position = 1000000, Station = 10000000);
     Train train2(lap = 4423.36, distanceStart = -2000, StationState = -1, Sensor1Position = 10000, Sensor2Position = 10000, Station = 100000);
     Curve c1(Start = 1, End = 402.366);
-    //Curve c2(Start = 603.504, End = 1005.84);
+    Curve c2(Start = 603.504, End = 1005.84);
     //Curve c3(Start = 2011.68, End = 2414.016);
     //Curve c4(Start = 2615.184, End = 3017.52);
     UpHill h1(Start = 1500, End = 1700);
-    DownHill h2(Start = 5000, End = 5600);
     VehicleCollection TrainCollection;
-    StructureCollection CurveCollection(OnStructure2 = 0, OnStructure3 = 0, OnStructure4 = 0, OnStructure5 = 0, OnStructure6 = 0, OnStructure7 = 0, OnStructure8 = 0, OnStructure9 = 0, OnStructure10 = 0, Speed2 = 0, Speed3 = 0, Speed4 = 0, Speed5 = 0, Speed6 = 0, Speed7 = 0, Speed8 = 0, Speed9 = 0, Speed10 = 0);
-    StructureCollection UpHillCollection(OnStructure2 = 0, OnStructure3 = 0, OnStructure4 = 0, OnStructure5 = 0, OnStructure6 = 0, OnStructure7 = 0, OnStructure8 = 0, OnStructure9 = 0, OnStructure10 = 0, Speed2 = 0, Speed3 = 0, Speed4 = 0, Speed5 = 0, Speed6 = 0, Speed7 = 0, Speed8 = 0, Speed9 = 0, Speed10 = 0);
-    StructureCollection DownHillCollection(OnStructure2 = 0, OnStructure3 = 0, OnStructure4 = 0, OnStructure5 = 0, OnStructure6 = 0, OnStructure7 = 0, OnStructure8 = 0, OnStructure9 = 0, OnStructure10 = 0, Speed2 = 0, Speed3 = 0, Speed4 = 0, Speed5 = 0, Speed6 = 0, Speed7 = 0, Speed8 = 0, Speed9 = 0, Speed10 = 0);
-    StructureCollection CurveCollection2(OnStructure2 = 0, OnStructure3 = 0, OnStructure4 = 0, OnStructure5 = 0, OnStructure6 = 0, OnStructure7 = 0, OnStructure8 = 0, OnStructure9 = 0, OnStructure10 = 0, Speed2 = 0, Speed3 = 0, Speed4 = 0, Speed5 = 0, Speed6 = 0, Speed7 = 0, Speed8 = 0, Speed9 = 0, Speed10 = 0);
-    StructureCollection UpHillCollection2(OnStructure2 = 0, OnStructure3 = 0, OnStructure4 = 0, OnStructure5 = 0, OnStructure6 = 0, OnStructure7 = 0, OnStructure8 = 0, OnStructure9 = 0, OnStructure10 = 0, Speed2 = 0, Speed3 = 0, Speed4 = 0, Speed5 = 0, Speed6 = 0, Speed7 = 0, Speed8 = 0, Speed9 = 0, Speed10 = 0);
-    StructureCollection DownHillCollection2(OnStructure2 = 0, OnStructure3 = 0, OnStructure4 = 0, OnStructure5 = 0, OnStructure6 = 0, OnStructure7 = 0, OnStructure8 = 0, OnStructure9 = 0, OnStructure10 = 0, Speed2 = 0, Speed3 = 0, Speed4 = 0, Speed5 = 0, Speed6 = 0, Speed7 = 0, Speed8 = 0, Speed9 = 0, Speed10 = 0);
+    StructureCollection CurveCollection(OnStructure3 = 0, OnStructure4 = 0, OnStructure5 = 0, OnStructure6 = 0, OnStructure7 = 0, OnStructure8 = 0, OnStructure9 = 0, OnStructure10 = 0, Speed3 = 0, Speed4 = 0, Speed5 = 0, Speed6 = 0, Speed7 = 0, Speed8 = 0, Speed9 = 0, Speed10 = 0);
+    StructureCollection UpHillCollection(OnStructure2 =0, OnStructure3 = 0, OnStructure4 = 0, OnStructure5 = 0, OnStructure6 = 0, OnStructure7 = 0, OnStructure8 = 0, OnStructure9 = 0, OnStructure10 = 0,Speed2=0, Speed3 = 0, Speed4 = 0, Speed5 = 0, Speed6 = 0, Speed7 = 0, Speed8 = 0, Speed9 = 0, Speed10 = 0);
+    
+    StructureCollection CurveCollection2(OnStructure3 = 0, OnStructure4 = 0, OnStructure5 = 0, OnStructure6 = 0, OnStructure7 = 0, OnStructure8 = 0, OnStructure9 = 0, OnStructure10 = 0, Speed3 = 0, Speed4 = 0, Speed5 = 0, Speed6 = 0, Speed7 = 0, Speed8 = 0, Speed9 = 0, Speed10 = 0);
+    StructureCollection UpHillCollection2(OnStructure2 =0, OnStructure3 = 0, OnStructure4 = 0, OnStructure5 = 0, OnStructure6 = 0, OnStructure7 = 0, OnStructure8 = 0, OnStructure9 = 0, OnStructure10 = 0,Speed2=0, Speed3 = 0, Speed4 = 0, Speed5 = 0, Speed6 = 0, Speed7 = 0, Speed8 = 0, Speed9 = 0, Speed10 = 0);
   equation
     connect(train.Distance, TrainCollection.Distance1);
     connect(train.Length, TrainCollection.Length1);
@@ -173,28 +173,25 @@ package TrainSimulation
     connect(train.ActiveCurve, CurveCollection.Activated);
     connect(train.onUpHillAcc, UpHillCollection.speed);
     connect(train.ActiveUpHill, UpHillCollection.Activated);
-    connect(train.onDownHillAcc, DownHillCollection.speed);
-    connect(train.ActiveDownHill, DownHillCollection.Activated);
+    
     connect(train2.Distance, TrainCollection.Distance2);
     connect(train2.Length, TrainCollection.Length2);
     connect(train2.onCurveSpeed, CurveCollection2.speed);
     connect(train2.ActiveCurve, CurveCollection2.Activated);
     connect(train2.onUpHillAcc, UpHillCollection2.speed);
     connect(train2.ActiveUpHill, UpHillCollection2.Activated);
-    connect(train2.onDownHillAcc, DownHillCollection2.speed);
-    connect(train2.ActiveDownHill, DownHillCollection2.Activated);
+    
     connect(TrainCollection.LengthVec, c1.TrainLength);
-//connect(TrainCollection.LengthVec, c2.TrainLength);
+  connect(TrainCollection.LengthVec, c2.TrainLength);
 //connect(TrainCollection.LengthVec, c3.TrainLength);
 //connect(TrainCollection.LengthVec, c4.TrainLength);
     connect(TrainCollection.LengthVec, h1.TrainLength);
-    connect(TrainCollection.LengthVec, h2.TrainLength);
     connect(TrainCollection.DistanceVec, c1.TrainDistance);
-//connect(TrainCollection.DistanceVec, c2.TrainDistance);
+  connect(TrainCollection.DistanceVec, c2.TrainDistance);
 //connect(TrainCollection.DistanceVec, c3.TrainDistance);
 //connect(TrainCollection.DistanceVec, c4.TrainDistance);
     connect(TrainCollection.DistanceVec, h1.TrainDistance);
-    connect(TrainCollection.DistanceVec, h2.TrainDistance);
+    
 //setting the corners speed for each train to their structure collection corner number
 //connect(cornername.CurveSpeed[number of the train], trains CurveCollection.Speed + number of corner
     connect(c1.CurveSpeed[1], CurveCollection.Speed1);
@@ -203,12 +200,12 @@ package TrainSimulation
 //connect(cornername.onCurve[number of the train], trains CurveCollection.OnStructure + number of corner
     connect(c1.onCurve[1], CurveCollection.OnStructure1);
     connect(c1.onCurve[2], CurveCollection2.OnStructure1);
-/*connect(c2.CurveSpeed[1], CurveCollection.Speed2);
+    connect(c2.CurveSpeed[1], CurveCollection.Speed2);
     connect(c2.CurveSpeed[2], CurveCollection2.Speed2);
     connect(c2.onCurve[1], CurveCollection.OnStructure2);
     connect(c2.onCurve[2], CurveCollection2.OnStructure2);
     
-    connect(c3.CurveSpeed[1], CurveCollection.Speed3);
+  /*  connect(c3.CurveSpeed[1], CurveCollection.Speed3);
     connect(c3.CurveSpeed[2], CurveCollection2.Speed3);
     connect(c3.onCurve[1], CurveCollection.OnStructure3);
     connect(c3.onCurve[2], CurveCollection2.OnStructure3);
@@ -221,10 +218,6 @@ package TrainSimulation
     connect(h1.HillAcc[2], UpHillCollection2.Speed1);
     connect(h1.onHill[1], UpHillCollection.OnStructure1);
     connect(h1.onHill[2], UpHillCollection2.OnStructure1);
-    connect(h2.HillAcc[1], DownHillCollection.Speed1);
-    connect(h2.HillAcc[2], DownHillCollection2.Speed1);
-    connect(h2.onHill[1], DownHillCollection.OnStructure1);
-    connect(h2.onHill[2], DownHillCollection2.OnStructure1);
   end Sim;
 
   //Collection for only one trains Structures
@@ -312,54 +305,8 @@ package TrainSimulation
     DistanceVec = distanceVec;
   end VehicleCollection;
 
-  class DownHill
-    parameter Real angle(unit = "degree") = 30;
-    parameter Real Start(unit = "m") = 40;
-    parameter Real End(unit = "m") = 50;
-    parameter Integer size = 10;
-    //All trains distance(in a lap) as input
-    Modelica.Blocks.Interfaces.RealVectorInput TrainDistance[size];
-    //All trains length as input
-    Modelica.Blocks.Interfaces.RealVectorInput TrainLength[size];
-    //Data for each train to limit their speed
-    Modelica.Blocks.Interfaces.RealVectorOutput HillAcc[size];
-    //Data for each train if they are on the rail
-    Modelica.Blocks.Interfaces.RealVectorOutput onHill[size];
-    //All trains on the curve
-
-    function OnTrack
-      input Integer size;
-      input Real TrainDistance[size];
-      input Real TrainLength[size];
-      output Real Active[size];
-    algorithm
-      for i in 1:size loop
-        if TrainDistance[i] >= Start and TrainDistance[i] <= End + TrainLength[i] then
-          Active[i] := 1;
-        else
-          Active[i] := 0;
-        end if;
-      end for;
-    end OnTrack;
-
-    //multiply calculated data for interfaces
-
-    function SpeedCalculations
-      input Integer size;
-      input Real value;
-      output Real hillacc[size];
-    algorithm
-      for i in 1:size loop
-        hillacc[i] := value;
-      end for;
-    end SpeedCalculations;
-  equation
-    HillAcc = SpeedCalculations(size, 9.81 * sin(angle * 0.0174532925));
-    onHill = OnTrack(size, TrainDistance, TrainLength);
-  end DownHill;
-
   class UpHill
-    parameter Real angle(unit = "degree") = 30;
+  parameter Real angle(unit = "degree") = 30;
     parameter Real Start(unit = "m") = 40;
     parameter Real End(unit = "m") = 50;
     parameter Integer size = 10;
@@ -370,7 +317,17 @@ package TrainSimulation
     //Data for each train to limit their speed
     Modelica.Blocks.Interfaces.RealVectorOutput HillAcc[size];
     //Data for each train if they are on the rail
-    Modelica.Blocks.Interfaces.RealVectorOutput onHill[size];
+    Modelica.Blocks.Interfaces.RealVectorOutput onHill[size] = {
+    if TrainDistance[1] >= Start and TrainDistance[1] <= End + TrainLength[1] then 1 else 0,
+    if TrainDistance[2] >= Start and TrainDistance[2] <= End + TrainLength[2] then 1 else 0,
+    if TrainDistance[3] >= Start and TrainDistance[3] <= End + TrainLength[3] then 1 else 0,
+    if TrainDistance[4] >= Start and TrainDistance[4] <= End + TrainLength[4] then 1 else 0,
+    if TrainDistance[5] >= Start and TrainDistance[5] <= End + TrainLength[5] then 1 else 0,
+    if TrainDistance[6] >= Start and TrainDistance[6] <= End + TrainLength[6] then 1 else 0,
+    if TrainDistance[7] >= Start and TrainDistance[7] <= End + TrainLength[7] then 1 else 0,
+    if TrainDistance[8] >= Start and TrainDistance[8] <= End + TrainLength[8] then 1 else 0,
+    if TrainDistance[9] >= Start and TrainDistance[9] <= End + TrainLength[9] then 1 else 0,
+    if TrainDistance[10] >= Start and TrainDistance[10] <= End + TrainLength[10] then 1 else 0};
     //All trains on the curve
 
     function OnTrack
@@ -401,7 +358,6 @@ package TrainSimulation
     end SpeedCalculations;
   equation
     HillAcc = -1 * SpeedCalculations(size, 9.81 * sin(angle * 0.0174532925));
-    onHill = OnTrack(size, TrainDistance, TrainLength);
   end UpHill;
 
   class Sensor
@@ -462,7 +418,7 @@ package TrainSimulation
   end Sensor;
 
   class TrainLight
-    Modelica.Blocks.Interfaces.RealInput Safe_Passage;
+  Modelica.Blocks.Interfaces.RealInput Safe_Passage;
     Modelica.Blocks.Interfaces.IntegerOutput ColorState_output;
     Modelica.Blocks.Interfaces.RealOutput Gate_Angle_output;
     Modelica.Blocks.Interfaces.RealOutput Intersection_output;
@@ -523,11 +479,11 @@ package TrainSimulation
   type TrainLightColor = enumeration(on, red, off);
 
   class Car
-    Modelica.Blocks.Interfaces.IntegerInput LightColor;
+  Modelica.Blocks.Interfaces.IntegerInput LightColor;
     Modelica.Blocks.Interfaces.RealInput Gate_Angle;
     Modelica.Blocks.Interfaces.RealInput Target;
-    Modelica.Blocks.Interfaces.RealVectorInput LengthVec[size];
-    Modelica.Blocks.Interfaces.RealVectorInput DistanceVec[size];
+    //Modelica.Blocks.Interfaces.RealVectorInput LengthVec[size];
+    //Modelica.Blocks.Interfaces.RealVectorInput DistanceVec[size];
     Modelica.Blocks.Interfaces.RealOutput Distance;
     Modelica.Blocks.Interfaces.RealOutput Length;
     TrainLightColor state(start = TrainLightColor.on);
@@ -543,8 +499,8 @@ package TrainSimulation
     Real distance(start = distanceStart);
     Real speed(start = maxSpeed);
     Real acceleration(start = 0.0);
-
-    function BreakCheck
+  
+    /*function BreakCheck
       input Integer size;
       input Real ThisCarDistance;
       input Real Target;
@@ -557,7 +513,7 @@ package TrainSimulation
           Distance := Distance + CarLength[i] + 2;
         end if;
       end for;
-    end BreakCheck;
+    end BreakCheck;*/
   equation
     Length = length;
     Distance = distance;
@@ -566,7 +522,7 @@ package TrainSimulation
     der(distance) = speed;
     der(speed) = acceleration;
 //distance for the car to stop
-    BreakingDistance = 1 / 2 * (speed / breakingDeceleration) ^ 2 * breakingDeceleration + BreakCheck(size, distance, Target, DistanceVec, LengthVec);
+    BreakingDistance = 1 / 2 * (speed / breakingDeceleration) ^ 2 * breakingDeceleration; /*+ BreakCheck(size, distance, Target, DistanceVec, LengthVec);*/
 //car can not acceed the speed limit
     when speed >= maxSpeed then
       reinit(acceleration, 0.0);
@@ -589,7 +545,7 @@ package TrainSimulation
   end Car;
 
   model CornersGood
-    Train train(lap = 4423.36, length = 30, onUpHillAcc = 0, ActiveUpHill = false, breakingDeceleration = 40, ActiveDownHill = false, onDownHillAcc = 0, StationState = -1, Sensor1Position = 10000, Sensor2Position = 10000, Station = 100000);
+  Train train(lap = 4423.36, length = 30, onUpHillAcc = 0, ActiveUpHill = false, breakingDeceleration = 40, ActiveDownHill = false, onDownHillAcc = 0, StationState = -1, Sensor1Position = 10000, Sensor2Position = 10000, Station = 100000);
     Curve c1(Start = 1, End = 402.366);
     Curve c2(Start = 603.504, End = 1005.84);
     Curve c3(Start = 2011.68, End = 2414.016);
@@ -624,7 +580,7 @@ package TrainSimulation
   end CornersGood;
 
   model CornersBad
-    Train train(lap = 4423.36, length = 30, onUpHillAcc = 0, ActiveUpHill = false, breakingDeceleration = 7, ActiveDownHill = false, onDownHillAcc = 0, StationState = -1, Sensor1Position = 10000, Sensor2Position = 10000, Station = 100000);
+  Train train(lap = 4423.36, length = 30, onUpHillAcc = 0, ActiveUpHill = false, breakingDeceleration = 7, StationState = -1, Sensor1Position = 10000, Sensor2Position = 10000, Station = 100000);
     Curve c1(Start = 310, End = 402.366);
     VehicleCollection TrainCollection(Distance2 = 0, Length2 = 0);
     StructureCollection CurveCollection(OnStructure2 = 0, OnStructure3 = 0, OnStructure4 = 0, OnStructure5 = 0, OnStructure6 = 0, OnStructure7 = 0, OnStructure8 = 0, OnStructure9 = 0, OnStructure10 = 0, Speed2 = 0, Speed3 = 0, Speed4 = 0, Speed5 = 0, Speed6 = 0, Speed7 = 0, Speed8 = 0, Speed9 = 0, Speed10 = 0);
@@ -644,84 +600,76 @@ package TrainSimulation
   end CornersBad;
 
   class TrainStation
-    Modelica.Blocks.Interfaces.RealInput Safe_Passage;
+  Modelica.Blocks.Interfaces.RealInput Safe_Passage;
     Modelica.Blocks.Interfaces.IntegerOutput StationState;
-    Modelica.Blocks.Interfaces.BooleanInput Arrived1;
-    Modelica.Blocks.Interfaces.BooleanInput Arrived2;
-    Modelica.Blocks.Interfaces.BooleanInput Arrived3;
-    Modelica.Blocks.Interfaces.BooleanInput Arrived4;
-    Modelica.Blocks.Interfaces.BooleanInput Arrived5;
-    Modelica.Blocks.Interfaces.BooleanInput Arrived6;
-    Modelica.Blocks.Interfaces.BooleanInput Arrived7;
-    Modelica.Blocks.Interfaces.BooleanInput Arrived8;
-    Modelica.Blocks.Interfaces.BooleanInput Arrived9;
-    Modelica.Blocks.Interfaces.BooleanInput Arrived10;
-    parameter Integer size = 10;
-    Boolean ArrivedVec[size] = {Arrived1, Arrived2, Arrived3, Arrived4, Arrived5, Arrived6, Arrived7, Arrived8, Arrived9, Arrived10};
-    Boolean Arrived(start = false);
+    //Modelica.Blocks.Interfaces.BooleanInput Arrived1;
+    //Modelica.Blocks.Interfaces.BooleanInput Arrived2;
+    //parameter Integer size = 2;
+    //Boolean ArrivedVec[size] = {Arrived1, Arrived2};
+    //Boolean Arrived(start = false);
     Modelica.StateGraph.InitialStep green;
     Modelica.StateGraph.Step red;
-    Modelica.StateGraph.Step redWaiting;
-    Modelica.StateGraph.Step redReady;
+    //Modelica.StateGraph.Step redWaiting;
+    //Modelica.StateGraph.Step redReady;
     Modelica.StateGraph.Transition GreenToRed(condition = Safe_Passage <= 0.9);
-    Modelica.StateGraph.Transition RedToRedWait(condition = Arrived);
-    Modelica.StateGraph.Transition RedWaitToRedReady(enableTimer = true, waitTime = 10.0);
-    Modelica.StateGraph.Transition RedReadyToGreen(condition = Safe_Passage >= 0.9);
+    // Modelica.StateGraph.Transition RedToRedWait(condition = Arrived);
+    // Modelica.StateGraph.Transition RedWaitToRedReady(enableTimer = true, waitTime = 10.0);
+    Modelica.StateGraph.Transition RedToGreen(condition = Safe_Passage >= 0.9);
     inner Modelica.StateGraph.StateGraphRoot stateGraphRoot;
     StationSignal state;
-
-    function ArrivedTrain
-      input Integer size;
-      input Boolean ArrivedVec[size];
-      output Boolean isArrived(start = false);
-    algorithm
-      for i in 1:size loop
-        isArrived := ArrivedVec[i] or isArrived;
-      end for;
-    end ArrivedTrain;
+    /*function ArrivedTrain
+          input Integer size;
+          input Boolean ArrivedVec[size];
+          output Boolean isArrived(start = false);
+        algorithm
+          for i in 1:size loop
+            isArrived := ArrivedVec[i] or isArrived;
+          end for;
+        end ArrivedTrain;*/
   equation
-    Arrived = ArrivedTrain(size, ArrivedVec);
+//Arrived = ArrivedTrain(size, ArrivedVec);
     StationState = Integer(state);
     if green.active then
       state = StationSignal.green;
-    elseif red.active then
+    else
+/*if red.active then*/
       state = StationSignal.red;
-    elseif redWaiting.active then
+/*elseif redWaiting.active then
       state = StationSignal.redWaiting;
     else
-      state = StationSignal.redReady;
+      state = StationSignal.redReady;*/
     end if;
     connect(green.outPort[1], GreenToRed.inPort);
     connect(GreenToRed.outPort, red.inPort[1]);
-    connect(red.outPort[1], RedToRedWait.inPort);
+/*connect(red.outPort[1], RedToRedWait.inPort);
     connect(RedToRedWait.outPort, redWaiting.inPort[1]);
     connect(redWaiting.outPort[1], RedWaitToRedReady.inPort);
-    connect(RedWaitToRedReady.outPort, redReady.inPort[1]);
-    connect(redReady.outPort[1], RedReadyToGreen.inPort);
-    connect(RedReadyToGreen.outPort, green.inPort[1]);
+    connect(RedWaitToRedReady.outPort, redReady.inPort[1]);*/
+    connect(red.outPort[1], RedToGreen.inPort);
+    connect(RedToGreen.outPort, green.inPort[1]);
   end TrainStation;
 
-  type StationSignal = enumeration(green, red, redWaiting, redReady);
+  type StationSignal = enumeration(green, red);
 
   model TrainStationSim
-    Train train(lap = 44230.36, length = 30, onCurveSpeed = 0, ActiveCurve = false, onUpHillAcc = 0, ActiveUpHill = false, ActiveDownHill = false, onDownHillAcc = 0);
-    Train train2(lap = 44230.36, distanceStart = -2000, onCurveSpeed = 0, ActiveCurve = false, onUpHillAcc = 0, ActiveUpHill = false, ActiveDownHill = false, onDownHillAcc = 0);
+  Train train(lap = 44230.36, length = 30, onCurveSpeed = 0, ActiveCurve = false, onUpHillAcc = 0, ActiveUpHill = false);
+    Train train2(lap = 44230.36, distanceStart = -1500, onCurveSpeed = 0, ActiveCurve = false, onUpHillAcc = 0, ActiveUpHill = false);
     VehicleCollection TrainCollection;
     Sensor sensor(Sensor1Position = 2000, Sensor2Position = 4500);
-    TrainStation station(Arrived3 = false, Arrived4 = false, Arrived5 = false, Arrived6 = false, Arrived7 = false, Arrived8 = false, Arrived9 = false, Arrived10 = false);
+    TrainStation station;
   equation
     connect(train.Distance, TrainCollection.Distance1);
     connect(train.Length, TrainCollection.Length1);
     connect(station.StationState, train.StationState);
     connect(train.Sensor1Position, sensor.Sensor1PositionOut);
     connect(train.Sensor2Position, sensor.Sensor2PositionOut);
-    connect(train.Arrived, station.Arrived1);
+//connect(train.Arrived, station.Arrived1);
     connect(train2.Distance, TrainCollection.Distance2);
     connect(train2.Length, TrainCollection.Length2);
     connect(station.StationState, train2.StationState);
     connect(train2.Sensor1Position, sensor.Sensor1PositionOut);
     connect(train2.Sensor2Position, sensor.Sensor2PositionOut);
-    connect(train2.Arrived, station.Arrived2);
+//connect(train2.Arrived, station.Arrived2);
     connect(sensor.LengthVec, TrainCollection.LengthVec);
     connect(sensor.DistanceVec, TrainCollection.DistanceVec);
     connect(sensor.Safe_Passage, station.Safe_Passage);

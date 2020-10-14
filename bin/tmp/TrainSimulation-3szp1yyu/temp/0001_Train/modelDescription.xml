@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription
+  fmiVersion="2.0"
+  modelName="TrainSimulation.Train"
+  guid="{20e2d042-f45c-4694-bd70-5ef266a4380f}"
+  description=""
+  generationTool="OpenModelica Compiler OpenModelica v1.16.0-dev.03 (64-bit)"
+  generationDateAndTime="2020-10-08T15:39:50Z"
+  variableNamingConvention="structured"
+  numberOfEventIndicators="13">
+  <ModelExchange
+    modelIdentifier="TrainSimulation_Train">
+    <SourceFiles>
+      <File name="TrainSimulation_Train.c" />
+      <File name="TrainSimulation_Train_functions.c" />
+      <File name="TrainSimulation_Train_records.c" />
+      <File name="TrainSimulation_Train_01exo.c" />
+      <File name="TrainSimulation_Train_02nls.c" />
+      <File name="TrainSimulation_Train_03lsy.c" />
+      <File name="TrainSimulation_Train_04set.c" />
+      <File name="TrainSimulation_Train_05evt.c" />
+      <File name="TrainSimulation_Train_06inz.c" />
+      <File name="TrainSimulation_Train_07dly.c" />
+      <File name="TrainSimulation_Train_08bnd.c" />
+      <File name="TrainSimulation_Train_09alg.c" />
+      <File name="TrainSimulation_Train_10asr.c" />
+      <File name="TrainSimulation_Train_11mix.c" />
+      <File name="TrainSimulation_Train_12jac.c" />
+      <File name="TrainSimulation_Train_13opt.c" />
+      <File name="TrainSimulation_Train_14lnz.c" />
+      <File name="TrainSimulation_Train_15syn.c" />
+      <File name="TrainSimulation_Train_16dae.c" />
+      <File name="TrainSimulation_Train_17inl.c" />
+      <File name="TrainSimulation_Train_init_fmu.c" />
+      <File name="TrainSimulation_Train_FMU.c" />
+      <File name="./util/read_matlab4.c" />
+      <File name="./util/read_csv.c" />
+      <File name="./util/libcsv.c" />
+      <File name="gc/memory_pool.c" />
+      <File name="gc/omc_gc.c" />
+      <File name="./util/base_array.c" />
+      <File name="./util/boolean_array.c" />
+      <File name="./util/omc_error.c" />
+      <File name="./util/omc_file.c" />
+      <File name="./util/division.c" />
+      <File name="./util/generic_array.c" />
+      <File name="./util/index_spec.c" />
+      <File name="./util/integer_array.c" />
+      <File name="./util/list.c" />
+      <File name="./util/modelica_string.c" />
+      <File name="./util/real_array.c" />
+      <File name="./util/ringbuffer.c" />
+      <File name="./util/string_array.c" />
+      <File name="./util/utility.c" />
+      <File name="./util/varinfo.c" />
+      <File name="./util/ModelicaUtilities.c" />
+      <File name="./util/omc_msvc.c" />
+      <File name="./util/omc_numbers.c" />
+      <File name="./util/parallel_helper.c" />
+      <File name="./util/simulation_options.c" />
+      <File name="./util/rational.c" />
+      <File name="./util/modelica_string_lit.c" />
+      <File name="./util/omc_init.c" />
+      <File name="./util/omc_mmap.c" />
+      <File name="./util/jacobian_util.c" />
+      <File name="./math-support/pivot.c" />
+      <File name="./simulation/simulation_info_json.c" />
+      <File name="./simulation/options.c" />
+      <File name="./simulation/simulation_omc_assert.c" />
+      <File name="./simulation/omc_simulation_util.c" />
+      <File name="./simulation/solver/delay.c" />
+      <File name="./simulation/solver/fmi_events.c" />
+      <File name="./simulation/solver/omc_math.c" />
+      <File name="./simulation/solver/model_help.c" />
+      <File name="./simulation/solver/stateset.c" />
+      <File name="./simulation/solver/synchronous.c" />
+      <File name="./simulation/solver/initialization/initialization.c" />
+      <File name="./meta/meta_modelica_catch.c" />
+    </SourceFiles>
+  </ModelExchange>
+  <CoSimulation
+    modelIdentifier="TrainSimulation_Train"
+    needsExecutionTool="false"
+    canHandleVariableCommunicationStepSize="true"
+    canInterpolateInputs="false"
+    maxOutputDerivativeOrder="0"
+    canRunAsynchronuously = "false"
+    canBeInstantiatedOnlyOncePerProcess="false"
+    canNotUseMemoryManagementFunctions="false"
+    canGetAndSetFMUstate="false"
+    canSerializeFMUstate="false"
+    >
+    <SourceFiles>
+      <File name="TrainSimulation_Train.c" />
+      <File name="TrainSimulation_Train_functions.c" />
+      <File name="TrainSimulation_Train_records.c" />
+      <File name="TrainSimulation_Train_01exo.c" />
+      <File name="TrainSimulation_Train_02nls.c" />
+      <File name="TrainSimulation_Train_03lsy.c" />
+      <File name="TrainSimulation_Train_04set.c" />
+      <File name="TrainSimulation_Train_05evt.c" />
+      <File name="TrainSimulation_Train_06inz.c" />
+      <File name="TrainSimulation_Train_07dly.c" />
+      <File name="TrainSimulation_Train_08bnd.c" />
+      <File name="TrainSimulation_Train_09alg.c" />
+      <File name="TrainSimulation_Train_10asr.c" />
+      <File name="TrainSimulation_Train_11mix.c" />
+      <File name="TrainSimulation_Train_12jac.c" />
+      <File name="TrainSimulation_Train_13opt.c" />
+      <File name="TrainSimulation_Train_14lnz.c" />
+      <File name="TrainSimulation_Train_15syn.c" />
+      <File name="TrainSimulation_Train_16dae.c" />
+      <File name="TrainSimulation_Train_17inl.c" />
+      <File name="TrainSimulation_Train_init_fmu.c" />
+      <File name="TrainSimulation_Train_FMU.c" />
+      <File name="./util/read_matlab4.c" />
+      <File name="./util/read_csv.c" />
+      <File name="./util/libcsv.c" />
+      <File name="gc/memory_pool.c" />
+      <File name="gc/omc_gc.c" />
+      <File name="./util/base_array.c" />
+      <File name="./util/boolean_array.c" />
+      <File name="./util/omc_error.c" />
+      <File name="./util/omc_file.c" />
+      <File name="./util/division.c" />
+      <File name="./util/generic_array.c" />
+      <File name="./util/index_spec.c" />
+      <File name="./util/integer_array.c" />
+      <File name="./util/list.c" />
+      <File name="./util/modelica_string.c" />
+      <File name="./util/real_array.c" />
+      <File name="./util/ringbuffer.c" />
+      <File name="./util/string_array.c" />
+      <File name="./util/utility.c" />
+      <File name="./util/varinfo.c" />
+      <File name="./util/ModelicaUtilities.c" />
+      <File name="./util/omc_msvc.c" />
+      <File name="./util/omc_numbers.c" />
+      <File name="./util/parallel_helper.c" />
+      <File name="./util/simulation_options.c" />
+      <File name="./util/rational.c" />
+      <File name="./util/modelica_string_lit.c" />
+      <File name="./util/omc_init.c" />
+      <File name="./util/omc_mmap.c" />
+      <File name="./util/jacobian_util.c" />
+      <File name="./math-support/pivot.c" />
+      <File name="./simulation/simulation_info_json.c" />
+      <File name="./simulation/options.c" />
+      <File name="./simulation/simulation_omc_assert.c" />
+      <File name="./simulation/omc_simulation_util.c" />
+      <File name="./simulation/solver/delay.c" />
+      <File name="./simulation/solver/fmi_events.c" />
+      <File name="./simulation/solver/omc_math.c" />
+      <File name="./simulation/solver/model_help.c" />
+      <File name="./simulation/solver/stateset.c" />
+      <File name="./simulation/solver/synchronous.c" />
+      <File name="./simulation/solver/initialization/initialization.c" />
+      <File name="./meta/meta_modelica_catch.c" />
+    </SourceFiles>
+  </CoSimulation>
+  <UnitDefinitions>
+    <Unit name ="m/s">
+      <BaseUnit  m="1" s="-1"/>
+    </Unit>
+    <Unit name ="m">
+      <BaseUnit  m="1"/>
+    </Unit>
+    <Unit name ="m/s2">
+      <BaseUnit  m="1" s="-2"/>
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <SimpleType name="TrainSimulation.StationSignal">
+      <Enumeration>
+        <Item name="green" value="1"/>
+        <Item name="red" value="2"/>
+        <Item name="redWaiting" value="3"/>
+        <Item name="redReady" value="4"/>
+      </Enumeration>
+    </SimpleType>
+  </TypeDefinitions>
+  <LogCategories>
+    <Category name="logEvents" />
+    <Category name="logSingularLinearSystems" />
+    <Category name="logNonlinearSystems" />
+    <Category name="logDynamicStateSelection" />
+    <Category name="logStatusWarning" />
+    <Category name="logStatusDiscard" />
+    <Category name="logStatusError" />
+    <Category name="logStatusFatal" />
+    <Category name="logStatusPending" />
+    <Category name="logAll" />
+    <Category name="logFmi2Call" />
+  </LogCategories>
+  <DefaultExperiment startTime="0.0" stopTime="1.0" tolerance="1e-006"/>
+  <ModelVariables>
+  <!-- Index of variable = "1" -->
+  <ScalarVariable
+    name="acceleration"
+    valueReference="0"
+    initial="exact">
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "2" -->
+  <ScalarVariable
+    name="distance"
+    valueReference="1"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "3" -->
+  <ScalarVariable
+    name="lapDistance"
+    valueReference="2"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "4" -->
+  <ScalarVariable
+    name="speed"
+    valueReference="3"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "5" -->
+  <ScalarVariable
+    name="der(acceleration)"
+    valueReference="4"
+    >
+    <Real derivative="1"/>
+  </ScalarVariable>
+  <!-- Index of variable = "6" -->
+  <ScalarVariable
+    name="der(distance)"
+    valueReference="5"
+    >
+    <Real derivative="2"/>
+  </ScalarVariable>
+  <!-- Index of variable = "7" -->
+  <ScalarVariable
+    name="der(lapDistance)"
+    valueReference="6"
+    >
+    <Real derivative="3"/>
+  </ScalarVariable>
+  <!-- Index of variable = "8" -->
+  <ScalarVariable
+    name="der(speed)"
+    valueReference="7"
+    >
+    <Real derivative="4"/>
+  </ScalarVariable>
+  <!-- Index of variable = "9" -->
+  <ScalarVariable
+    name="BreakingDistance"
+    valueReference="8"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "10" -->
+  <ScalarVariable
+    name="Distance"
+    valueReference="9"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "11" -->
+  <ScalarVariable
+    name="Length"
+    valueReference="10"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "12" -->
+  <ScalarVariable
+    name="Sensor1Position"
+    valueReference="11"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "13" -->
+  <ScalarVariable
+    name="Sensor2Position"
+    valueReference="12"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "14" -->
+  <ScalarVariable
+    name="Station"
+    valueReference="13"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "15" -->
+  <ScalarVariable
+    name="onCurveSpeed"
+    valueReference="14"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "16" -->
+  <ScalarVariable
+    name="onUpHillAcc"
+    valueReference="15"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "17" -->
+  <ScalarVariable
+    name="breakingDeceleration"
+    valueReference="17"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="20.0" unit="m/s2"/>
+  </ScalarVariable>
+  <!-- Index of variable = "18" -->
+  <ScalarVariable
+    name="distanceStart"
+    valueReference="18"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="0.0" unit="m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "19" -->
+  <ScalarVariable
+    name="lap"
+    valueReference="19"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="99999999.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "20" -->
+  <ScalarVariable
+    name="length"
+    valueReference="20"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="20.0" unit="m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "21" -->
+  <ScalarVariable
+    name="maxSpeed"
+    valueReference="21"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="75.0" unit="m/s"/>
+  </ScalarVariable>
+  <!-- Index of variable = "22" -->
+  <ScalarVariable
+    name="Lapcount"
+    valueReference="0"
+    variability="discrete"
+    >
+    <Integer/>
+  </ScalarVariable>
+  <!-- Index of variable = "23" -->
+  <ScalarVariable
+    name="StationState"
+    valueReference="1"
+    variability="discrete"
+    causality="input"
+    >
+    <Integer start="0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "24" -->
+  <ScalarVariable
+    name="state"
+    valueReference="2"
+    variability="discrete"
+    >
+    <Enumeration declaredType="TrainSimulation.StationSignal"/>
+  </ScalarVariable>
+  <!-- Index of variable = "25" -->
+  <ScalarVariable
+    name="size"
+    valueReference="3"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Integer start="10"/>
+  </ScalarVariable>
+  <!-- Index of variable = "26" -->
+  <ScalarVariable
+    name="ActiveCurve"
+    valueReference="13"
+    variability="discrete"
+    causality="input"
+    >
+    <Boolean start="false"/>
+  </ScalarVariable>
+  <!-- Index of variable = "27" -->
+  <ScalarVariable
+    name="ActiveUpHill"
+    valueReference="14"
+    variability="discrete"
+    causality="input"
+    >
+    <Boolean start="false"/>
+  </ScalarVariable>
+  <!-- Index of variable = "28" -->
+  <ScalarVariable
+    name="Arrived"
+    valueReference="15"
+    variability="discrete"
+    causality="output"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "29" -->
+  <ScalarVariable
+    name="Decelerating"
+    valueReference="16"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  <!-- Index of variable = "30" -->
+  <ScalarVariable
+    name="inStation"
+    valueReference="17"
+    variability="discrete"
+    >
+    <Boolean/>
+  </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="10" dependencies="3" dependenciesKind="dependent" />
+      <Unknown index="11" dependencies="" dependenciesKind="" />
+      <Unknown index="28" dependencies="3 4 12 13 14 23" dependenciesKind="dependent dependent dependent dependent dependent dependent" />
+    </Outputs>
+    <Derivatives>
+      <Unknown index="5" dependencies="" dependenciesKind="" />
+      <Unknown index="6" dependencies="4" dependenciesKind="dependent" />
+      <Unknown index="7" dependencies="4" dependenciesKind="dependent" />
+      <Unknown index="8" dependencies="1" dependenciesKind="dependent" />
+    </Derivatives>
+    <InitialUnknowns>
+      <Unknown index="2" dependencies="" dependenciesKind="" />
+      <Unknown index="3" dependencies="" dependenciesKind="" />
+      <Unknown index="4" dependencies="" dependenciesKind="" />
+      <Unknown index="5" dependencies="" dependenciesKind="" />
+      <Unknown index="6" dependencies="" dependenciesKind="" />
+      <Unknown index="7" dependencies="" dependenciesKind="" />
+      <Unknown index="8" dependencies="1" dependenciesKind="dependent" />
+      <Unknown index="10" dependencies="" dependenciesKind="" />
+      <Unknown index="11" dependencies="20" dependenciesKind="dependent" />
+      <Unknown index="28" dependencies="12 13 14 17 23" dependenciesKind="dependent dependent dependent dependent dependent" />
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>

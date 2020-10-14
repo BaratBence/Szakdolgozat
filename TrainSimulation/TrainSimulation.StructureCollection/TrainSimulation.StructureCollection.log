@@ -1,0 +1,26 @@
+C:/Users/Bence/AppData/Local/Temp/OpenModelica/OMEdit/TrainSimulation.StructureCollection/TrainSimulation.StructureCollection.exe -port=58053 -logFormat=xmltcp -override=startTime=0,stopTime=1,stepSize=0.002,tolerance=1e-6,solver=dassl,outputFormat=mat,variableFilter=.* -r=C:/Users/Bence/AppData/Local/Temp/OpenModelica/OMEdit/TrainSimulation.StructureCollection/TrainSimulation.StructureCollection_res.mat -w -lv=LOG_STATS -inputPath=C:/Users/Bence/AppData/Local/Temp/OpenModelica/OMEdit/TrainSimulation.StructureCollection -outputPath=C:/Users/Bence/AppData/Local/Temp/OpenModelica/OMEdit/TrainSimulation.StructureCollection
+The initialization finished successfully without homotopy method.
+### STATISTICS ###
+timer
+   0.0018096s          reading init.xml
+   0.0005629s          reading info.xml
+   0.0040959s [  9.8%] pre-initialization
+   0.0001516s [  0.4%] initialization
+   9.38e-005s [  0.2%] steps
+   4.37e-005s [  0.1%] solver (excl. callbacks)
+     0.00506s [ 12.1%] creating output-file
+   5.19e-005s [  0.1%] event-handling
+   0.0004285s [  1.0%] overhead
+   0.0318217s [ 76.2%] simulation
+   0.0417471s [100.0%] total
+events
+    0 state events
+    0 time events
+solver: euler
+  500 steps taken
+  500 calls of functionODE
+    0 evaluations of jacobian
+    0 error test failures
+    0 convergence test failures
+0s time of jacobian evaluation
+The simulation finished successfully.

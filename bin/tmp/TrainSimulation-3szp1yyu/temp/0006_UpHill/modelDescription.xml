@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription
+  fmiVersion="2.0"
+  modelName="TrainSimulation.UpHill"
+  guid="{5dcadf7a-8a96-47c7-b8d2-4150f8d01b0a}"
+  description=""
+  generationTool="OpenModelica Compiler OpenModelica v1.16.0-dev.03 (64-bit)"
+  generationDateAndTime="2020-10-08T15:21:11Z"
+  variableNamingConvention="structured"
+  numberOfEventIndicators="0">
+  <ModelExchange
+    modelIdentifier="TrainSimulation_UpHill">
+    <SourceFiles>
+      <File name="TrainSimulation_UpHill.c" />
+      <File name="TrainSimulation_UpHill_functions.c" />
+      <File name="TrainSimulation_UpHill_records.c" />
+      <File name="TrainSimulation_UpHill_01exo.c" />
+      <File name="TrainSimulation_UpHill_02nls.c" />
+      <File name="TrainSimulation_UpHill_03lsy.c" />
+      <File name="TrainSimulation_UpHill_04set.c" />
+      <File name="TrainSimulation_UpHill_05evt.c" />
+      <File name="TrainSimulation_UpHill_06inz.c" />
+      <File name="TrainSimulation_UpHill_07dly.c" />
+      <File name="TrainSimulation_UpHill_08bnd.c" />
+      <File name="TrainSimulation_UpHill_09alg.c" />
+      <File name="TrainSimulation_UpHill_10asr.c" />
+      <File name="TrainSimulation_UpHill_11mix.c" />
+      <File name="TrainSimulation_UpHill_12jac.c" />
+      <File name="TrainSimulation_UpHill_13opt.c" />
+      <File name="TrainSimulation_UpHill_14lnz.c" />
+      <File name="TrainSimulation_UpHill_15syn.c" />
+      <File name="TrainSimulation_UpHill_16dae.c" />
+      <File name="TrainSimulation_UpHill_17inl.c" />
+      <File name="TrainSimulation_UpHill_init_fmu.c" />
+      <File name="TrainSimulation_UpHill_FMU.c" />
+      <File name="./util/read_matlab4.c" />
+      <File name="./util/read_csv.c" />
+      <File name="./util/libcsv.c" />
+      <File name="gc/memory_pool.c" />
+      <File name="gc/omc_gc.c" />
+      <File name="./util/base_array.c" />
+      <File name="./util/boolean_array.c" />
+      <File name="./util/omc_error.c" />
+      <File name="./util/omc_file.c" />
+      <File name="./util/division.c" />
+      <File name="./util/generic_array.c" />
+      <File name="./util/index_spec.c" />
+      <File name="./util/integer_array.c" />
+      <File name="./util/list.c" />
+      <File name="./util/modelica_string.c" />
+      <File name="./util/real_array.c" />
+      <File name="./util/ringbuffer.c" />
+      <File name="./util/string_array.c" />
+      <File name="./util/utility.c" />
+      <File name="./util/varinfo.c" />
+      <File name="./util/ModelicaUtilities.c" />
+      <File name="./util/omc_msvc.c" />
+      <File name="./util/omc_numbers.c" />
+      <File name="./util/parallel_helper.c" />
+      <File name="./util/simulation_options.c" />
+      <File name="./util/rational.c" />
+      <File name="./util/modelica_string_lit.c" />
+      <File name="./util/omc_init.c" />
+      <File name="./util/omc_mmap.c" />
+      <File name="./util/jacobian_util.c" />
+      <File name="./math-support/pivot.c" />
+      <File name="./simulation/simulation_info_json.c" />
+      <File name="./simulation/options.c" />
+      <File name="./simulation/simulation_omc_assert.c" />
+      <File name="./simulation/omc_simulation_util.c" />
+      <File name="./simulation/solver/delay.c" />
+      <File name="./simulation/solver/fmi_events.c" />
+      <File name="./simulation/solver/omc_math.c" />
+      <File name="./simulation/solver/model_help.c" />
+      <File name="./simulation/solver/stateset.c" />
+      <File name="./simulation/solver/synchronous.c" />
+      <File name="./simulation/solver/initialization/initialization.c" />
+      <File name="./meta/meta_modelica_catch.c" />
+    </SourceFiles>
+  </ModelExchange>
+  <CoSimulation
+    modelIdentifier="TrainSimulation_UpHill"
+    needsExecutionTool="false"
+    canHandleVariableCommunicationStepSize="true"
+    canInterpolateInputs="false"
+    maxOutputDerivativeOrder="0"
+    canRunAsynchronuously = "false"
+    canBeInstantiatedOnlyOncePerProcess="false"
+    canNotUseMemoryManagementFunctions="false"
+    canGetAndSetFMUstate="false"
+    canSerializeFMUstate="false"
+    >
+    <SourceFiles>
+      <File name="TrainSimulation_UpHill.c" />
+      <File name="TrainSimulation_UpHill_functions.c" />
+      <File name="TrainSimulation_UpHill_records.c" />
+      <File name="TrainSimulation_UpHill_01exo.c" />
+      <File name="TrainSimulation_UpHill_02nls.c" />
+      <File name="TrainSimulation_UpHill_03lsy.c" />
+      <File name="TrainSimulation_UpHill_04set.c" />
+      <File name="TrainSimulation_UpHill_05evt.c" />
+      <File name="TrainSimulation_UpHill_06inz.c" />
+      <File name="TrainSimulation_UpHill_07dly.c" />
+      <File name="TrainSimulation_UpHill_08bnd.c" />
+      <File name="TrainSimulation_UpHill_09alg.c" />
+      <File name="TrainSimulation_UpHill_10asr.c" />
+      <File name="TrainSimulation_UpHill_11mix.c" />
+      <File name="TrainSimulation_UpHill_12jac.c" />
+      <File name="TrainSimulation_UpHill_13opt.c" />
+      <File name="TrainSimulation_UpHill_14lnz.c" />
+      <File name="TrainSimulation_UpHill_15syn.c" />
+      <File name="TrainSimulation_UpHill_16dae.c" />
+      <File name="TrainSimulation_UpHill_17inl.c" />
+      <File name="TrainSimulation_UpHill_init_fmu.c" />
+      <File name="TrainSimulation_UpHill_FMU.c" />
+      <File name="./util/read_matlab4.c" />
+      <File name="./util/read_csv.c" />
+      <File name="./util/libcsv.c" />
+      <File name="gc/memory_pool.c" />
+      <File name="gc/omc_gc.c" />
+      <File name="./util/base_array.c" />
+      <File name="./util/boolean_array.c" />
+      <File name="./util/omc_error.c" />
+      <File name="./util/omc_file.c" />
+      <File name="./util/division.c" />
+      <File name="./util/generic_array.c" />
+      <File name="./util/index_spec.c" />
+      <File name="./util/integer_array.c" />
+      <File name="./util/list.c" />
+      <File name="./util/modelica_string.c" />
+      <File name="./util/real_array.c" />
+      <File name="./util/ringbuffer.c" />
+      <File name="./util/string_array.c" />
+      <File name="./util/utility.c" />
+      <File name="./util/varinfo.c" />
+      <File name="./util/ModelicaUtilities.c" />
+      <File name="./util/omc_msvc.c" />
+      <File name="./util/omc_numbers.c" />
+      <File name="./util/parallel_helper.c" />
+      <File name="./util/simulation_options.c" />
+      <File name="./util/rational.c" />
+      <File name="./util/modelica_string_lit.c" />
+      <File name="./util/omc_init.c" />
+      <File name="./util/omc_mmap.c" />
+      <File name="./util/jacobian_util.c" />
+      <File name="./math-support/pivot.c" />
+      <File name="./simulation/simulation_info_json.c" />
+      <File name="./simulation/options.c" />
+      <File name="./simulation/simulation_omc_assert.c" />
+      <File name="./simulation/omc_simulation_util.c" />
+      <File name="./simulation/solver/delay.c" />
+      <File name="./simulation/solver/fmi_events.c" />
+      <File name="./simulation/solver/omc_math.c" />
+      <File name="./simulation/solver/model_help.c" />
+      <File name="./simulation/solver/stateset.c" />
+      <File name="./simulation/solver/synchronous.c" />
+      <File name="./simulation/solver/initialization/initialization.c" />
+      <File name="./meta/meta_modelica_catch.c" />
+    </SourceFiles>
+  </CoSimulation>
+  <UnitDefinitions>
+    <Unit name ="m">
+      <BaseUnit  m="1"/>
+    </Unit>
+  </UnitDefinitions>
+  <LogCategories>
+    <Category name="logEvents" />
+    <Category name="logSingularLinearSystems" />
+    <Category name="logNonlinearSystems" />
+    <Category name="logDynamicStateSelection" />
+    <Category name="logStatusWarning" />
+    <Category name="logStatusDiscard" />
+    <Category name="logStatusError" />
+    <Category name="logStatusFatal" />
+    <Category name="logStatusPending" />
+    <Category name="logAll" />
+    <Category name="logFmi2Call" />
+  </LogCategories>
+  <DefaultExperiment startTime="0.0" stopTime="1.0" tolerance="1e-006"/>
+  <ModelVariables>
+  <!-- Index of variable = "1" -->
+  <ScalarVariable
+    name="HillAcc[1]"
+    valueReference="0"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "2" -->
+  <ScalarVariable
+    name="HillAcc[2]"
+    valueReference="1"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "3" -->
+  <ScalarVariable
+    name="HillAcc[3]"
+    valueReference="2"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "4" -->
+  <ScalarVariable
+    name="HillAcc[4]"
+    valueReference="3"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "5" -->
+  <ScalarVariable
+    name="HillAcc[5]"
+    valueReference="4"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "6" -->
+  <ScalarVariable
+    name="HillAcc[6]"
+    valueReference="5"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "7" -->
+  <ScalarVariable
+    name="HillAcc[7]"
+    valueReference="6"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "8" -->
+  <ScalarVariable
+    name="HillAcc[8]"
+    valueReference="7"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "9" -->
+  <ScalarVariable
+    name="HillAcc[9]"
+    valueReference="8"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "10" -->
+  <ScalarVariable
+    name="HillAcc[10]"
+    valueReference="9"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "11" -->
+  <ScalarVariable
+    name="TrainDistance[1]"
+    valueReference="10"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "12" -->
+  <ScalarVariable
+    name="TrainDistance[2]"
+    valueReference="11"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "13" -->
+  <ScalarVariable
+    name="TrainDistance[3]"
+    valueReference="12"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "14" -->
+  <ScalarVariable
+    name="TrainDistance[4]"
+    valueReference="13"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "15" -->
+  <ScalarVariable
+    name="TrainDistance[5]"
+    valueReference="14"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "16" -->
+  <ScalarVariable
+    name="TrainDistance[6]"
+    valueReference="15"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "17" -->
+  <ScalarVariable
+    name="TrainDistance[7]"
+    valueReference="16"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "18" -->
+  <ScalarVariable
+    name="TrainDistance[8]"
+    valueReference="17"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "19" -->
+  <ScalarVariable
+    name="TrainDistance[9]"
+    valueReference="18"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "20" -->
+  <ScalarVariable
+    name="TrainDistance[10]"
+    valueReference="19"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "21" -->
+  <ScalarVariable
+    name="TrainLength[1]"
+    valueReference="20"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "22" -->
+  <ScalarVariable
+    name="TrainLength[2]"
+    valueReference="21"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "23" -->
+  <ScalarVariable
+    name="TrainLength[3]"
+    valueReference="22"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "24" -->
+  <ScalarVariable
+    name="TrainLength[4]"
+    valueReference="23"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "25" -->
+  <ScalarVariable
+    name="TrainLength[5]"
+    valueReference="24"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "26" -->
+  <ScalarVariable
+    name="TrainLength[6]"
+    valueReference="25"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "27" -->
+  <ScalarVariable
+    name="TrainLength[7]"
+    valueReference="26"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "28" -->
+  <ScalarVariable
+    name="TrainLength[8]"
+    valueReference="27"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "29" -->
+  <ScalarVariable
+    name="TrainLength[9]"
+    valueReference="28"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "30" -->
+  <ScalarVariable
+    name="TrainLength[10]"
+    valueReference="29"
+    causality="input"
+    >
+    <Real start="0.0"/>
+  </ScalarVariable>
+  <!-- Index of variable = "31" -->
+  <ScalarVariable
+    name="onHill[1]"
+    valueReference="30"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "32" -->
+  <ScalarVariable
+    name="onHill[2]"
+    valueReference="31"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "33" -->
+  <ScalarVariable
+    name="onHill[3]"
+    valueReference="32"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "34" -->
+  <ScalarVariable
+    name="onHill[4]"
+    valueReference="33"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "35" -->
+  <ScalarVariable
+    name="onHill[5]"
+    valueReference="34"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "36" -->
+  <ScalarVariable
+    name="onHill[6]"
+    valueReference="35"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "37" -->
+  <ScalarVariable
+    name="onHill[7]"
+    valueReference="36"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "38" -->
+  <ScalarVariable
+    name="onHill[8]"
+    valueReference="37"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "39" -->
+  <ScalarVariable
+    name="onHill[9]"
+    valueReference="38"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "40" -->
+  <ScalarVariable
+    name="onHill[10]"
+    valueReference="39"
+    causality="output"
+    >
+    <Real/>
+  </ScalarVariable>
+  <!-- Index of variable = "41" -->
+  <ScalarVariable
+    name="End"
+    valueReference="40"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="50.0" unit="m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "42" -->
+  <ScalarVariable
+    name="Start"
+    valueReference="41"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="40.0" unit="m"/>
+  </ScalarVariable>
+  <!-- Index of variable = "43" -->
+  <ScalarVariable
+    name="angle"
+    valueReference="42"
+    variability="fixed"
+    causality="parameter"
+    >
+    <Real start="30.0" unit="degree"/>
+  </ScalarVariable>
+  <!-- Index of variable = "44" -->
+  <ScalarVariable
+    name="size"
+    valueReference="0"
+    variability="fixed"
+    causality="calculatedParameter"
+    >
+    <Integer/>
+  </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="1" dependencies="" dependenciesKind="" />
+      <Unknown index="2" dependencies="" dependenciesKind="" />
+      <Unknown index="3" dependencies="" dependenciesKind="" />
+      <Unknown index="4" dependencies="" dependenciesKind="" />
+      <Unknown index="5" dependencies="" dependenciesKind="" />
+      <Unknown index="6" dependencies="" dependenciesKind="" />
+      <Unknown index="7" dependencies="" dependenciesKind="" />
+      <Unknown index="8" dependencies="" dependenciesKind="" />
+      <Unknown index="9" dependencies="" dependenciesKind="" />
+      <Unknown index="10" dependencies="" dependenciesKind="" />
+      <Unknown index="31" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="32" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="33" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="34" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="35" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="36" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="37" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="38" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="39" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="40" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+    </Outputs>
+    <InitialUnknowns>
+      <Unknown index="1" dependencies="43" dependenciesKind="dependent" />
+      <Unknown index="2" dependencies="43" dependenciesKind="dependent" />
+      <Unknown index="3" dependencies="43" dependenciesKind="dependent" />
+      <Unknown index="4" dependencies="43" dependenciesKind="dependent" />
+      <Unknown index="5" dependencies="43" dependenciesKind="dependent" />
+      <Unknown index="6" dependencies="43" dependenciesKind="dependent" />
+      <Unknown index="7" dependencies="43" dependenciesKind="dependent" />
+      <Unknown index="8" dependencies="43" dependenciesKind="dependent" />
+      <Unknown index="9" dependencies="43" dependenciesKind="dependent" />
+      <Unknown index="10" dependencies="43" dependenciesKind="dependent" />
+      <Unknown index="31" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="32" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="33" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="34" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="35" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="36" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="37" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="38" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="39" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="40" dependencies="11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30" dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent" />
+      <Unknown index="44" dependencies="" dependenciesKind="" />
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>

@@ -1,0 +1,573 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+
+<!-- description of the model interface using an extention of the FMI standard -->
+<fmiModelDescription
+  fmiVersion                          = "1.0"
+
+  modelName                           = "TrainSimulation.Train"
+  modelIdentifier                     = "TrainSimulation_Train"
+
+  OPENMODELICAHOME                    = "E:/Modelica"
+
+  guid                                = "{ef8fda24-54ac-4402-9cdd-a3f326a46415}"
+
+  description                         = ""
+  generationTool                      = "OpenModelica Compiler OpenModelica v1.16.0-dev.03 (64-bit)"
+  generationDateAndTime               = "2020-10-08T12:15:13Z"
+
+  variableNamingConvention            = "structured"
+
+  numberOfEventIndicators             = "14"  cmt_numberOfEventIndicators             = "NG:       number of zero crossings,                           FMI"
+  numberOfTimeEvents                  = "0"  cmt_numberOfTimeEvents                  = "NG_SAM:   number of zero crossings that are samples,          OMC"
+
+  numberOfInputVariables              = "8"  cmt_numberOfInputVariables              = "NI:       number of inputvar on topmodel,                     OMC"
+  numberOfOutputVariables             = "3"  cmt_numberOfOutputVariables             = "NO:       number of outputvar on topmodel,                    OMC"
+
+  numberOfExternalObjects             = "0"  cmt_numberOfExternalObjects             = "NEXT:     number of external objects,                         OMC"
+  numberOfFunctions                   = "0"  cmt_numberOfFunctions                   = "NFUNC:    number of functions used by the simulation,         OMC"
+
+  numberOfContinuousStates            = "4"  cmt_numberOfContinuousStates            = "NX:       number of states,                                   FMI"
+  numberOfRealAlgebraicVariables      = "8"  cmt_numberOfRealAlgebraicVariables      = "NY:       number of real variables,                           OMC"
+  numberOfRealAlgebraicAliasVariables = "0"  cmt_numberOfRealAlgebraicAliasVariables = "NA:       number of alias variables,                          OMC"
+  numberOfRealParameters              = "5"  cmt_numberOfRealParameters              = "NP:       number of parameters,                               OMC"
+
+  numberOfIntegerAlgebraicVariables   = "3"  cmt_numberOfIntegerAlgebraicVariables   = "NYINT:    number of alg. int variables,                       OMC"
+  numberOfIntegerAliasVariables       = "0"  cmt_numberOfIntegerAliasVariables       = "NAINT:    number of alias int variables,                      OMC"
+  numberOfIntegerParameters           = "1"  cmt_numberOfIntegerParameters           = "NPINT:    number of int parameters,                           OMC"
+
+  numberOfStringAlgebraicVariables    = "0"  cmt_numberOfStringAlgebraicVariables    = "NYSTR:    number of alg. string variables,                    OMC"
+  numberOfStringAliasVariables        = "0"  cmt_numberOfStringAliasVariables        = "NASTR:    number of alias string variables,                   OMC"
+  numberOfStringParameters            = "0"  cmt_numberOfStringParameters            = "NPSTR:    number of string parameters,                        OMC"
+
+  numberOfBooleanAlgebraicVariables   = "19"  cmt_numberOfBooleanAlgebraicVariables   = "NYBOOL:   number of alg. bool variables,                      OMC"
+  numberOfBooleanAliasVariables       = "0"  cmt_numberOfBooleanAliasVariables       = "NABOOL:   number of alias bool variables,                     OMC"
+  numberOfBooleanParameters           = "0"  cmt_numberOfBooleanParameters           = "NPBOOL:   number of bool parameters,                          OMC" >
+
+
+  <!-- startTime, stopTime, tolerance are FMI specific, all others are OMC specific -->
+  <DefaultExperiment
+    startTime      = "0"
+    stopTime       = "1"
+    stepSize       = "0.002"
+    tolerance      = "1e-006"
+    solver        = "dassl"
+    outputFormat      = "mat"
+    variableFilter      = ".*" />
+
+  <!-- variables in the model -->
+  <ModelVariables>
+
+  <ScalarVariable
+    name = "acceleration"
+    valueReference = "1000"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "rSta"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "90" startColumn = "5" endLine = "90" endColumn = "35" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "distance"
+    valueReference = "1001"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rSta"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "88" startColumn = "5" endLine = "88" endColumn = "41" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "lapDistance"
+    valueReference = "1002"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "2" classType = "rSta"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "91" startColumn = "5" endLine = "91" endColumn = "44" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "speed"
+    valueReference = "1003"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "3" classType = "rSta"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "89" startColumn = "5" endLine = "89" endColumn = "33" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(acceleration)"
+    valueReference = "1004"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rDer"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "90" startColumn = "5" endLine = "90" endColumn = "35" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(distance)"
+    valueReference = "1005"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rDer"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "88" startColumn = "5" endLine = "88" endColumn = "41" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(lapDistance)"
+    valueReference = "1006"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "2" classType = "rDer"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "91" startColumn = "5" endLine = "91" endColumn = "44" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(speed)"
+    valueReference = "1007"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "3" classType = "rDer"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "89" startColumn = "5" endLine = "89" endColumn = "33" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "BreakingDistance"
+    valueReference = "1008"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "92" startColumn = "5" endLine = "92" endColumn = "37" fileWritable = "true">
+    <Real start="0.0" fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Distance"
+    valueReference = "1009"
+    variability = "continuous" isDiscrete = "false"
+    causality = "output" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "67" startColumn = "5" endLine = "67" endColumn = "51" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Length"
+    valueReference = "1010"
+    variability = "continuous" isDiscrete = "false"
+    causality = "output" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "2" classType = "rAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "68" startColumn = "5" endLine = "68" endColumn = "49" fileWritable = "true">
+    <Real start="20.0" fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Sensor1Position"
+    valueReference = "1011"
+    variability = "continuous" isDiscrete = "false"
+    causality = "input" isValueChangeable = "true"
+    inputIndex = "2"
+    alias = "noAlias"
+    classIndex = "3" classType = "rAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "77" startColumn = "5" endLine = "77" endColumn = "57" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Sensor2Position"
+    valueReference = "1012"
+    variability = "continuous" isDiscrete = "false"
+    causality = "input" isValueChangeable = "true"
+    inputIndex = "3"
+    alias = "noAlias"
+    classIndex = "4" classType = "rAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "78" startColumn = "5" endLine = "78" endColumn = "57" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Station"
+    valueReference = "1013"
+    variability = "continuous" isDiscrete = "false"
+    causality = "input" isValueChangeable = "true"
+    inputIndex = "4"
+    alias = "noAlias"
+    classIndex = "5" classType = "rAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "76" startColumn = "5" endLine = "76" endColumn = "49" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "onCurveSpeed"
+    valueReference = "1014"
+    variability = "continuous" isDiscrete = "false"
+    causality = "input" isValueChangeable = "true"
+    inputIndex = "6"
+    alias = "noAlias"
+    classIndex = "6" classType = "rAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "70" startColumn = "5" endLine = "70" endColumn = "54" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "onUpHillAcc"
+    valueReference = "1015"
+    variability = "continuous" isDiscrete = "false"
+    causality = "input" isValueChangeable = "true"
+    inputIndex = "7"
+    alias = "noAlias"
+    classIndex = "7" classType = "rAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "72" startColumn = "5" endLine = "72" endColumn = "53" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "breakingDeceleration"
+    valueReference = "1016"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "rPar"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "83" startColumn = "5" endLine = "83" endColumn = "62" fileWritable = "true">
+    <Real start="20.0" fixed="true" useNominal="false" unit="m/s2" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "distanceStart"
+    valueReference = "1017"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "1" classType = "rPar"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "86" startColumn = "5" endLine = "86" endColumn = "49" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" unit="m" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "lap"
+    valueReference = "1018"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "2" classType = "rPar"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "85" startColumn = "5" endLine = "85" endColumn = "34" fileWritable = "true">
+    <Real start="99999999.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "length"
+    valueReference = "1019"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "3" classType = "rPar"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "84" startColumn = "5" endLine = "84" endColumn = "43" fileWritable = "true">
+    <Real start="20.0" fixed="true" useNominal="false" unit="m" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "maxSpeed"
+    valueReference = "1020"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "4" classType = "rPar"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "82" startColumn = "5" endLine = "82" endColumn = "47" fileWritable = "true">
+    <Real start="75.0" fixed="true" useNominal="false" unit="m/s" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Lapcount"
+    valueReference = "1021"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "iAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "87" startColumn = "5" endLine = "87" endColumn = "32" fileWritable = "true">
+    <Integer start="0" fixed="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "StationState"
+    valueReference = "1022"
+    variability = "continuous" isDiscrete = "true"
+    causality = "input" isValueChangeable = "true"
+    inputIndex = "5"
+    alias = "noAlias"
+    classIndex = "1" classType = "iAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "75" startColumn = "5" endLine = "75" endColumn = "57" fileWritable = "true">
+    <Integer fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "state"
+    valueReference = "1023"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "2" classType = "iAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "80" startColumn = "5" endLine = "80" endColumn = "24" fileWritable = "true">
+    <Integer fixed="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "size"
+    valueReference = "1024"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "iPar"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "81" startColumn = "5" endLine = "81" endColumn = "32" fileWritable = "true">
+    <Integer start="10" fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition1"
+    valueReference = "1025"
+    description = "lapDistance &gt;= lap"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "108" startColumn = "7" endLine = "108" endColumn = "29" fileWritable = "true">
+    <Boolean fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition10"
+    valueReference = "1026"
+    description = "inStation and speed &lt; maxSpeed and lapDistance + BreakingDistance + 5.0 &gt;= Sensor1Position and lapDistance + BreakingDistance - 5.0 &lt;= Sensor1Position and state == TrainSimulation.StationSignal.green"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "144" startColumn = "7" endLine = "144" endColumn = "49" fileWritable = "true">
+    <Boolean fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition11"
+    valueReference = "1027"
+    description = "inStation and speed &gt; 0.0 and lapDistance + BreakingDistance + 5.0 &gt;= Station and lapDistance + BreakingDistance - 5.0 &lt;= Station and state == TrainSimulation.StationSignal.red"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "2" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "147" startColumn = "7" endLine = "147" endColumn = "50" fileWritable = "true">
+    <Boolean fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition12"
+    valueReference = "1028"
+    description = "inStation and speed &lt;= 0.0"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "3" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "150" startColumn = "7" endLine = "150" endColumn = "32" fileWritable = "true">
+    <Boolean start="false" fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition13"
+    valueReference = "1029"
+    description = "inStation and speed &gt;= maxSpeed"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "4" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "153" startColumn = "7" endLine = "153" endColumn = "32" fileWritable = "true">
+    <Boolean start="false" fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition14"
+    valueReference = "1030"
+    description = "inStation and state == TrainSimulation.StationSignal.redReady and lapDistance + BreakingDistance + 5.0 &gt;= Station"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "5" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "156" startColumn = "7" endLine = "156" endColumn = "49" fileWritable = "true">
+    <Boolean fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition2"
+    valueReference = "1031"
+    description = "speed &gt;= onCurveSpeed and ActiveCurve"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "6" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "111" startColumn = "7" endLine = "111" endColumn = "50" fileWritable = "true">
+    <Boolean fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition3"
+    valueReference = "1032"
+    description = "speed &lt;= onCurveSpeed and ActiveCurve"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "7" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "114" startColumn = "7" endLine = "114" endColumn = "32" fileWritable = "true">
+    <Boolean fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition4"
+    valueReference = "1033"
+    description = "ActiveCurve &lt;&gt; pre(ActiveCurve) and not ActiveCurve"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "8" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "117" startColumn = "7" endLine = "117" endColumn = "49" fileWritable = "true">
+    <Boolean start="false" fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition5"
+    valueReference = "1034"
+    description = "speed &gt;= maxSpeed and not ActiveCurve and not ActiveUpHill and not ActiveCurve &lt;&gt; pre(ActiveCurve) and not ActiveUpHill &lt;&gt; pre(ActiveUpHill) and not Decelerating and not inStation"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "9" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "122" startColumn = "7" endLine = "122" endColumn = "32" fileWritable = "true">
+    <Boolean fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition6"
+    valueReference = "1035"
+    description = "Decelerating and speed &lt;= maxSpeed and not ActiveCurve and not ActiveUpHill and not ActiveCurve &lt;&gt; pre(ActiveCurve) and not ActiveUpHill &lt;&gt; pre(ActiveUpHill) and not inStation"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "10" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "126" startColumn = "7" endLine = "126" endColumn = "32" fileWritable = "true">
+    <Boolean start="false" fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition7"
+    valueReference = "1036"
+    description = "ActiveUpHill"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "11" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "129" startColumn = "7" endLine = "129" endColumn = "40" fileWritable = "true">
+    <Boolean fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition8"
+    valueReference = "1037"
+    description = "ActiveUpHill &lt;&gt; pre(ActiveUpHill) and not ActiveUpHill"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "12" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "132" startColumn = "7" endLine = "132" endColumn = "49" fileWritable = "true">
+    <Boolean start="false" fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition9"
+    valueReference = "1038"
+    description = "inStation and speed &gt; 0.0 and lapDistance + BreakingDistance + 5.0 &gt;= Sensor1Position and lapDistance + BreakingDistance - 5.0 &lt;= Sensor1Position and not state == TrainSimulation.StationSignal.green"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "13" classType = "bAlg"
+    isProtected = "true" hideResult = "true"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "141" startColumn = "7" endLine = "141" endColumn = "50" fileWritable = "true">
+    <Boolean fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "ActiveCurve"
+    valueReference = "1039"
+    variability = "continuous" isDiscrete = "true"
+    causality = "input" isValueChangeable = "true"
+    inputIndex = "0"
+    alias = "noAlias"
+    classIndex = "14" classType = "bAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "69" startColumn = "5" endLine = "69" endColumn = "56" fileWritable = "true">
+    <Boolean fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "ActiveUpHill"
+    valueReference = "1040"
+    variability = "continuous" isDiscrete = "true"
+    causality = "input" isValueChangeable = "true"
+    inputIndex = "1"
+    alias = "noAlias"
+    classIndex = "15" classType = "bAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "71" startColumn = "5" endLine = "71" endColumn = "57" fileWritable = "true">
+    <Boolean fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Arrived"
+    valueReference = "1041"
+    variability = "discrete" isDiscrete = "true"
+    causality = "output" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "16" classType = "bAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "79" startColumn = "5" endLine = "79" endColumn = "53" fileWritable = "true">
+    <Boolean fixed="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Decelerating"
+    valueReference = "1042"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "17" classType = "bAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "93" startColumn = "5" endLine = "93" endColumn = "40" fileWritable = "true">
+    <Boolean start="false" fixed="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "inStation"
+    valueReference = "1043"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "18" classType = "bAlg"
+    isProtected = "false" hideResult = "false"
+    fileName = "E:/Szakdoga/TrainSimulation.mo" startLine = "94" startColumn = "5" endLine = "94" endColumn = "37" fileWritable = "true">
+    <Boolean start="false" fixed="false" />
+  </ScalarVariable>
+
+
+
+  </ModelVariables>
+
+
+</fmiModelDescription>
+

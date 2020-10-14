@@ -1,0 +1,6 @@
+mingw32-make: Entering directory 'C:/Users/Bence/AppData/Local/Temp/OPENMO~1/OMEdit/TRAINS~1.UPH'
+rm -f TrainSimulation_UpHill.fmutmp/sources/TrainSimulation_UpHill_init.xml
+cp -a "E:/Modelica/share/omc/runtime/c/fmi/buildproject/"* TrainSimulation_UpHill.fmutmp/sources
+cp -a TrainSimulation_UpHill_FMU.libs TrainSimulation_UpHill.fmutmp/sources/
+mingw32-make: Leaving directory 'C:/Users/Bence/AppData/Local/Temp/OPENMO~1/OMEdit/TRAINS~1.UPH'
+RESULT: 0 

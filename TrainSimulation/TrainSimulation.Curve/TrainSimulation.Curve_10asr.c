@@ -1,0 +1,26 @@
+#ifdef OMC_BASE_FILE
+  #define OMC_FILE OMC_BASE_FILE
+#else
+  #define OMC_FILE "C:/Users/Bence/AppData/Local/Temp/OpenModelica/OMEdit/TrainSimulation.Curve/TrainSimulation.Curve_10asr.c"
+#endif
+/* Asserts */
+#include "TrainSimulation.Curve_model.h"
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
+/* function to check assert after a step is done */
+OMC_DISABLE_OPT
+int TrainSimulation_Curve_checkForAsserts(DATA *data, threadData_t *threadData)
+{
+  TRACE_PUSH
+
+  
+  TRACE_POP
+  return 0;
+}
+
+#if defined(__cplusplus)
+}
+#endif
+

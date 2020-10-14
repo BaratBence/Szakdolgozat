@@ -1,0 +1,6 @@
+mingw32-make: Entering directory 'C:/Users/Bence/AppData/Local/Temp/OPENMO~1/OMEdit/TRAINS~1.SEN'
+rm -f TrainSimulation_Sensor.fmutmp/sources/TrainSimulation_Sensor_init.xml
+cp -a "E:/Modelica/share/omc/runtime/c/fmi/buildproject/"* TrainSimulation_Sensor.fmutmp/sources
+cp -a TrainSimulation_Sensor_FMU.libs TrainSimulation_Sensor.fmutmp/sources/
+mingw32-make: Leaving directory 'C:/Users/Bence/AppData/Local/Temp/OPENMO~1/OMEdit/TRAINS~1.SEN'
+RESULT: 0 
