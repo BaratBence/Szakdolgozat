@@ -1,0 +1,54 @@
+EXPORTS
+  ;***************************************************
+  ;Common Functions
+  ;****************************************************
+  TrainSimulation_TrainLight_fmiGetTypesPlatform @1
+  TrainSimulation_TrainLight_fmiGetVersion @2
+  TrainSimulation_TrainLight_fmiSetDebugLogging @3
+  TrainSimulation_TrainLight_fmiInstantiate @4
+  TrainSimulation_TrainLight_fmiFreeInstance @5
+  TrainSimulation_TrainLight_fmiSetupExperiment @6
+  TrainSimulation_TrainLight_fmiEnterInitializationMode @7
+  TrainSimulation_TrainLight_fmiExitInitializationMode @8
+  TrainSimulation_TrainLight_fmiTerminate @9
+  TrainSimulation_TrainLight_fmiReset @10
+  TrainSimulation_TrainLight_fmiGetReal @11
+  TrainSimulation_TrainLight_fmiGetInteger @12
+  TrainSimulation_TrainLight_fmiGetBoolean @13
+  TrainSimulation_TrainLight_fmiGetString @14
+  TrainSimulation_TrainLight_fmiSetReal @15
+  TrainSimulation_TrainLight_fmiSetInteger @16
+  TrainSimulation_TrainLight_fmiSetBoolean @17
+  TrainSimulation_TrainLight_fmiSetString @18
+  TrainSimulation_TrainLight_fmiGetFMUstate @19
+  TrainSimulation_TrainLight_fmiSetFMUstate @20
+  TrainSimulation_TrainLight_fmiFreeFMUstate @21
+  TrainSimulation_TrainLight_fmiSerializedFMUstateSize @22
+  TrainSimulation_TrainLight_fmiSerializeFMUstate @23
+  TrainSimulation_TrainLight_fmiDeSerializeFMUstate @24
+  TrainSimulation_TrainLight_fmiGetDirectionalDerivative @25
+  ;***************************************************
+  ;Functions for FMI for Model Exchange
+  ;****************************************************
+  TrainSimulation_TrainLight_fmiEnterEventMode @26
+  TrainSimulation_TrainLight_fmiNewDiscreteStates @27
+  TrainSimulation_TrainLight_fmiEnterContinuousTimeMode @28
+  TrainSimulation_TrainLight_fmiCompletedIntegratorStep @29
+  TrainSimulation_TrainLight_fmiSetTime @30
+  TrainSimulation_TrainLight_fmiSetContinuousStates @31
+  TrainSimulation_TrainLight_fmiGetDerivatives @32
+  TrainSimulation_TrainLight_fmiGetEventIndicators @33
+  TrainSimulation_TrainLight_fmiGetContinuousStates @34
+  TrainSimulation_TrainLight_fmiGetNominalsOfContinuousStates @35
+  ;***************************************************
+  ;Functions for FMI for Co-Simulation
+  ;****************************************************
+  TrainSimulation_TrainLight_fmiSetRealInputDerivatives @36
+  TrainSimulation_TrainLight_fmiGetRealOutputDerivatives @37
+  TrainSimulation_TrainLight_fmiDoStep @38
+  TrainSimulation_TrainLight_fmiCancelStep @39
+  TrainSimulation_TrainLight_fmiGetStatus @40
+  TrainSimulation_TrainLight_fmiGetRealStatus @41
+  TrainSimulation_TrainLight_fmiGetIntegerStatus @42
+  TrainSimulation_TrainLight_fmiGetBooleanStatus @43
+  TrainSimulation_TrainLight_fmiGetStringStatus @44

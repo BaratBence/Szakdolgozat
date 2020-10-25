@@ -1,0 +1,54 @@
+EXPORTS
+  ;***************************************************
+  ;Common Functions
+  ;****************************************************
+  TrainSimulation_Car_fmiGetTypesPlatform @1
+  TrainSimulation_Car_fmiGetVersion @2
+  TrainSimulation_Car_fmiSetDebugLogging @3
+  TrainSimulation_Car_fmiInstantiate @4
+  TrainSimulation_Car_fmiFreeInstance @5
+  TrainSimulation_Car_fmiSetupExperiment @6
+  TrainSimulation_Car_fmiEnterInitializationMode @7
+  TrainSimulation_Car_fmiExitInitializationMode @8
+  TrainSimulation_Car_fmiTerminate @9
+  TrainSimulation_Car_fmiReset @10
+  TrainSimulation_Car_fmiGetReal @11
+  TrainSimulation_Car_fmiGetInteger @12
+  TrainSimulation_Car_fmiGetBoolean @13
+  TrainSimulation_Car_fmiGetString @14
+  TrainSimulation_Car_fmiSetReal @15
+  TrainSimulation_Car_fmiSetInteger @16
+  TrainSimulation_Car_fmiSetBoolean @17
+  TrainSimulation_Car_fmiSetString @18
+  TrainSimulation_Car_fmiGetFMUstate @19
+  TrainSimulation_Car_fmiSetFMUstate @20
+  TrainSimulation_Car_fmiFreeFMUstate @21
+  TrainSimulation_Car_fmiSerializedFMUstateSize @22
+  TrainSimulation_Car_fmiSerializeFMUstate @23
+  TrainSimulation_Car_fmiDeSerializeFMUstate @24
+  TrainSimulation_Car_fmiGetDirectionalDerivative @25
+  ;***************************************************
+  ;Functions for FMI for Model Exchange
+  ;****************************************************
+  TrainSimulation_Car_fmiEnterEventMode @26
+  TrainSimulation_Car_fmiNewDiscreteStates @27
+  TrainSimulation_Car_fmiEnterContinuousTimeMode @28
+  TrainSimulation_Car_fmiCompletedIntegratorStep @29
+  TrainSimulation_Car_fmiSetTime @30
+  TrainSimulation_Car_fmiSetContinuousStates @31
+  TrainSimulation_Car_fmiGetDerivatives @32
+  TrainSimulation_Car_fmiGetEventIndicators @33
+  TrainSimulation_Car_fmiGetContinuousStates @34
+  TrainSimulation_Car_fmiGetNominalsOfContinuousStates @35
+  ;***************************************************
+  ;Functions for FMI for Co-Simulation
+  ;****************************************************
+  TrainSimulation_Car_fmiSetRealInputDerivatives @36
+  TrainSimulation_Car_fmiGetRealOutputDerivatives @37
+  TrainSimulation_Car_fmiDoStep @38
+  TrainSimulation_Car_fmiCancelStep @39
+  TrainSimulation_Car_fmiGetStatus @40
+  TrainSimulation_Car_fmiGetRealStatus @41
+  TrainSimulation_Car_fmiGetIntegerStatus @42
+  TrainSimulation_Car_fmiGetBooleanStatus @43
+  TrainSimulation_Car_fmiGetStringStatus @44

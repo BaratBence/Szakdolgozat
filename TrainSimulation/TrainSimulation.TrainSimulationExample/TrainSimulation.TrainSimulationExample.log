@@ -1,0 +1,26 @@
+C:/Users/Bence/AppData/Local/Temp/OpenModelica/OMEdit/TrainSimulation.TrainSimulationExample/TrainSimulation.TrainSimulationExample.exe -port=53510 -logFormat=xmltcp -override=startTime=0,stopTime=200,stepSize=0.4,tolerance=1e-6,solver=dassl,outputFormat=mat,variableFilter=.* -r=C:/Users/Bence/AppData/Local/Temp/OpenModelica/OMEdit/TrainSimulation.TrainSimulationExample/TrainSimulation.TrainSimulationExample_res.mat -w -lv=LOG_STATS -inputPath=C:/Users/Bence/AppData/Local/Temp/OpenModelica/OMEdit/TrainSimulation.TrainSimulationExample -outputPath=C:/Users/Bence/AppData/Local/Temp/OpenModelica/OMEdit/TrainSimulation.TrainSimulationExample
+The initialization finished successfully without homotopy method.
+### STATISTICS ###
+timer
+   0.0220823s          reading init.xml
+   0.0031453s          reading info.xml
+    0.006936s [  3.8%] pre-initialization
+   0.0004717s [  0.3%] initialization
+   9.96e-005s [  0.1%] steps
+    0.017153s [  9.4%] solver (excl. callbacks)
+   0.0214457s [ 11.7%] creating output-file
+   0.0718242s [ 39.2%] event-handling
+   0.0020278s [  1.1%] overhead
+   0.0632897s [ 34.5%] simulation
+    0.183248s [100.0%] total
+events
+  150 state events
+    0 time events
+solver: dassl
+ 2277 steps taken
+ 2277 calls of functionODE
+ 2148 evaluations of jacobian
+    0 error test failures
+    0 convergence test failures
+0.0017109s time of jacobian evaluation
+The simulation finished successfully.

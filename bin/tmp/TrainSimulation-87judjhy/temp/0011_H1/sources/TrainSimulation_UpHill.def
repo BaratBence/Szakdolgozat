@@ -1,0 +1,54 @@
+EXPORTS
+  ;***************************************************
+  ;Common Functions
+  ;****************************************************
+  TrainSimulation_UpHill_fmiGetTypesPlatform @1
+  TrainSimulation_UpHill_fmiGetVersion @2
+  TrainSimulation_UpHill_fmiSetDebugLogging @3
+  TrainSimulation_UpHill_fmiInstantiate @4
+  TrainSimulation_UpHill_fmiFreeInstance @5
+  TrainSimulation_UpHill_fmiSetupExperiment @6
+  TrainSimulation_UpHill_fmiEnterInitializationMode @7
+  TrainSimulation_UpHill_fmiExitInitializationMode @8
+  TrainSimulation_UpHill_fmiTerminate @9
+  TrainSimulation_UpHill_fmiReset @10
+  TrainSimulation_UpHill_fmiGetReal @11
+  TrainSimulation_UpHill_fmiGetInteger @12
+  TrainSimulation_UpHill_fmiGetBoolean @13
+  TrainSimulation_UpHill_fmiGetString @14
+  TrainSimulation_UpHill_fmiSetReal @15
+  TrainSimulation_UpHill_fmiSetInteger @16
+  TrainSimulation_UpHill_fmiSetBoolean @17
+  TrainSimulation_UpHill_fmiSetString @18
+  TrainSimulation_UpHill_fmiGetFMUstate @19
+  TrainSimulation_UpHill_fmiSetFMUstate @20
+  TrainSimulation_UpHill_fmiFreeFMUstate @21
+  TrainSimulation_UpHill_fmiSerializedFMUstateSize @22
+  TrainSimulation_UpHill_fmiSerializeFMUstate @23
+  TrainSimulation_UpHill_fmiDeSerializeFMUstate @24
+  TrainSimulation_UpHill_fmiGetDirectionalDerivative @25
+  ;***************************************************
+  ;Functions for FMI for Model Exchange
+  ;****************************************************
+  TrainSimulation_UpHill_fmiEnterEventMode @26
+  TrainSimulation_UpHill_fmiNewDiscreteStates @27
+  TrainSimulation_UpHill_fmiEnterContinuousTimeMode @28
+  TrainSimulation_UpHill_fmiCompletedIntegratorStep @29
+  TrainSimulation_UpHill_fmiSetTime @30
+  TrainSimulation_UpHill_fmiSetContinuousStates @31
+  TrainSimulation_UpHill_fmiGetDerivatives @32
+  TrainSimulation_UpHill_fmiGetEventIndicators @33
+  TrainSimulation_UpHill_fmiGetContinuousStates @34
+  TrainSimulation_UpHill_fmiGetNominalsOfContinuousStates @35
+  ;***************************************************
+  ;Functions for FMI for Co-Simulation
+  ;****************************************************
+  TrainSimulation_UpHill_fmiSetRealInputDerivatives @36
+  TrainSimulation_UpHill_fmiGetRealOutputDerivatives @37
+  TrainSimulation_UpHill_fmiDoStep @38
+  TrainSimulation_UpHill_fmiCancelStep @39
+  TrainSimulation_UpHill_fmiGetStatus @40
+  TrainSimulation_UpHill_fmiGetRealStatus @41
+  TrainSimulation_UpHill_fmiGetIntegerStatus @42
+  TrainSimulation_UpHill_fmiGetBooleanStatus @43
+  TrainSimulation_UpHill_fmiGetStringStatus @44

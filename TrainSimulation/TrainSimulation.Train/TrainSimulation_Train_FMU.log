@@ -1,6 +1,6 @@
-mingw32-make: Entering directory 'C:/Users/Bence/AppData/Local/Temp/OPENMO~1/OMEdit/TRAINS~1.TRA'
+mingw32-make: Entering directory 'C:/Users/Bence/AppData/Local/Temp/OPENMO~1/OMEdit/TRAINS~3.TRA'
 rm -f TrainSimulation_Train.fmutmp/sources/TrainSimulation_Train_init.xml
 cp -a "E:/Modelica/share/omc/runtime/c/fmi/buildproject/"* TrainSimulation_Train.fmutmp/sources
 cp -a TrainSimulation_Train_FMU.libs TrainSimulation_Train.fmutmp/sources/
-mingw32-make: Leaving directory 'C:/Users/Bence/AppData/Local/Temp/OPENMO~1/OMEdit/TRAINS~1.TRA'
+mingw32-make: Leaving directory 'C:/Users/Bence/AppData/Local/Temp/OPENMO~1/OMEdit/TRAINS~3.TRA'
 RESULT: 0 

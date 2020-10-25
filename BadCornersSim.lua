@@ -24,7 +24,7 @@ oms_addConnection("TrainSimulation.root.Curve.onCurve[1]",
 "TrainSimulation.root.curveCollection.OnStructure1")
 
 
-simulationEnd=20.0 
+simulationEnd=10.0 
 stepsize=0.01 
 oms_setResultFile("TrainSimulation", "/Szakdoga/BadCornersSim.mat")
 oms_setStopTime("TrainSimulation", simulationEnd) 
@@ -37,8 +37,6 @@ crashed=false
 oms_setReal("TrainSimulation.root.Train.length",30)
 oms_setReal("TrainSimulation.root.Train.distanceStart", 0)
 oms_setReal("TrainSimulation.root.Train.lap", 700)
-oms_setReal("TrainSimulation.root.Train.onUpHillAcc", 0)
-oms_setBoolean("TrainSimulation.root.Train.ActiveUpHill", 0)
 oms_setReal("TrainSimulation.root.Train.breakingDeceleration", 7)
 
 oms_setReal("TrainSimulation.root.Curve.Start",320)
@@ -46,19 +44,34 @@ oms_setReal("TrainSimulation.root.Curve.End",400)
 
 oms_initialize("TrainSimulation")
 
-function crash()
-	corner = (oms_getReal("TrainSimulation.root.Curve.End") - oms_getReal("TrainSimulation.root.Curve.Start"))/2 + oms_getReal("TrainSimulation.root.Curve.Start")
-	if oms_getReal("TrainSimulation.root.trainCollection.DistanceVec[1]")>=corner and oms_getReal("TrainSimulation.root.trainCollection.DistanceVec[1]")<oms_getReal("TrainSimulation.root.Curve.End") and oms_getReal("TrainSimulation.root.Train.speed")>oms_getReal("TrainSimulation.root.Curve.CurveSpeedValue") 
-	then 
-		oms_setReal("TrainSimulation.root.Train.speed",0.0)
-		crashed= true;
-		stopped=true;
+cornersEnd = {oms_getReal("TrainSimulation.root.Curve.End")}
+cornersStart = {oms_getReal("TrainSimulation.root.Curve.Start")}
+cornerSpeed = {oms_getReal("TrainSimulation.root.Curve.CurveSpeedValue")}
+cornerCrashId = 0
+cornerCount=1
+trainCount=1 
+function crashInCorner()
+	trainsSpeed = {oms_getReal("TrainSimulation.root.Train.speed")}
+	trainCrashed={oms_getBoolean("TrainSimulation.root.Train.Crashed")}
+	for i=1,cornerCount do
+		corner = (cornersEnd[i] - cornersStart[i])/2 + cornersStart[i]
+		for j=1,trainCount do
+			distance = oms_getReal("TrainSimulation.root.trainCollection.DistanceVec["..j.."]")
+			if trainCrashed[j] < 1 and distance>=corner and distance<cornersEnd[i] and trainsSpeed[j]>cornerSpeed[i]
+			then
+				cornerCrashId=i
+				trainCrashId=j
+				--should set all of them
+				oms_setBoolean("TrainSimulation.root.Train.Crashed",1)
+				crashed = true
+			end
+		end
 	end
-	if crashed then print("Crash happend at " .. time) crashed = false end
+	if crashed then print("Crash happend at Corner" .. cornerCrashId .. " at ".. time .. " with train number " .. trainCrashId) crashed =false end 
 end
 while(time<simulationEnd)
   do
-	crash()
+	crashInCorner()
         stepsize=0.001
         oms_setFixedStepSize("TrainSimulation.root",stepsize)
         time=time+stepsize

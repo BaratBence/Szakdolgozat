@@ -14,12 +14,12 @@ oms_instantiate("TrainSimulation")
 --Making the connection between variables
 oms_addConnection("TrainSimulation.root.Train.Distance","TrainSimulation.root.trainCollection.Distance1")
 oms_addConnection("TrainSimulation.root.Train.Length","TrainSimulation.root.trainCollection.Length1")
-oms_addConnection("TrainSimulation.root.Train.onUpHillAcc","TrainSimulation.root.HillCollection.speed")
+oms_addConnection("TrainSimulation.root.Train.onUpHillSpeedScale","TrainSimulation.root.HillCollection.speed")
 oms_addConnection("TrainSimulation.root.Train.ActiveUpHill","TrainSimulation.root.HillCollection.Activated")
 
 oms_addConnection("TrainSimulation.root.Train2.Distance","TrainSimulation.root.trainCollection.Distance2")
 oms_addConnection("TrainSimulation.root.Train2.Length","TrainSimulation.root.trainCollection.Length2")
-oms_addConnection("TrainSimulation.root.Train2.onUpHillAcc","TrainSimulation.root.HillCollection2.speed")
+oms_addConnection("TrainSimulation.root.Train2.onUpHillSpeedScale","TrainSimulation.root.HillCollection2.speed")
 oms_addConnection("TrainSimulation.root.Train2.ActiveUpHill","TrainSimulation.root.HillCollection2.Activated")
 
 oms_addConnection("TrainSimulation.root.trainCollection.LengthVec[1]", "TrainSimulation.root.UpHill.TrainLength[1]")
@@ -27,10 +27,10 @@ oms_addConnection("TrainSimulation.root.trainCollection.DistanceVec[1]", "TrainS
 oms_addConnection("TrainSimulation.root.trainCollection.LengthVec[2]", "TrainSimulation.root.UpHill.TrainLength[2]")
 oms_addConnection("TrainSimulation.root.trainCollection.DistanceVec[2]", "TrainSimulation.root.UpHill.TrainDistance[2]")
 
-oms_addConnection("TrainSimulation.root.UpHill.HillAcc[1]","TrainSimulation.root.HillCollection.Speed1")
+oms_addConnection("TrainSimulation.root.UpHill.HillSpeedScale[1]","TrainSimulation.root.HillCollection.Speed1")
 oms_addConnection("TrainSimulation.root.UpHill.onHill[1]","TrainSimulation.root.HillCollection.OnStructure1")
 
-oms_addConnection("TrainSimulation.root.UpHill.HillAcc[2]","TrainSimulation.root.HillCollection2.Speed1")
+oms_addConnection("TrainSimulation.root.UpHill.HillSpeedScale[2]","TrainSimulation.root.HillCollection2.Speed1")
 oms_addConnection("TrainSimulation.root.UpHill.onHill[2]","TrainSimulation.root.HillCollection2.OnStructure1")
 
 
@@ -41,7 +41,6 @@ oms_setStopTime("TrainSimulation", simulationEnd)
 oms_setFixedStepSize("TrainSimulation.root",stepsize) 
 time=0.0
 crashed=false;
-stopped=false;
 
 --Making the starting parameters 
 oms_setReal("TrainSimulation.root.Train.length",30)
@@ -60,19 +59,29 @@ oms_setReal("TrainSimulation.root.UpHill.End",900)
 
 oms_initialize("TrainSimulation")
 
+trainCount = 2
+hillNumber =0
+train1=0
+train2=0
+trainLapCount = {oms_getReal("TrainSimulation.root.Train.lap"),oms_getReal("TrainSimulation.root.Train2.lap")}
 function crash()
-	if  oms_getReal("TrainSimulation.root.Train.lapDistance") - oms_getReal("TrainSimulation.root.Train.length") <= oms_getReal("TrainSimulation.root.Train2.lapDistance")
-	then
-		oms_setReal("TrainSimulation.root.Train.lapDistance",oms_getReal("TrainSimulation.root.Train.lapDistance")+1)
-		crashed = true;
-		stopped=true
-	end 
-	if crashed then print("Crash happend at " .. time) crashed = false end
-	if stopped 
-	then 
-		oms_setReal("TrainSimulation.root.Train2.speed",0.0)
-		oms_setReal("TrainSimulation.root.Train.speed",0.0)
+	trainCrashed = {oms_getBoolean("TrainSimulation.root.Train.Crashed"),oms_getBoolean("TrainSimulation.root.Train2.Crashed")}
+	for i=1,trainCount do
+		trainCurrentDistance = oms_getReal("TrainSimulation.root.trainCollection.DistanceVec[".. i .."]")
+		trainCurrentLenght = oms_getReal("TrainSimulation.root.trainCollection.LengthVec[".. i .."]")
+		for j=1,trainCount do
+			trainDistance = oms_getReal("TrainSimulation.root.trainCollection.DistanceVec[".. j .."]")
+			if trainCurrentDistance - trainCurrentLenght <= trainDistance and trainCurrentDistance > trainDistance and trainCrashed[i] < 1 and trainLapCount[i] == trainLapCount[j] then
+				--for all the trains
+				oms_setBoolean("TrainSimulation.root.Train.Crashed",1)
+				oms_setBoolean("TrainSimulation.root.Train2.Crashed",1)
+				crashed = true
+				train1=i
+				train2=j
+			end
+		end
 	end
+	if crashed then print("Crash happend with train" .. train1 .. " and train".. train2 .." at " .. time) crashed = false end
 end
 while(time<simulationEnd)
   do

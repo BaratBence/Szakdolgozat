@@ -26,7 +26,7 @@ int TrainSimulation_Train_input_function(DATA *data, threadData_t *threadData)
   data->localData[0]->realVars[12] /* Sensor2Position variable */ = data->simulationInfo->inputVars[1];
   data->localData[0]->realVars[13] /* Station variable */ = data->simulationInfo->inputVars[2];
   data->localData[0]->realVars[14] /* onCurveSpeed variable */ = data->simulationInfo->inputVars[3];
-  data->localData[0]->realVars[15] /* onUpHillAcc variable */ = data->simulationInfo->inputVars[4];
+  data->localData[0]->realVars[15] /* onUpHillSpeedScale variable */ = data->simulationInfo->inputVars[4];
   
   TRACE_POP
   return 0;
@@ -106,113 +106,129 @@ int TrainSimulation_Train_setc_function(DATA *data, threadData_t *threadData)
 
 
 /*
-equation index: 33
+equation index: 32
 type: SIMPLE_ASSIGN
 state = (*TrainSimulation.StationSignal*)(StationState)
+*/
+void TrainSimulation_Train_eqFunction_32(DATA *data, threadData_t *threadData)
+{
+  TRACE_PUSH
+  const int equationIndexes[2] = {1,32};
+  data->localData[0]->integerVars[2] /* state DISCRETE */ = ((modelica_integer)data->localData[0]->integerVars[1] /* StationState variable */);
+  TRACE_POP
+}
+/*
+equation index: 33
+type: SIMPLE_ASSIGN
+BreakingDistance = 0.5 * (speed / breakingDeceleration) ^ 2.0 * breakingDeceleration
 */
 void TrainSimulation_Train_eqFunction_33(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,33};
-  data->localData[0]->integerVars[2] /* state DISCRETE */ = ((modelica_integer)data->localData[0]->integerVars[1] /* StationState variable */);
-  TRACE_POP
-}
-/*
-equation index: 34
-type: SIMPLE_ASSIGN
-BreakingDistance = 0.5 * (speed / breakingDeceleration) ^ 2.0 * breakingDeceleration
-*/
-void TrainSimulation_Train_eqFunction_34(DATA *data, threadData_t *threadData)
-{
-  TRACE_PUSH
-  const int equationIndexes[2] = {1,34};
   modelica_real tmp0;
   tmp0 = DIVISION_SIM(data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */,data->simulationInfo->realParameter[0] /* breakingDeceleration PARAM */,"breakingDeceleration",equationIndexes);
   data->localData[0]->realVars[8] /* BreakingDistance variable */ = (0.5) * (((tmp0 * tmp0)) * (data->simulationInfo->realParameter[0] /* breakingDeceleration PARAM */));
   TRACE_POP
 }
 /*
-equation index: 35
+equation index: 34
 type: SIMPLE_ASSIGN
 inStation = lapDistance + BreakingDistance + 10.0 >= Sensor1Position and lapDistance <= Sensor2Position
+*/
+void TrainSimulation_Train_eqFunction_34(DATA *data, threadData_t *threadData)
+{
+  TRACE_PUSH
+  const int equationIndexes[2] = {1,34};
+  modelica_boolean tmp1;
+  modelica_boolean tmp2;
+  RELATIONHYSTERESIS(tmp1, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ + 10.0, data->localData[0]->realVars[11] /* Sensor1Position variable */, 6, GreaterEq);
+  RELATIONHYSTERESIS(tmp2, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */, data->localData[0]->realVars[12] /* Sensor2Position variable */, 7, LessEq);
+  data->localData[0]->booleanVars[18] /* inStation DISCRETE */ = (tmp1 && tmp2);
+  TRACE_POP
+}
+/*
+equation index: 35
+type: SIMPLE_ASSIGN
+Arrived = inStation and lapDistance > Sensor1Position and lapDistance < Sensor2Position and lapDistance + 11.0 >= Station
 */
 void TrainSimulation_Train_eqFunction_35(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,35};
-  modelica_boolean tmp1;
-  modelica_boolean tmp2;
-  RELATIONHYSTERESIS(tmp1, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ + 10.0, data->localData[0]->realVars[11] /* Sensor1Position variable */, 4, GreaterEq);
-  RELATIONHYSTERESIS(tmp2, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */, data->localData[0]->realVars[12] /* Sensor2Position variable */, 5, LessEq);
-  data->localData[0]->booleanVars[18] /* inStation DISCRETE */ = (tmp1 && tmp2);
+  modelica_boolean tmp3;
+  modelica_boolean tmp4;
+  modelica_boolean tmp5;
+  RELATIONHYSTERESIS(tmp3, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */, data->localData[0]->realVars[11] /* Sensor1Position variable */, 8, Greater);
+  RELATIONHYSTERESIS(tmp4, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */, data->localData[0]->realVars[12] /* Sensor2Position variable */, 9, Less);
+  RELATIONHYSTERESIS(tmp5, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + 11.0, data->localData[0]->realVars[13] /* Station variable */, 10, GreaterEq);
+  data->localData[0]->booleanVars[16] /* Arrived DISCRETE */ = (((data->localData[0]->booleanVars[18] /* inStation DISCRETE */ && tmp3) && tmp4) && tmp5);
   TRACE_POP
 }
 /*
 equation index: 36
 type: SIMPLE_ASSIGN
-$whenCondition12 = inStation and speed <= 0.0
+$whenCondition4 = speed <= maxSpeed and not ActiveCurve and not ActiveUpHill and not inStation
 */
 void TrainSimulation_Train_eqFunction_36(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,36};
-  modelica_boolean tmp3;
-  RELATIONHYSTERESIS(tmp3, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, 0.0, 8, LessEq);
-  data->localData[0]->booleanVars[3] /* $whenCondition12 DISCRETE */ = (data->localData[0]->booleanVars[18] /* inStation DISCRETE */ && tmp3);
+  modelica_boolean tmp6;
+  RELATIONHYSTERESIS(tmp6, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, data->simulationInfo->realParameter[4] /* maxSpeed PARAM */, 11, LessEq);
+  data->localData[0]->booleanVars[8] /* $whenCondition4 DISCRETE */ = (((tmp6 && (!data->localData[0]->booleanVars[14] /* ActiveCurve variable */)) && (!data->localData[0]->booleanVars[15] /* ActiveUpHill variable */)) && (!data->localData[0]->booleanVars[18] /* inStation DISCRETE */));
   TRACE_POP
 }
 /*
 equation index: 37
 type: SIMPLE_ASSIGN
-$whenCondition13 = inStation and speed >= maxSpeed
+$whenCondition5 = speed >= maxSpeed and not inStation
 */
 void TrainSimulation_Train_eqFunction_37(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,37};
-  modelica_boolean tmp4;
-  RELATIONHYSTERESIS(tmp4, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, data->simulationInfo->realParameter[4] /* maxSpeed PARAM */, 6, GreaterEq);
-  data->localData[0]->booleanVars[4] /* $whenCondition13 DISCRETE */ = (data->localData[0]->booleanVars[18] /* inStation DISCRETE */ && tmp4);
+  modelica_boolean tmp7;
+  RELATIONHYSTERESIS(tmp7, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, data->simulationInfo->realParameter[4] /* maxSpeed PARAM */, 12, GreaterEq);
+  data->localData[0]->booleanVars[9] /* $whenCondition5 DISCRETE */ = (tmp7 && (!data->localData[0]->booleanVars[18] /* inStation DISCRETE */));
   TRACE_POP
 }
 /*
 equation index: 38
 type: SIMPLE_ASSIGN
-Arrived = inStation and speed <= 0.0 and lapDistance + 10.0 >= Station and not state == TrainSimulation.StationSignal.redReady
+$whenCondition13 = inStation and speed <= 0.0 and Arrived
 */
 void TrainSimulation_Train_eqFunction_38(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,38};
-  modelica_boolean tmp5;
-  modelica_boolean tmp6;
-  RELATIONHYSTERESIS(tmp5, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, 0.0, 8, LessEq);
-  RELATIONHYSTERESIS(tmp6, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + 10.0, data->localData[0]->realVars[13] /* Station variable */, 9, GreaterEq);
-  data->localData[0]->booleanVars[16] /* Arrived DISCRETE */ = (((data->localData[0]->booleanVars[18] /* inStation DISCRETE */ && tmp5) && tmp6) && (!(data->localData[0]->integerVars[2] /* state DISCRETE */ == 4)));
+  modelica_boolean tmp8;
+  RELATIONHYSTERESIS(tmp8, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, 0.0, 13, LessEq);
+  data->localData[0]->booleanVars[4] /* $whenCondition13 DISCRETE */ = ((data->localData[0]->booleanVars[18] /* inStation DISCRETE */ && tmp8) && data->localData[0]->booleanVars[16] /* Arrived DISCRETE */);
   TRACE_POP
 }
 /*
 equation index: 39
 type: SIMPLE_ASSIGN
-$whenCondition9 = inStation and speed > 0.0 and lapDistance + BreakingDistance + 5.0 >= Sensor1Position and lapDistance + BreakingDistance - 5.0 <= Sensor1Position and not state == TrainSimulation.StationSignal.green
+$whenCondition12 = inStation and speed > 0.0 and lapDistance + BreakingDistance + 10.0 >= Station and lapDistance + BreakingDistance - 10.0 <= Station and not Arrived
 */
 void TrainSimulation_Train_eqFunction_39(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,39};
-  modelica_boolean tmp8;
   modelica_boolean tmp9;
   modelica_boolean tmp10;
-  RELATIONHYSTERESIS(tmp8, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, 0.0, 10, Greater);
-  RELATIONHYSTERESIS(tmp9, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ + 5.0, data->localData[0]->realVars[11] /* Sensor1Position variable */, 11, GreaterEq);
-  RELATIONHYSTERESIS(tmp10, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ - 5.0, data->localData[0]->realVars[11] /* Sensor1Position variable */, 12, LessEq);
-  data->localData[0]->booleanVars[13] /* $whenCondition9 DISCRETE */ = ((((data->localData[0]->booleanVars[18] /* inStation DISCRETE */ && tmp8) && tmp9) && tmp10) && (!(data->localData[0]->integerVars[2] /* state DISCRETE */ == 1)));
+  modelica_boolean tmp11;
+  RELATIONHYSTERESIS(tmp9, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, 0.0, 14, Greater);
+  RELATIONHYSTERESIS(tmp10, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ + 10.0, data->localData[0]->realVars[13] /* Station variable */, 15, GreaterEq);
+  RELATIONHYSTERESIS(tmp11, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ - 10.0, data->localData[0]->realVars[13] /* Station variable */, 16, LessEq);
+  data->localData[0]->booleanVars[3] /* $whenCondition12 DISCRETE */ = ((((data->localData[0]->booleanVars[18] /* inStation DISCRETE */ && tmp9) && tmp10) && tmp11) && (!data->localData[0]->booleanVars[16] /* Arrived DISCRETE */));
   TRACE_POP
 }
 /*
 equation index: 40
 type: SIMPLE_ASSIGN
-$whenCondition10 = inStation and speed < maxSpeed and lapDistance + BreakingDistance + 5.0 >= Sensor1Position and lapDistance + BreakingDistance - 5.0 <= Sensor1Position and state == TrainSimulation.StationSignal.green
+$whenCondition9 = inStation and speed > 0.0 and lapDistance + BreakingDistance + 5.0 >= Sensor1Position - 10.0 and lapDistance + BreakingDistance - 5.0 <= Sensor1Position - 10.0 and state == TrainSimulation.StationSignal.red
 */
 void TrainSimulation_Train_eqFunction_40(DATA *data, threadData_t *threadData)
 {
@@ -221,16 +237,16 @@ void TrainSimulation_Train_eqFunction_40(DATA *data, threadData_t *threadData)
   modelica_boolean tmp12;
   modelica_boolean tmp13;
   modelica_boolean tmp14;
-  RELATIONHYSTERESIS(tmp12, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, data->simulationInfo->realParameter[4] /* maxSpeed PARAM */, 13, Less);
-  RELATIONHYSTERESIS(tmp13, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ + 5.0, data->localData[0]->realVars[11] /* Sensor1Position variable */, 11, GreaterEq);
-  RELATIONHYSTERESIS(tmp14, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ - 5.0, data->localData[0]->realVars[11] /* Sensor1Position variable */, 12, LessEq);
-  data->localData[0]->booleanVars[1] /* $whenCondition10 DISCRETE */ = ((((data->localData[0]->booleanVars[18] /* inStation DISCRETE */ && tmp12) && tmp13) && tmp14) && (data->localData[0]->integerVars[2] /* state DISCRETE */ == 1));
+  RELATIONHYSTERESIS(tmp12, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, 0.0, 14, Greater);
+  RELATIONHYSTERESIS(tmp13, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ + 5.0, data->localData[0]->realVars[11] /* Sensor1Position variable */ - 10.0, 17, GreaterEq);
+  RELATIONHYSTERESIS(tmp14, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ - 5.0, data->localData[0]->realVars[11] /* Sensor1Position variable */ - 10.0, 18, LessEq);
+  data->localData[0]->booleanVars[13] /* $whenCondition9 DISCRETE */ = ((((data->localData[0]->booleanVars[18] /* inStation DISCRETE */ && tmp12) && tmp13) && tmp14) && (data->localData[0]->integerVars[2] /* state DISCRETE */ == 2));
   TRACE_POP
 }
 /*
 equation index: 41
 type: SIMPLE_ASSIGN
-$whenCondition11 = inStation and speed > 0.0 and lapDistance + BreakingDistance + 5.0 >= Station and lapDistance + BreakingDistance - 5.0 <= Station and state == TrainSimulation.StationSignal.red
+$whenCondition10 = inStation and speed <= 0.0 and lapDistance + BreakingDistance + 5.0 >= Sensor1Position - 10.0 and lapDistance + BreakingDistance - 5.0 <= Sensor1Position - 10.0 and state == TrainSimulation.StationSignal.red
 */
 void TrainSimulation_Train_eqFunction_41(DATA *data, threadData_t *threadData)
 {
@@ -239,24 +255,28 @@ void TrainSimulation_Train_eqFunction_41(DATA *data, threadData_t *threadData)
   modelica_boolean tmp16;
   modelica_boolean tmp17;
   modelica_boolean tmp18;
-  RELATIONHYSTERESIS(tmp16, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, 0.0, 10, Greater);
-  RELATIONHYSTERESIS(tmp17, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ + 5.0, data->localData[0]->realVars[13] /* Station variable */, 14, GreaterEq);
-  RELATIONHYSTERESIS(tmp18, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ - 5.0, data->localData[0]->realVars[13] /* Station variable */, 15, LessEq);
-  data->localData[0]->booleanVars[2] /* $whenCondition11 DISCRETE */ = ((((data->localData[0]->booleanVars[18] /* inStation DISCRETE */ && tmp16) && tmp17) && tmp18) && (data->localData[0]->integerVars[2] /* state DISCRETE */ == 2));
+  RELATIONHYSTERESIS(tmp16, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, 0.0, 13, LessEq);
+  RELATIONHYSTERESIS(tmp17, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ + 5.0, data->localData[0]->realVars[11] /* Sensor1Position variable */ - 10.0, 17, GreaterEq);
+  RELATIONHYSTERESIS(tmp18, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ - 5.0, data->localData[0]->realVars[11] /* Sensor1Position variable */ - 10.0, 18, LessEq);
+  data->localData[0]->booleanVars[1] /* $whenCondition10 DISCRETE */ = ((((data->localData[0]->booleanVars[18] /* inStation DISCRETE */ && tmp16) && tmp17) && tmp18) && (data->localData[0]->integerVars[2] /* state DISCRETE */ == 2));
   TRACE_POP
 }
 /*
 equation index: 42
 type: SIMPLE_ASSIGN
-$whenCondition14 = inStation and state == TrainSimulation.StationSignal.redReady and lapDistance + BreakingDistance + 5.0 >= Station
+$whenCondition11 = inStation and speed < 45.0 and lapDistance + BreakingDistance + 5.0 >= Sensor1Position - 10.0 and lapDistance + BreakingDistance - 5.0 <= Sensor1Position - 10.0 and state == TrainSimulation.StationSignal.green
 */
 void TrainSimulation_Train_eqFunction_42(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,42};
+  modelica_boolean tmp20;
   modelica_boolean tmp21;
-  RELATIONHYSTERESIS(tmp21, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ + 5.0, data->localData[0]->realVars[13] /* Station variable */, 14, GreaterEq);
-  data->localData[0]->booleanVars[5] /* $whenCondition14 DISCRETE */ = ((data->localData[0]->booleanVars[18] /* inStation DISCRETE */ && (data->localData[0]->integerVars[2] /* state DISCRETE */ == 4)) && tmp21);
+  modelica_boolean tmp22;
+  RELATIONHYSTERESIS(tmp20, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, 45.0, 19, Less);
+  RELATIONHYSTERESIS(tmp21, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ + 5.0, data->localData[0]->realVars[11] /* Sensor1Position variable */ - 10.0, 17, GreaterEq);
+  RELATIONHYSTERESIS(tmp22, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ + data->localData[0]->realVars[8] /* BreakingDistance variable */ - 5.0, data->localData[0]->realVars[11] /* Sensor1Position variable */ - 10.0, 18, LessEq);
+  data->localData[0]->booleanVars[2] /* $whenCondition11 DISCRETE */ = ((((data->localData[0]->booleanVars[18] /* inStation DISCRETE */ && tmp20) && tmp21) && tmp22) && (data->localData[0]->integerVars[2] /* state DISCRETE */ == 1));
   TRACE_POP
 }
 /*
@@ -322,159 +342,135 @@ void TrainSimulation_Train_eqFunction_47(DATA *data, threadData_t *threadData)
 /*
 equation index: 48
 type: SIMPLE_ASSIGN
-Decelerating = acceleration < 0.0
+Distance = lapDistance
 */
 void TrainSimulation_Train_eqFunction_48(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,48};
-  modelica_boolean tmp22;
-  RELATIONHYSTERESIS(tmp22, data->localData[0]->realVars[0] /* acceleration STATE(1) */, 0.0, 3, Less);
-  data->localData[0]->booleanVars[17] /* Decelerating DISCRETE */ = tmp22;
+  data->localData[0]->realVars[9] /* Distance variable */ = data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */;
   TRACE_POP
 }
 /*
 equation index: 49
 type: SIMPLE_ASSIGN
-$whenCondition5 = speed >= maxSpeed and not ActiveCurve and not ActiveUpHill and not Decelerating and not inStation
+$whenCondition1 = lapDistance >= lap
 */
 void TrainSimulation_Train_eqFunction_49(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,49};
-  modelica_boolean tmp23;
-  RELATIONHYSTERESIS(tmp23, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, data->simulationInfo->realParameter[4] /* maxSpeed PARAM */, 6, GreaterEq);
-  data->localData[0]->booleanVars[9] /* $whenCondition5 DISCRETE */ = ((((tmp23 && (!data->localData[0]->booleanVars[14] /* ActiveCurve variable */)) && (!data->localData[0]->booleanVars[15] /* ActiveUpHill variable */)) && (!data->localData[0]->booleanVars[17] /* Decelerating DISCRETE */)) && (!data->localData[0]->booleanVars[18] /* inStation DISCRETE */));
+  modelica_boolean tmp24;
+  RELATIONHYSTERESIS(tmp24, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */, data->simulationInfo->realParameter[2] /* lap PARAM */, 5, GreaterEq);
+  data->localData[0]->booleanVars[0] /* $whenCondition1 DISCRETE */ = tmp24;
   TRACE_POP
 }
 /*
 equation index: 50
 type: SIMPLE_ASSIGN
-$whenCondition6 = Decelerating and speed <= maxSpeed and not ActiveCurve and not ActiveUpHill and not inStation
+$whenCondition2 = speed >= onCurveSpeed and ActiveCurve
 */
 void TrainSimulation_Train_eqFunction_50(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,50};
-  modelica_boolean tmp24;
-  RELATIONHYSTERESIS(tmp24, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, data->simulationInfo->realParameter[4] /* maxSpeed PARAM */, 7, LessEq);
-  data->localData[0]->booleanVars[10] /* $whenCondition6 DISCRETE */ = ((((data->localData[0]->booleanVars[17] /* Decelerating DISCRETE */ && tmp24) && (!data->localData[0]->booleanVars[14] /* ActiveCurve variable */)) && (!data->localData[0]->booleanVars[15] /* ActiveUpHill variable */)) && (!data->localData[0]->booleanVars[18] /* inStation DISCRETE */));
+  modelica_boolean tmp25;
+  RELATIONHYSTERESIS(tmp25, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, data->localData[0]->realVars[14] /* onCurveSpeed variable */, 4, GreaterEq);
+  data->localData[0]->booleanVars[6] /* $whenCondition2 DISCRETE */ = (tmp25 && data->localData[0]->booleanVars[14] /* ActiveCurve variable */);
   TRACE_POP
 }
 /*
 equation index: 51
 type: SIMPLE_ASSIGN
-Distance = lapDistance
+$whenCondition3 = speed <= onCurveSpeed and ActiveCurve
 */
 void TrainSimulation_Train_eqFunction_51(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,51};
-  data->localData[0]->realVars[9] /* Distance variable */ = data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */;
+  modelica_boolean tmp26;
+  RELATIONHYSTERESIS(tmp26, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, data->localData[0]->realVars[14] /* onCurveSpeed variable */, 3, LessEq);
+  data->localData[0]->booleanVars[7] /* $whenCondition3 DISCRETE */ = (tmp26 && data->localData[0]->booleanVars[14] /* ActiveCurve variable */);
   TRACE_POP
 }
 /*
 equation index: 52
 type: SIMPLE_ASSIGN
-$whenCondition1 = lapDistance >= lap
+$whenCondition6 = speed >= speed * onUpHillSpeedScale and ActiveUpHill
 */
 void TrainSimulation_Train_eqFunction_52(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,52};
-  modelica_boolean tmp25;
-  RELATIONHYSTERESIS(tmp25, data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */, data->simulationInfo->realParameter[2] /* lap PARAM */, 2, GreaterEq);
-  data->localData[0]->booleanVars[0] /* $whenCondition1 DISCRETE */ = tmp25;
+  modelica_boolean tmp27;
+  RELATIONHYSTERESIS(tmp27, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, (data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */) * (data->localData[0]->realVars[15] /* onUpHillSpeedScale variable */), 2, GreaterEq);
+  data->localData[0]->booleanVars[10] /* $whenCondition6 DISCRETE */ = (tmp27 && data->localData[0]->booleanVars[15] /* ActiveUpHill variable */);
   TRACE_POP
 }
 /*
 equation index: 53
 type: SIMPLE_ASSIGN
-$whenCondition2 = speed >= onCurveSpeed and ActiveCurve
+$whenCondition7 = speed <= speed * onUpHillSpeedScale and ActiveUpHill
 */
 void TrainSimulation_Train_eqFunction_53(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,53};
-  modelica_boolean tmp26;
-  RELATIONHYSTERESIS(tmp26, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, data->localData[0]->realVars[14] /* onCurveSpeed variable */, 1, GreaterEq);
-  data->localData[0]->booleanVars[6] /* $whenCondition2 DISCRETE */ = (tmp26 && data->localData[0]->booleanVars[14] /* ActiveCurve variable */);
+  modelica_boolean tmp28;
+  RELATIONHYSTERESIS(tmp28, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, (data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */) * (data->localData[0]->realVars[15] /* onUpHillSpeedScale variable */), 1, LessEq);
+  data->localData[0]->booleanVars[11] /* $whenCondition7 DISCRETE */ = (tmp28 && data->localData[0]->booleanVars[15] /* ActiveUpHill variable */);
   TRACE_POP
 }
 /*
 equation index: 54
 type: SIMPLE_ASSIGN
-$whenCondition3 = speed <= onCurveSpeed and ActiveCurve
+$whenCondition8 = false
 */
 void TrainSimulation_Train_eqFunction_54(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,54};
-  modelica_boolean tmp27;
-  RELATIONHYSTERESIS(tmp27, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, data->localData[0]->realVars[14] /* onCurveSpeed variable */, 0, LessEq);
-  data->localData[0]->booleanVars[7] /* $whenCondition3 DISCRETE */ = (tmp27 && data->localData[0]->booleanVars[14] /* ActiveCurve variable */);
+  data->localData[0]->booleanVars[12] /* $whenCondition8 DISCRETE */ = 0;
   TRACE_POP
 }
 /*
 equation index: 55
 type: SIMPLE_ASSIGN
-$whenCondition4 = false
+$whenCondition14 = speed >= 45.0
 */
 void TrainSimulation_Train_eqFunction_55(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,55};
-  data->localData[0]->booleanVars[8] /* $whenCondition4 DISCRETE */ = 0;
+  modelica_boolean tmp29;
+  RELATIONHYSTERESIS(tmp29, data->localData[0]->realVars[3] /* speed STATE(1,acceleration) */, 45.0, 0, GreaterEq);
+  data->localData[0]->booleanVars[5] /* $whenCondition14 DISCRETE */ = tmp29;
   TRACE_POP
 }
 /*
 equation index: 56
 type: SIMPLE_ASSIGN
-$whenCondition7 = ActiveUpHill
+Length = length
 */
 void TrainSimulation_Train_eqFunction_56(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,56};
-  data->localData[0]->booleanVars[11] /* $whenCondition7 DISCRETE */ = data->localData[0]->booleanVars[15] /* ActiveUpHill variable */;
-  TRACE_POP
-}
-/*
-equation index: 57
-type: SIMPLE_ASSIGN
-$whenCondition8 = false
-*/
-void TrainSimulation_Train_eqFunction_57(DATA *data, threadData_t *threadData)
-{
-  TRACE_PUSH
-  const int equationIndexes[2] = {1,57};
-  data->localData[0]->booleanVars[12] /* $whenCondition8 DISCRETE */ = 0;
-  TRACE_POP
-}
-/*
-equation index: 58
-type: SIMPLE_ASSIGN
-Length = length
-*/
-void TrainSimulation_Train_eqFunction_58(DATA *data, threadData_t *threadData)
-{
-  TRACE_PUSH
-  const int equationIndexes[2] = {1,58};
   data->localData[0]->realVars[10] /* Length variable */ = data->simulationInfo->realParameter[3] /* length PARAM */;
   TRACE_POP
 }
 /*
-equation index: 72
+equation index: 70
 type: WHEN
 
 when {$whenCondition1} then
   reinit(lapDistance,  0.0);
 end when;
 */
-void TrainSimulation_Train_eqFunction_72(DATA *data, threadData_t *threadData)
+void TrainSimulation_Train_eqFunction_70(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
-  const int equationIndexes[2] = {1,72};
+  const int equationIndexes[2] = {1,70};
   if((data->localData[0]->booleanVars[0] /* $whenCondition1 DISCRETE */ && !data->simulationInfo->booleanVarsPre[0] /* $whenCondition1 DISCRETE */ /* edge */))
   {
     data->localData[0]->realVars[2] /* lapDistance STATE(1,speed) */ = 0.0;
@@ -484,17 +480,17 @@ void TrainSimulation_Train_eqFunction_72(DATA *data, threadData_t *threadData)
   TRACE_POP
 }
 /*
-equation index: 71
+equation index: 69
 type: WHEN
 
 when {$whenCondition2} then
   reinit(acceleration,  -breakingDeceleration);
 end when;
 */
-void TrainSimulation_Train_eqFunction_71(DATA *data, threadData_t *threadData)
+void TrainSimulation_Train_eqFunction_69(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
-  const int equationIndexes[2] = {1,71};
+  const int equationIndexes[2] = {1,69};
   if((data->localData[0]->booleanVars[6] /* $whenCondition2 DISCRETE */ && !data->simulationInfo->booleanVarsPre[6] /* $whenCondition2 DISCRETE */ /* edge */))
   {
     data->localData[0]->realVars[0] /* acceleration STATE(1) */ = (-data->simulationInfo->realParameter[0] /* breakingDeceleration PARAM */);
@@ -504,50 +500,10 @@ void TrainSimulation_Train_eqFunction_71(DATA *data, threadData_t *threadData)
   TRACE_POP
 }
 /*
-equation index: 70
-type: WHEN
-
-when {$whenCondition3} then
-  reinit(acceleration,  0.0);
-end when;
-*/
-void TrainSimulation_Train_eqFunction_70(DATA *data, threadData_t *threadData)
-{
-  TRACE_PUSH
-  const int equationIndexes[2] = {1,70};
-  if((data->localData[0]->booleanVars[7] /* $whenCondition3 DISCRETE */ && !data->simulationInfo->booleanVarsPre[7] /* $whenCondition3 DISCRETE */ /* edge */))
-  {
-    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = 0.0;
-    infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
-    data->simulationInfo->needToIterate = 1;
-  }
-  TRACE_POP
-}
-/*
-equation index: 69
-type: WHEN
-
-when {$whenCondition4} then
-  reinit(acceleration,  breakingDeceleration);
-end when;
-*/
-void TrainSimulation_Train_eqFunction_69(DATA *data, threadData_t *threadData)
-{
-  TRACE_PUSH
-  const int equationIndexes[2] = {1,69};
-  if((data->localData[0]->booleanVars[8] /* $whenCondition4 DISCRETE */ && !data->simulationInfo->booleanVarsPre[8] /* $whenCondition4 DISCRETE */ /* edge */))
-  {
-    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = data->simulationInfo->realParameter[0] /* breakingDeceleration PARAM */;
-    infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
-    data->simulationInfo->needToIterate = 1;
-  }
-  TRACE_POP
-}
-/*
 equation index: 68
 type: WHEN
 
-when {$whenCondition5} then
+when {$whenCondition3} then
   reinit(acceleration,  0.0);
 end when;
 */
@@ -555,7 +511,7 @@ void TrainSimulation_Train_eqFunction_68(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,68};
-  if((data->localData[0]->booleanVars[9] /* $whenCondition5 DISCRETE */ && !data->simulationInfo->booleanVarsPre[9] /* $whenCondition5 DISCRETE */ /* edge */))
+  if((data->localData[0]->booleanVars[7] /* $whenCondition3 DISCRETE */ && !data->simulationInfo->booleanVarsPre[7] /* $whenCondition3 DISCRETE */ /* edge */))
   {
     data->localData[0]->realVars[0] /* acceleration STATE(1) */ = 0.0;
     infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
@@ -567,17 +523,17 @@ void TrainSimulation_Train_eqFunction_68(DATA *data, threadData_t *threadData)
 equation index: 67
 type: WHEN
 
-when {$whenCondition6} then
-  reinit(acceleration,  0.0);
+when {$whenCondition4} then
+  reinit(acceleration,  breakingDeceleration);
 end when;
 */
 void TrainSimulation_Train_eqFunction_67(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,67};
-  if((data->localData[0]->booleanVars[10] /* $whenCondition6 DISCRETE */ && !data->simulationInfo->booleanVarsPre[10] /* $whenCondition6 DISCRETE */ /* edge */))
+  if((data->localData[0]->booleanVars[8] /* $whenCondition4 DISCRETE */ && !data->simulationInfo->booleanVarsPre[8] /* $whenCondition4 DISCRETE */ /* edge */))
   {
-    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = 0.0;
+    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = data->simulationInfo->realParameter[0] /* breakingDeceleration PARAM */;
     infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
     data->simulationInfo->needToIterate = 1;
   }
@@ -587,17 +543,17 @@ void TrainSimulation_Train_eqFunction_67(DATA *data, threadData_t *threadData)
 equation index: 66
 type: WHEN
 
-when {$whenCondition7} then
-  reinit(acceleration,  onUpHillAcc);
+when {$whenCondition5} then
+  reinit(acceleration,  0.0);
 end when;
 */
 void TrainSimulation_Train_eqFunction_66(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,66};
-  if((data->localData[0]->booleanVars[11] /* $whenCondition7 DISCRETE */ && !data->simulationInfo->booleanVarsPre[11] /* $whenCondition7 DISCRETE */ /* edge */))
+  if((data->localData[0]->booleanVars[9] /* $whenCondition5 DISCRETE */ && !data->simulationInfo->booleanVarsPre[9] /* $whenCondition5 DISCRETE */ /* edge */))
   {
-    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = data->localData[0]->realVars[15] /* onUpHillAcc variable */;
+    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = 0.0;
     infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
     data->simulationInfo->needToIterate = 1;
   }
@@ -607,17 +563,17 @@ void TrainSimulation_Train_eqFunction_66(DATA *data, threadData_t *threadData)
 equation index: 65
 type: WHEN
 
-when {$whenCondition8} then
-  reinit(acceleration,  breakingDeceleration);
+when {$whenCondition6} then
+  reinit(acceleration,  -breakingDeceleration);
 end when;
 */
 void TrainSimulation_Train_eqFunction_65(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,65};
-  if((data->localData[0]->booleanVars[12] /* $whenCondition8 DISCRETE */ && !data->simulationInfo->booleanVarsPre[12] /* $whenCondition8 DISCRETE */ /* edge */))
+  if((data->localData[0]->booleanVars[10] /* $whenCondition6 DISCRETE */ && !data->simulationInfo->booleanVarsPre[10] /* $whenCondition6 DISCRETE */ /* edge */))
   {
-    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = data->simulationInfo->realParameter[0] /* breakingDeceleration PARAM */;
+    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = (-data->simulationInfo->realParameter[0] /* breakingDeceleration PARAM */);
     infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
     data->simulationInfo->needToIterate = 1;
   }
@@ -627,17 +583,17 @@ void TrainSimulation_Train_eqFunction_65(DATA *data, threadData_t *threadData)
 equation index: 64
 type: WHEN
 
-when {$whenCondition9} then
-  reinit(acceleration,  -breakingDeceleration);
+when {$whenCondition7} then
+  reinit(acceleration,  0.0);
 end when;
 */
 void TrainSimulation_Train_eqFunction_64(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,64};
-  if((data->localData[0]->booleanVars[13] /* $whenCondition9 DISCRETE */ && !data->simulationInfo->booleanVarsPre[13] /* $whenCondition9 DISCRETE */ /* edge */))
+  if((data->localData[0]->booleanVars[11] /* $whenCondition7 DISCRETE */ && !data->simulationInfo->booleanVarsPre[11] /* $whenCondition7 DISCRETE */ /* edge */))
   {
-    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = (-data->simulationInfo->realParameter[0] /* breakingDeceleration PARAM */);
+    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = 0.0;
     infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
     data->simulationInfo->needToIterate = 1;
   }
@@ -647,7 +603,7 @@ void TrainSimulation_Train_eqFunction_64(DATA *data, threadData_t *threadData)
 equation index: 63
 type: WHEN
 
-when {$whenCondition10} then
+when {$whenCondition8} then
   reinit(acceleration,  breakingDeceleration);
 end when;
 */
@@ -655,7 +611,7 @@ void TrainSimulation_Train_eqFunction_63(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,63};
-  if((data->localData[0]->booleanVars[1] /* $whenCondition10 DISCRETE */ && !data->simulationInfo->booleanVarsPre[1] /* $whenCondition10 DISCRETE */ /* edge */))
+  if((data->localData[0]->booleanVars[12] /* $whenCondition8 DISCRETE */ && !data->simulationInfo->booleanVarsPre[12] /* $whenCondition8 DISCRETE */ /* edge */))
   {
     data->localData[0]->realVars[0] /* acceleration STATE(1) */ = data->simulationInfo->realParameter[0] /* breakingDeceleration PARAM */;
     infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
@@ -667,7 +623,7 @@ void TrainSimulation_Train_eqFunction_63(DATA *data, threadData_t *threadData)
 equation index: 62
 type: WHEN
 
-when {$whenCondition11} then
+when {$whenCondition9} then
   reinit(acceleration,  -breakingDeceleration);
 end when;
 */
@@ -675,7 +631,7 @@ void TrainSimulation_Train_eqFunction_62(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,62};
-  if((data->localData[0]->booleanVars[2] /* $whenCondition11 DISCRETE */ && !data->simulationInfo->booleanVarsPre[2] /* $whenCondition11 DISCRETE */ /* edge */))
+  if((data->localData[0]->booleanVars[13] /* $whenCondition9 DISCRETE */ && !data->simulationInfo->booleanVarsPre[13] /* $whenCondition9 DISCRETE */ /* edge */))
   {
     data->localData[0]->realVars[0] /* acceleration STATE(1) */ = (-data->simulationInfo->realParameter[0] /* breakingDeceleration PARAM */);
     infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
@@ -687,7 +643,7 @@ void TrainSimulation_Train_eqFunction_62(DATA *data, threadData_t *threadData)
 equation index: 61
 type: WHEN
 
-when {$whenCondition12} then
+when {$whenCondition10} then
   reinit(acceleration,  0.0);
 end when;
 */
@@ -695,7 +651,7 @@ void TrainSimulation_Train_eqFunction_61(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,61};
-  if((data->localData[0]->booleanVars[3] /* $whenCondition12 DISCRETE */ && !data->simulationInfo->booleanVarsPre[3] /* $whenCondition12 DISCRETE */ /* edge */))
+  if((data->localData[0]->booleanVars[1] /* $whenCondition10 DISCRETE */ && !data->simulationInfo->booleanVarsPre[1] /* $whenCondition10 DISCRETE */ /* edge */))
   {
     data->localData[0]->realVars[0] /* acceleration STATE(1) */ = 0.0;
     infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
@@ -707,17 +663,17 @@ void TrainSimulation_Train_eqFunction_61(DATA *data, threadData_t *threadData)
 equation index: 60
 type: WHEN
 
-when {$whenCondition13} then
-  reinit(acceleration,  0.0);
+when {$whenCondition11} then
+  reinit(acceleration,  breakingDeceleration);
 end when;
 */
 void TrainSimulation_Train_eqFunction_60(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,60};
-  if((data->localData[0]->booleanVars[4] /* $whenCondition13 DISCRETE */ && !data->simulationInfo->booleanVarsPre[4] /* $whenCondition13 DISCRETE */ /* edge */))
+  if((data->localData[0]->booleanVars[2] /* $whenCondition11 DISCRETE */ && !data->simulationInfo->booleanVarsPre[2] /* $whenCondition11 DISCRETE */ /* edge */))
   {
-    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = 0.0;
+    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = data->simulationInfo->realParameter[0] /* breakingDeceleration PARAM */;
     infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
     data->simulationInfo->needToIterate = 1;
   }
@@ -727,17 +683,57 @@ void TrainSimulation_Train_eqFunction_60(DATA *data, threadData_t *threadData)
 equation index: 59
 type: WHEN
 
-when {$whenCondition14} then
-  reinit(acceleration,  breakingDeceleration);
+when {$whenCondition12} then
+  reinit(acceleration,  -breakingDeceleration);
 end when;
 */
 void TrainSimulation_Train_eqFunction_59(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
   const int equationIndexes[2] = {1,59};
-  if((data->localData[0]->booleanVars[5] /* $whenCondition14 DISCRETE */ && !data->simulationInfo->booleanVarsPre[5] /* $whenCondition14 DISCRETE */ /* edge */))
+  if((data->localData[0]->booleanVars[3] /* $whenCondition12 DISCRETE */ && !data->simulationInfo->booleanVarsPre[3] /* $whenCondition12 DISCRETE */ /* edge */))
+  {
+    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = (-data->simulationInfo->realParameter[0] /* breakingDeceleration PARAM */);
+    infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
+    data->simulationInfo->needToIterate = 1;
+  }
+  TRACE_POP
+}
+/*
+equation index: 58
+type: WHEN
+
+when {$whenCondition13} then
+  reinit(acceleration,  breakingDeceleration);
+end when;
+*/
+void TrainSimulation_Train_eqFunction_58(DATA *data, threadData_t *threadData)
+{
+  TRACE_PUSH
+  const int equationIndexes[2] = {1,58};
+  if((data->localData[0]->booleanVars[4] /* $whenCondition13 DISCRETE */ && !data->simulationInfo->booleanVarsPre[4] /* $whenCondition13 DISCRETE */ /* edge */))
   {
     data->localData[0]->realVars[0] /* acceleration STATE(1) */ = data->simulationInfo->realParameter[0] /* breakingDeceleration PARAM */;
+    infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
+    data->simulationInfo->needToIterate = 1;
+  }
+  TRACE_POP
+}
+/*
+equation index: 57
+type: WHEN
+
+when {$whenCondition14} then
+  reinit(acceleration,  0.0);
+end when;
+*/
+void TrainSimulation_Train_eqFunction_57(DATA *data, threadData_t *threadData)
+{
+  TRACE_PUSH
+  const int equationIndexes[2] = {1,57};
+  if((data->localData[0]->booleanVars[5] /* $whenCondition14 DISCRETE */ && !data->simulationInfo->booleanVarsPre[5] /* $whenCondition14 DISCRETE */ /* edge */))
+  {
+    data->localData[0]->realVars[0] /* acceleration STATE(1) */ = 0.0;
     infoStreamPrint(LOG_EVENTS, 0, "reinit acceleration = %g", data->localData[0]->realVars[0] /* acceleration STATE(1) */);
     data->simulationInfo->needToIterate = 1;
   }
@@ -756,6 +752,8 @@ int TrainSimulation_Train_functionDAE(DATA *data, threadData_t *threadData)
   data->simulationInfo->needToIterate = 0;
   data->simulationInfo->discreteCall = 1;
   TrainSimulation_Train_functionLocalKnownVars(data, threadData);
+  TrainSimulation_Train_eqFunction_32(data, threadData);
+
   TrainSimulation_Train_eqFunction_33(data, threadData);
 
   TrainSimulation_Train_eqFunction_34(data, threadData);
@@ -804,14 +802,6 @@ int TrainSimulation_Train_functionDAE(DATA *data, threadData_t *threadData)
 
   TrainSimulation_Train_eqFunction_56(data, threadData);
 
-  TrainSimulation_Train_eqFunction_57(data, threadData);
-
-  TrainSimulation_Train_eqFunction_58(data, threadData);
-
-  TrainSimulation_Train_eqFunction_72(data, threadData);
-
-  TrainSimulation_Train_eqFunction_71(data, threadData);
-
   TrainSimulation_Train_eqFunction_70(data, threadData);
 
   TrainSimulation_Train_eqFunction_69(data, threadData);
@@ -835,6 +825,10 @@ int TrainSimulation_Train_functionDAE(DATA *data, threadData_t *threadData)
   TrainSimulation_Train_eqFunction_60(data, threadData);
 
   TrainSimulation_Train_eqFunction_59(data, threadData);
+
+  TrainSimulation_Train_eqFunction_58(data, threadData);
+
+  TrainSimulation_Train_eqFunction_57(data, threadData);
   data->simulationInfo->discreteCall = 0;
   
 #if !defined(OMC_MINIMAL_RUNTIME)
@@ -1007,7 +1001,7 @@ void TrainSimulation_Train_setupDataStruc(DATA *data, threadData_t *threadData)
   data->modelData->modelFilePrefix = "TrainSimulation.Train";
   data->modelData->resultFileName = NULL;
   data->modelData->modelDir = "E:/Szakdoga";
-  data->modelData->modelGUID = "{ef8fda24-54ac-4402-9cdd-a3f326a46415}";
+  data->modelData->modelGUID = "{64c4fb96-1232-491a-b639-d4a2d3ef9aaa}";
   #if defined(OPENMODELICA_XML_FROM_FILE_AT_RUNTIME)
   data->modelData->initXMLData = NULL;
   data->modelData->modelDataXml.infoXMLData = NULL;
@@ -1043,20 +1037,20 @@ void TrainSimulation_Train_setupDataStruc(DATA *data, threadData_t *threadData)
   data->modelData->nVariablesBoolean = 19;
   data->modelData->nVariablesString = 0;
   data->modelData->nParametersReal = 5;
-  data->modelData->nParametersInteger = 1;
+  data->modelData->nParametersInteger = 0;
   data->modelData->nParametersBoolean = 0;
   data->modelData->nParametersString = 0;
   data->modelData->nInputVars = 8;
-  data->modelData->nOutputVars = 3;
+  data->modelData->nOutputVars = 2;
   
   data->modelData->nAliasReal = 0;
   data->modelData->nAliasInteger = 0;
   data->modelData->nAliasBoolean = 0;
   data->modelData->nAliasString = 0;
   
-  data->modelData->nZeroCrossings = 14;
+  data->modelData->nZeroCrossings = 17;
   data->modelData->nSamples = 0;
-  data->modelData->nRelations = 16;
+  data->modelData->nRelations = 20;
   data->modelData->nMathEvents = 0;
   data->modelData->nExtObjs = 0;
   
@@ -1064,7 +1058,7 @@ void TrainSimulation_Train_setupDataStruc(DATA *data, threadData_t *threadData)
   data->modelData->modelDataXml.modelInfoXmlLength = 0;
   data->modelData->modelDataXml.nFunctions = 0;
   data->modelData->modelDataXml.nProfileBlocks = 0;
-  data->modelData->modelDataXml.nEquations = 77;
+  data->modelData->modelDataXml.nEquations = 76;
   data->modelData->nMixedSystems = 0;
   data->modelData->nLinearSystems = 0;
   data->modelData->nNonLinearSystems = 0;

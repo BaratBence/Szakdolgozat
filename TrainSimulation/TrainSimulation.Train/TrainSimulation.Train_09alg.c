@@ -7,7 +7,8 @@ extern "C" {
 
 
 /* forwarded equations */
-extern void TrainSimulation_Train_eqFunction_58(DATA* data, threadData_t *threadData);
+extern void TrainSimulation_Train_eqFunction_56(DATA* data, threadData_t *threadData);
+extern void TrainSimulation_Train_eqFunction_32(DATA* data, threadData_t *threadData);
 extern void TrainSimulation_Train_eqFunction_33(DATA* data, threadData_t *threadData);
 extern void TrainSimulation_Train_eqFunction_34(DATA* data, threadData_t *threadData);
 extern void TrainSimulation_Train_eqFunction_35(DATA* data, threadData_t *threadData);
@@ -27,10 +28,6 @@ extern void TrainSimulation_Train_eqFunction_52(DATA* data, threadData_t *thread
 extern void TrainSimulation_Train_eqFunction_53(DATA* data, threadData_t *threadData);
 extern void TrainSimulation_Train_eqFunction_54(DATA* data, threadData_t *threadData);
 extern void TrainSimulation_Train_eqFunction_55(DATA* data, threadData_t *threadData);
-extern void TrainSimulation_Train_eqFunction_56(DATA* data, threadData_t *threadData);
-extern void TrainSimulation_Train_eqFunction_57(DATA* data, threadData_t *threadData);
-extern void TrainSimulation_Train_eqFunction_72(DATA* data, threadData_t *threadData);
-extern void TrainSimulation_Train_eqFunction_71(DATA* data, threadData_t *threadData);
 extern void TrainSimulation_Train_eqFunction_70(DATA* data, threadData_t *threadData);
 extern void TrainSimulation_Train_eqFunction_69(DATA* data, threadData_t *threadData);
 extern void TrainSimulation_Train_eqFunction_68(DATA* data, threadData_t *threadData);
@@ -43,10 +40,14 @@ extern void TrainSimulation_Train_eqFunction_62(DATA* data, threadData_t *thread
 extern void TrainSimulation_Train_eqFunction_61(DATA* data, threadData_t *threadData);
 extern void TrainSimulation_Train_eqFunction_60(DATA* data, threadData_t *threadData);
 extern void TrainSimulation_Train_eqFunction_59(DATA* data, threadData_t *threadData);
+extern void TrainSimulation_Train_eqFunction_58(DATA* data, threadData_t *threadData);
+extern void TrainSimulation_Train_eqFunction_57(DATA* data, threadData_t *threadData);
 
 static void functionAlg_system0(DATA *data, threadData_t *threadData)
 {
-    TrainSimulation_Train_eqFunction_58(data, threadData);
+    TrainSimulation_Train_eqFunction_56(data, threadData);
+
+    TrainSimulation_Train_eqFunction_32(data, threadData);
 
     TrainSimulation_Train_eqFunction_33(data, threadData);
 
@@ -86,14 +87,6 @@ static void functionAlg_system0(DATA *data, threadData_t *threadData)
 
     TrainSimulation_Train_eqFunction_55(data, threadData);
 
-    TrainSimulation_Train_eqFunction_56(data, threadData);
-
-    TrainSimulation_Train_eqFunction_57(data, threadData);
-
-    TrainSimulation_Train_eqFunction_72(data, threadData);
-
-    TrainSimulation_Train_eqFunction_71(data, threadData);
-
     TrainSimulation_Train_eqFunction_70(data, threadData);
 
     TrainSimulation_Train_eqFunction_69(data, threadData);
@@ -117,6 +110,10 @@ static void functionAlg_system0(DATA *data, threadData_t *threadData)
     TrainSimulation_Train_eqFunction_60(data, threadData);
 
     TrainSimulation_Train_eqFunction_59(data, threadData);
+
+    TrainSimulation_Train_eqFunction_58(data, threadData);
+
+    TrainSimulation_Train_eqFunction_57(data, threadData);
 }
 /* for continuous time variables */
 int TrainSimulation_Train_functionAlgebraics(DATA *data, threadData_t *threadData)

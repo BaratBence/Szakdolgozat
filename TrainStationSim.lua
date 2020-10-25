@@ -45,13 +45,11 @@ stopped=false;
 --Making the starting parameters 
 oms_setReal("TrainSimulation.root.Train.length",30)
 oms_setReal("TrainSimulation.root.Train.distanceStart", 0)
---oms_setReal("TrainSimulation.root.Train.lap", 1000)
 oms_setReal("TrainSimulation.root.Train.breakingDeceleration", 5)
 
-oms_setReal("TrainSimulation.root.Train2.length",30)
+--oms_setReal("TrainSimulation.root.Train2.length",30)
 --oms_setReal("TrainSimulation.root.Train2.maxSpeed",125)
-oms_setReal("TrainSimulation.root.Train2.distanceStart", -100)
---oms_setReal("TrainSimulation.root.Train2.lap", 1000)
+oms_setReal("TrainSimulation.root.Train2.distanceStart", -500)
 --oms_setReal("TrainSimulation.root.Train2.breakingDeceleration", 7)
 
 oms_setReal("TrainSimulation.root.Sensor.Sensor1Position",2000)
@@ -65,19 +63,30 @@ function fail()
 		if not happend then print("Sensor 1 Failed") happend=true end
 	end 
 end
+
+trainCount = 2
+hillNumber =0
+train1=0
+train2=0
+trainLapCount = {oms_getReal("TrainSimulation.root.Train.lap"),oms_getReal("TrainSimulation.root.Train2.lap")}
 function crash()
-	if  oms_getReal("TrainSimulation.root.Train.lapDistance") - oms_getReal("TrainSimulation.root.Train.length") <= oms_getReal("TrainSimulation.root.Train2.lapDistance")
-	then
-		oms_setReal("TrainSimulation.root.Train.lapDistance",oms_getReal("TrainSimulation.root.Train.lapDistance")+1)
-		crashed = true;
-		stopped=true
-	end 
-	if crashed then print("Crash happend at " .. time) crashed = false end
-	if stopped 
-	then 
-		oms_setReal("TrainSimulation.root.Train2.speed",0.0)
-		oms_setReal("TrainSimulation.root.Train.speed",0.0)
+	trainCrashed = {oms_getBoolean("TrainSimulation.root.Train.Crashed"),oms_getBoolean("TrainSimulation.root.Train2.Crashed")}
+	for i=1,trainCount do
+		trainCurrentDistance = oms_getReal("TrainSimulation.root.trainCollection.DistanceVec[".. i .."]")
+		trainCurrentLenght = oms_getReal("TrainSimulation.root.trainCollection.LengthVec[".. i .."]")
+		for j=1,trainCount do
+			trainDistance = oms_getReal("TrainSimulation.root.trainCollection.DistanceVec[".. j .."]")
+			if trainCurrentDistance - trainCurrentLenght <= trainDistance and trainCurrentDistance > trainDistance and trainCrashed[i] < 1 and trainLapCount[i] == trainLapCount[j] then
+				--for all the trains
+				oms_setBoolean("TrainSimulation.root.Train.Crashed",1)
+				oms_setBoolean("TrainSimulation.root.Train2.Crashed",1)
+				crashed = true
+				train1=i
+				train2=j
+			end
+		end
 	end
+	if crashed then print("Crash happend with train" .. train1 .. " and train".. train2 .." at " .. time) crashed = false end
 end
 while(time<simulationEnd)
   do

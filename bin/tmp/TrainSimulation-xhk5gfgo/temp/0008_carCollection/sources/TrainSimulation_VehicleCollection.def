@@ -1,0 +1,54 @@
+EXPORTS
+  ;***************************************************
+  ;Common Functions
+  ;****************************************************
+  TrainSimulation_VehicleCollection_fmiGetTypesPlatform @1
+  TrainSimulation_VehicleCollection_fmiGetVersion @2
+  TrainSimulation_VehicleCollection_fmiSetDebugLogging @3
+  TrainSimulation_VehicleCollection_fmiInstantiate @4
+  TrainSimulation_VehicleCollection_fmiFreeInstance @5
+  TrainSimulation_VehicleCollection_fmiSetupExperiment @6
+  TrainSimulation_VehicleCollection_fmiEnterInitializationMode @7
+  TrainSimulation_VehicleCollection_fmiExitInitializationMode @8
+  TrainSimulation_VehicleCollection_fmiTerminate @9
+  TrainSimulation_VehicleCollection_fmiReset @10
+  TrainSimulation_VehicleCollection_fmiGetReal @11
+  TrainSimulation_VehicleCollection_fmiGetInteger @12
+  TrainSimulation_VehicleCollection_fmiGetBoolean @13
+  TrainSimulation_VehicleCollection_fmiGetString @14
+  TrainSimulation_VehicleCollection_fmiSetReal @15
+  TrainSimulation_VehicleCollection_fmiSetInteger @16
+  TrainSimulation_VehicleCollection_fmiSetBoolean @17
+  TrainSimulation_VehicleCollection_fmiSetString @18
+  TrainSimulation_VehicleCollection_fmiGetFMUstate @19
+  TrainSimulation_VehicleCollection_fmiSetFMUstate @20
+  TrainSimulation_VehicleCollection_fmiFreeFMUstate @21
+  TrainSimulation_VehicleCollection_fmiSerializedFMUstateSize @22
+  TrainSimulation_VehicleCollection_fmiSerializeFMUstate @23
+  TrainSimulation_VehicleCollection_fmiDeSerializeFMUstate @24
+  TrainSimulation_VehicleCollection_fmiGetDirectionalDerivative @25
+  ;***************************************************
+  ;Functions for FMI for Model Exchange
+  ;****************************************************
+  TrainSimulation_VehicleCollection_fmiEnterEventMode @26
+  TrainSimulation_VehicleCollection_fmiNewDiscreteStates @27
+  TrainSimulation_VehicleCollection_fmiEnterContinuousTimeMode @28
+  TrainSimulation_VehicleCollection_fmiCompletedIntegratorStep @29
+  TrainSimulation_VehicleCollection_fmiSetTime @30
+  TrainSimulation_VehicleCollection_fmiSetContinuousStates @31
+  TrainSimulation_VehicleCollection_fmiGetDerivatives @32
+  TrainSimulation_VehicleCollection_fmiGetEventIndicators @33
+  TrainSimulation_VehicleCollection_fmiGetContinuousStates @34
+  TrainSimulation_VehicleCollection_fmiGetNominalsOfContinuousStates @35
+  ;***************************************************
+  ;Functions for FMI for Co-Simulation
+  ;****************************************************
+  TrainSimulation_VehicleCollection_fmiSetRealInputDerivatives @36
+  TrainSimulation_VehicleCollection_fmiGetRealOutputDerivatives @37
+  TrainSimulation_VehicleCollection_fmiDoStep @38
+  TrainSimulation_VehicleCollection_fmiCancelStep @39
+  TrainSimulation_VehicleCollection_fmiGetStatus @40
+  TrainSimulation_VehicleCollection_fmiGetRealStatus @41
+  TrainSimulation_VehicleCollection_fmiGetIntegerStatus @42
+  TrainSimulation_VehicleCollection_fmiGetBooleanStatus @43
+  TrainSimulation_VehicleCollection_fmiGetStringStatus @44
