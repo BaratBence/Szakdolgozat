@@ -9,7 +9,6 @@ oms_addSubModel("TrainSimulation.root.curveCollection2", "/Szakdoga/TrainSimulat
 oms_addSubModel("TrainSimulation.root.HillCollection1", "/Szakdoga/TrainSimulation/TrainSimulation.StructureCollection/TrainSimulation.StructureCollection.fmu")
 oms_addSubModel("TrainSimulation.root.HillCollection2", "/Szakdoga/TrainSimulation/TrainSimulation.StructureCollection/TrainSimulation.StructureCollection.fmu")
 oms_addSubModel("TrainSimulation.root.trainCollection", "/Szakdoga/TrainSimulation/TrainSimulation.VehicleCollection/TrainSimulation.VehicleCollection.fmu")
-oms_addSubModel("TrainSimulation.root.carCollection", "/Szakdoga/TrainSimulation/TrainSimulation.VehicleCollection/TrainSimulation.VehicleCollection.fmu")
 oms_addSubModel("TrainSimulation.root.C1", "/Szakdoga/TrainSimulation/TrainSimulation.Curve/TrainSimulation.Curve.fmu")
 oms_addSubModel("TrainSimulation.root.C2", "/Szakdoga/TrainSimulation/TrainSimulation.Curve/TrainSimulation.Curve.fmu")
 oms_addSubModel("TrainSimulation.root.H1","/Szakdoga/TrainSimulation/TrainSimulation.UpHill/TrainSimulation.UpHill.fmu")
@@ -48,15 +47,11 @@ oms_addConnection("TrainSimulation.root.Train2.Sensor2Position","TrainSimulation
 oms_addConnection("TrainSimulation.root.Train2.Station","TrainSimulation.root.StationSensor.Intersection")
 
 --Car1 connection
-oms_addConnection("TrainSimulation.root.Car1.Distance","TrainSimulation.root.carCollection.Distance1")
-oms_addConnection("TrainSimulation.root.Car1.Length","TrainSimulation.root.carCollection.Length1")
 oms_addConnection("TrainSimulation.root.Car1.LightColor", "TrainSimulation.root.TrainLight.ColorState_output")
 oms_addConnection("TrainSimulation.root.Car1.Gate_Angle","TrainSimulation.root.TrainLight.Gate_Angle_output")
 oms_addConnection("TrainSimulation.root.Car1.Target", "TrainSimulation.root.TrainLight.Intersection_output")
 
 --Car2 connection
-oms_addConnection("TrainSimulation.root.Car2.Distance","TrainSimulation.root.carCollection.Distance2")
-oms_addConnection("TrainSimulation.root.Car2.Length","TrainSimulation.root.carCollection.Length2")
 oms_addConnection("TrainSimulation.root.Car2.LightColor", "TrainSimulation.root.TrainLight.ColorState_output")
 oms_addConnection("TrainSimulation.root.Car2.Gate_Angle","TrainSimulation.root.TrainLight.Gate_Angle_output")
 oms_addConnection("TrainSimulation.root.Car2.Target", "TrainSimulation.root.TrainLight.Intersection_output")
@@ -79,18 +74,18 @@ oms_addConnection("TrainSimulation.root.trainCollection.LengthVec[2]", "TrainSim
 oms_addConnection("TrainSimulation.root.trainCollection.DistanceVec[2]", "TrainSimulation.root.H1.TrainDistance[2]")
 
 --Adding structures to their collection
-oms_addConnection("TrainSimulation.root.C1.CurveSpeed[1]","TrainSimulation.root.curveCollection1.Speed1")
-oms_addConnection("TrainSimulation.root.C1.CurveSpeed[2]","TrainSimulation.root.curveCollection2.Speed1")
-oms_addConnection("TrainSimulation.root.C2.CurveSpeed[1]","TrainSimulation.root.curveCollection1.Speed2")
-oms_addConnection("TrainSimulation.root.C2.CurveSpeed[2]","TrainSimulation.root.curveCollection2.Speed2")
+oms_addConnection("TrainSimulation.root.C1.CurveSpeed","TrainSimulation.root.curveCollection1.Speed1")
+oms_addConnection("TrainSimulation.root.C1.CurveSpeed","TrainSimulation.root.curveCollection2.Speed1")
+oms_addConnection("TrainSimulation.root.C2.CurveSpeed","TrainSimulation.root.curveCollection1.Speed2")
+oms_addConnection("TrainSimulation.root.C2.CurveSpeed","TrainSimulation.root.curveCollection2.Speed2")
 
 oms_addConnection("TrainSimulation.root.C1.onCurve[1]","TrainSimulation.root.curveCollection1.OnStructure1")
 oms_addConnection("TrainSimulation.root.C1.onCurve[2]","TrainSimulation.root.curveCollection2.OnStructure1")
 oms_addConnection("TrainSimulation.root.C2.onCurve[1]","TrainSimulation.root.curveCollection1.OnStructure2")
 oms_addConnection("TrainSimulation.root.C2.onCurve[2]","TrainSimulation.root.curveCollection2.OnStructure2")
 
-oms_addConnection("TrainSimulation.root.H1.HillSpeedScale[1]","TrainSimulation.root.HillCollection1.Speed1")
-oms_addConnection("TrainSimulation.root.H1.HillSpeedScale[2]","TrainSimulation.root.HillCollection2.Speed1")
+oms_addConnection("TrainSimulation.root.H1.HillSpeedScale","TrainSimulation.root.HillCollection1.Speed1")
+oms_addConnection("TrainSimulation.root.H1.HillSpeedScale","TrainSimulation.root.HillCollection2.Speed1")
 oms_addConnection("TrainSimulation.root.H1.onHill[1]","TrainSimulation.root.HillCollection1.OnStructure1")
 oms_addConnection("TrainSimulation.root.H1.onHill[2]","TrainSimulation.root.HillCollection2.OnStructure1")
 
@@ -151,7 +146,7 @@ train2 = 0
 trainCrashId = 0
 cornersEnd = {oms_getReal("TrainSimulation.root.C1.End"),oms_getReal("TrainSimulation.root.C2.End")}
 cornersStart = {oms_getReal("TrainSimulation.root.C1.Start"),oms_getReal("TrainSimulation.root.C2.Start")}
-cornerSpeed = {oms_getReal("TrainSimulation.root.C1.CurveSpeedValue"),oms_getReal("TrainSimulation.root.C2.CurveSpeedValue")}
+cornerSpeed = {oms_getReal("TrainSimulation.root.C1.CurveSpeed"),oms_getReal("TrainSimulation.root.C2.CurveSpeed")}
 hillsEnd = {oms_getReal("TrainSimulation.root.H1.End")}
 hillsStart = {oms_getReal("TrainSimulation.root.H1.Start")}
 stationSensors = { oms_getReal("TrainSimulation.root.IntersectionSensors.Sensor1Position"),oms_getReal("TrainSimulation.root.IntersectionSensors.Sensor1Position")}
@@ -189,7 +184,6 @@ function crashInCorner()
 			distance = oms_getReal("TrainSimulation.root.trainCollection.DistanceVec["..j.."]")
 			if trainCrashed[j] < 1 and distance>=corner and distance<cornersEnd[i] and trainsSpeed[j]>cornerSpeed[i]
 			then
-				print(corner .. " " .. trainsSpeed[j] .. " " .. cornerSpeed[i])
 				cornerCrashId=i
 				trainCrashId=j
 				--should set all of them
@@ -200,37 +194,6 @@ function crashInCorner()
 		end
 	end
 	if crashed then print("Crash happend at Corner" .. cornerCrashId .. " at ".. time .. " with train number " .. trainCrashId) crashed =false end 
-end
-function crashInIntersection()
-	carCollectionDistance = {oms_getReal("TrainSimulation.root.Car1.Distance"),oms_getReal("TrainSimulation.root.Car2.Distance")}
-	carCollectionLength = {oms_getReal("TrainSimulation.root.Car1.Length"),oms_getReal("TrainSimulation.root.Car2.Length")}
-	trainCrashed = {oms_getBoolean("TrainSimulation.root.Train1.Crashed"),oms_getBoolean("TrainSimulation.root.Train2.Crashed")}
-	trainDanger = false
-	carDanger=false
-	car = 0
-	train = 0
-	for i=1,trainCount do
-	if oms_getReal("TrainSimulation.root.trainCollection.DistanceVec[".. i .."]")>=oms_getReal("TrainSimulation.root.IntersectionSensors.Intersection") and 
-	oms_getReal("TrainSimulation.root.trainCollection.DistanceVec[".. i .."]")-oms_getReal("TrainSimulation.root.trainCollection.LengthVec[".. i .."]")<oms_getReal("TrainSimulation.root.IntersectionSensors.Intersection") and trainCrashed[i] < 1
-	then 
-		trainDanger=true
-		train=i
-	end
-	end
-	for i=1,carCount do
-		if carCollectionDistance[i] + 3 >=oms_getReal("TrainSimulation.root.TrainLight.Intersection") and carCollectionDistance[i]- carCollectionLength[i] - 10 <oms_getReal("TrainSimulation.root.TrainLight.Intersection") then 
-			carDanger=true
-			car=i
-	 	end
-	end
-	if trainDanger and carDanger then crashed=true end
-	if crashed then 
-		print("Crash happend at " .. time .. " between train number " .. train .. " and car number " .. car) 
-		crashed=false
-		--should set all of them
-		oms_setBoolean("TrainSimulation.root.Train1.Crashed",1)
-		oms_setBoolean("TrainSimulation.root.Train2.Crashed",1)
-	end
 end
 function InStructure()
 	stepInCorner = false
@@ -264,7 +227,7 @@ function InStructure()
 end
 function crashInIntersection()
 	carCollectionDistance = {oms_getReal("TrainSimulation.root.Car1.Distance"),oms_getReal("TrainSimulation.root.Car2.Distance")}
-	carCollectionLength = {oms_getReal("TrainSimulation.root.Car1.Length"),oms_getReal("TrainSimulation.root.Car2.Length")}
+	carCollectionLength = {oms_getReal("TrainSimulation.root.Car1.length"),oms_getReal("TrainSimulation.root.Car2.length")}
 	trainCrashed = {oms_getBoolean("TrainSimulation.root.Train1.Crashed"),oms_getBoolean("TrainSimulation.root.Train2.Crashed")}
 	trainDanger = false
 	carDanger=false
@@ -293,29 +256,27 @@ function crashInIntersection()
 		oms_setBoolean("TrainSimulation.root.Train2.Crashed",1)
 	end
 end
+local startTime= os.clock()
 while(time<simulationEnd)
   do
 	crashToOther()
 	crashInCorner()
 	crashInIntersection()
-        crashToOther()
-	crashInCorner()
-	crashInIntersection()
 	InStructure()
 	if critical then
 		if criticalSection then print("critical section reached at " ..time) criticalSection=false end
-		stepsize = 0.01
+		stepsize = 0.001
 		oms_setFixedStepSize("TrainSimulation.root",stepsize)
           	time=time+stepsize
           	oms_stepUntil("TrainSimulation",time)
         else
 		if not criticalSection then print("normal section reached at " ..time) criticalSection=true end
-		stepsize=0.1
+		stepsize=0.01
         	oms_setFixedStepSize("TrainSimulation.root",stepsize)
         	time=time+stepsize
         	oms_stepUntil("TrainSimulation",time)
 	end
 end
-
+print(string.format("elapsed time: %.2f\n", os.clock() - startTime))
 oms_terminate("TrainSimulation")
 oms_delete("TrainSimulation")

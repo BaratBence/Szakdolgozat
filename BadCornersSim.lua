@@ -18,10 +18,8 @@ oms_addConnection("TrainSimulation.root.Train.ActiveCurve","TrainSimulation.root
 oms_addConnection("TrainSimulation.root.trainCollection.LengthVec[1]", "TrainSimulation.root.Curve.TrainLength[1]")
 oms_addConnection("TrainSimulation.root.trainCollection.DistanceVec[1]", "TrainSimulation.root.Curve.TrainDistance[1]")
 
-oms_addConnection("TrainSimulation.root.Curve.CurveSpeed[1]",
-"TrainSimulation.root.curveCollection.Speed1")
-oms_addConnection("TrainSimulation.root.Curve.onCurve[1]",
-"TrainSimulation.root.curveCollection.OnStructure1")
+oms_addConnection("TrainSimulation.root.Curve.CurveSpeed","TrainSimulation.root.curveCollection.Speed1")
+oms_addConnection("TrainSimulation.root.Curve.onCurve[1]","TrainSimulation.root.curveCollection.OnStructure1")
 
 
 simulationEnd=10.0 
@@ -46,7 +44,7 @@ oms_initialize("TrainSimulation")
 
 cornersEnd = {oms_getReal("TrainSimulation.root.Curve.End")}
 cornersStart = {oms_getReal("TrainSimulation.root.Curve.Start")}
-cornerSpeed = {oms_getReal("TrainSimulation.root.Curve.CurveSpeedValue")}
+cornerSpeed = {oms_getReal("TrainSimulation.root.Curve.CurveSpeed")}
 cornerCrashId = 0
 cornerCount=1
 trainCount=1 

@@ -1,0 +1,54 @@
+EXPORTS
+  ;***************************************************
+  ;Common Functions
+  ;****************************************************
+  TrainSimulation_StructureCollection_fmiGetTypesPlatform @1
+  TrainSimulation_StructureCollection_fmiGetVersion @2
+  TrainSimulation_StructureCollection_fmiSetDebugLogging @3
+  TrainSimulation_StructureCollection_fmiInstantiate @4
+  TrainSimulation_StructureCollection_fmiFreeInstance @5
+  TrainSimulation_StructureCollection_fmiSetupExperiment @6
+  TrainSimulation_StructureCollection_fmiEnterInitializationMode @7
+  TrainSimulation_StructureCollection_fmiExitInitializationMode @8
+  TrainSimulation_StructureCollection_fmiTerminate @9
+  TrainSimulation_StructureCollection_fmiReset @10
+  TrainSimulation_StructureCollection_fmiGetReal @11
+  TrainSimulation_StructureCollection_fmiGetInteger @12
+  TrainSimulation_StructureCollection_fmiGetBoolean @13
+  TrainSimulation_StructureCollection_fmiGetString @14
+  TrainSimulation_StructureCollection_fmiSetReal @15
+  TrainSimulation_StructureCollection_fmiSetInteger @16
+  TrainSimulation_StructureCollection_fmiSetBoolean @17
+  TrainSimulation_StructureCollection_fmiSetString @18
+  TrainSimulation_StructureCollection_fmiGetFMUstate @19
+  TrainSimulation_StructureCollection_fmiSetFMUstate @20
+  TrainSimulation_StructureCollection_fmiFreeFMUstate @21
+  TrainSimulation_StructureCollection_fmiSerializedFMUstateSize @22
+  TrainSimulation_StructureCollection_fmiSerializeFMUstate @23
+  TrainSimulation_StructureCollection_fmiDeSerializeFMUstate @24
+  TrainSimulation_StructureCollection_fmiGetDirectionalDerivative @25
+  ;***************************************************
+  ;Functions for FMI for Model Exchange
+  ;****************************************************
+  TrainSimulation_StructureCollection_fmiEnterEventMode @26
+  TrainSimulation_StructureCollection_fmiNewDiscreteStates @27
+  TrainSimulation_StructureCollection_fmiEnterContinuousTimeMode @28
+  TrainSimulation_StructureCollection_fmiCompletedIntegratorStep @29
+  TrainSimulation_StructureCollection_fmiSetTime @30
+  TrainSimulation_StructureCollection_fmiSetContinuousStates @31
+  TrainSimulation_StructureCollection_fmiGetDerivatives @32
+  TrainSimulation_StructureCollection_fmiGetEventIndicators @33
+  TrainSimulation_StructureCollection_fmiGetContinuousStates @34
+  TrainSimulation_StructureCollection_fmiGetNominalsOfContinuousStates @35
+  ;***************************************************
+  ;Functions for FMI for Co-Simulation
+  ;****************************************************
+  TrainSimulation_StructureCollection_fmiSetRealInputDerivatives @36
+  TrainSimulation_StructureCollection_fmiGetRealOutputDerivatives @37
+  TrainSimulation_StructureCollection_fmiDoStep @38
+  TrainSimulation_StructureCollection_fmiCancelStep @39
+  TrainSimulation_StructureCollection_fmiGetStatus @40
+  TrainSimulation_StructureCollection_fmiGetRealStatus @41
+  TrainSimulation_StructureCollection_fmiGetIntegerStatus @42
+  TrainSimulation_StructureCollection_fmiGetBooleanStatus @43
+  TrainSimulation_StructureCollection_fmiGetStringStatus @44

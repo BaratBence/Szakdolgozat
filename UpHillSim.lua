@@ -27,10 +27,10 @@ oms_addConnection("TrainSimulation.root.trainCollection.DistanceVec[1]", "TrainS
 oms_addConnection("TrainSimulation.root.trainCollection.LengthVec[2]", "TrainSimulation.root.UpHill.TrainLength[2]")
 oms_addConnection("TrainSimulation.root.trainCollection.DistanceVec[2]", "TrainSimulation.root.UpHill.TrainDistance[2]")
 
-oms_addConnection("TrainSimulation.root.UpHill.HillSpeedScale[1]","TrainSimulation.root.HillCollection.Speed1")
+oms_addConnection("TrainSimulation.root.UpHill.HillSpeedScale","TrainSimulation.root.HillCollection.Speed1")
 oms_addConnection("TrainSimulation.root.UpHill.onHill[1]","TrainSimulation.root.HillCollection.OnStructure1")
 
-oms_addConnection("TrainSimulation.root.UpHill.HillSpeedScale[2]","TrainSimulation.root.HillCollection2.Speed1")
+oms_addConnection("TrainSimulation.root.UpHill.HillSpeedScale","TrainSimulation.root.HillCollection2.Speed1")
 oms_addConnection("TrainSimulation.root.UpHill.onHill[2]","TrainSimulation.root.HillCollection2.OnStructure1")
 
 

@@ -8,7 +8,7 @@ package TrainSimulation
     //parameter for the curve's track gauge
     parameter Real TrackGauge(unit = "mm") = 1475;
     //parameter for the cant value
-    parameter Real cant(unit = "mm") = 160;
+    parameter Real cant(unit = "mm") = 152;
     //parameter for the curve's cantdeficiency
     parameter Real cantdeficiency(unit = "mm") = 100;
     //parameter for the start distance from the trains perspective
@@ -17,14 +17,12 @@ package TrainSimulation
     parameter Real End(unit = "m") = 50;
     //legnth of the curves arrays
     parameter Integer size = 10;
-    //the allowed speed in the corner
-    Real CurveSpeedValue(start =0);
     //All trains distance(in a lap) as input
     Modelica.Blocks.Interfaces.RealVectorInput TrainDistance[size];
     //All trains length as input
     Modelica.Blocks.Interfaces.RealVectorInput TrainLength[size];
-    //Data for each train to limit their speed
-    Modelica.Blocks.Interfaces.RealVectorOutput CurveSpeed[size];
+    //Data for train to limit their speed
+    Modelica.Blocks.Interfaces.RealOutput CurveSpeed;
     //Data for each train if they are on the rail
     Modelica.Blocks.Interfaces.RealVectorOutput onCurve[size] = {
     if TrainDistance[1] >= Start and TrainDistance[1] <= End + TrainLength[1] then 1 else 0, 
@@ -37,21 +35,9 @@ package TrainSimulation
     if TrainDistance[8] >= Start and TrainDistance[8] <= End + TrainLength[8] then 1 else 0,
     if TrainDistance[9] >= Start and TrainDistance[9] <= End + TrainLength[9] then 1 else 0,
     if TrainDistance[10] >= Start and TrainDistance[10] <= End + TrainLength[10] then 1 else 0} ;
-
-//multiply calculated data for interfaces
-    function SpeedCalculations
-      input Integer size;
-      input Real value;
-      output Real curvespeed[size];
-    algorithm
-      for i in 1:size loop
-        curvespeed[i] := value;
-      end for;
-    end SpeedCalculations;
     
   equation
-    CurveSpeedValue = sqrt(radius * Gravity * (cant + cantdeficiency) / TrackGauge);
-    CurveSpeed = SpeedCalculations(size,CurveSpeedValue);
+    CurveSpeed = sqrt(radius * Gravity * (cant + cantdeficiency) / TrackGauge);
   end Curve;
 //class to represent a train that can go around the train track
   class Train
@@ -300,7 +286,7 @@ package TrainSimulation
     //All trains length as input
     Modelica.Blocks.Interfaces.RealVectorInput TrainLength[size];
     //Data for each train to limit their speed
-    Modelica.Blocks.Interfaces.RealVectorOutput HillSpeedScale[size];
+    Modelica.Blocks.Interfaces.RealOutput HillSpeedScale;
     //Data for each train if they are on the rail
     Modelica.Blocks.Interfaces.RealVectorOutput onHill[size] = {
     if TrainDistance[1] >= Start and TrainDistance[1] <= End + TrainLength[1] then 1 else 0,
@@ -313,19 +299,9 @@ package TrainSimulation
     if TrainDistance[8] >= Start and TrainDistance[8] <= End + TrainLength[8] then 1 else 0,
     if TrainDistance[9] >= Start and TrainDistance[9] <= End + TrainLength[9] then 1 else 0,
     if TrainDistance[10] >= Start and TrainDistance[10] <= End + TrainLength[10] then 1 else 0};
-
-    //multiply calculated data for interfaces
-    function SpeedCalculations
-      input Integer size;
-      input Real value;
-      output Real HillSpeedScale[size];
-    algorithm
-      for i in 1:size loop
-        HillSpeedScale[i] := value;
-      end for;
-    end SpeedCalculations;
+  
   equation
-    HillSpeedScale = SpeedCalculations(size,cos(angle * 0.0174532925));
+    HillSpeedScale = cos(angle * 0.0174532925);
   end UpHill;
 //class that represents a sensor system which can signal if theres anything in between them
   class Sensor
@@ -478,10 +454,6 @@ package TrainSimulation
     Modelica.Blocks.Interfaces.RealInput Gate_Angle;
     //Intersections position
     Modelica.Blocks.Interfaces.RealInput Target;
-    //Car's distance output
-    Modelica.Blocks.Interfaces.RealOutput Distance;
-    //Car's Length output
-    Modelica.Blocks.Interfaces.RealOutput Length;
     //light signals
     TrainLightColor state(start = TrainLightColor.on);
     //car's deceleration parameter
@@ -499,18 +471,16 @@ package TrainSimulation
     //distance for the car to stop
     Real BreakingDistance;
     //distance made by the car
-    Real distance(start = distanceStart);
+    Real Distance(start = distanceStart);
     //car's speed
     Real speed(start = maxSpeed);
     //car's acceleration
     Real acceleration(start = 0.0);
   
   equation
-    Length = length;
-    Distance = distance;
     Integer(state) = LightColor;
     der(acceleration) = 0.0;
-    der(distance) = speed;
+    der(Distance) = speed;
     der(speed) = acceleration;
   //distance for the car to stop
     BreakingDistance = 1 / 2 * (speed / breakingDeceleration) ^ 2 * breakingDeceleration;
@@ -519,11 +489,11 @@ package TrainSimulation
       reinit(acceleration, 0.0);
     end when;
   //car reaches light + its breaking distance and if its speed is not 0 than the car will slow down
-    when distance + BreakingDistance + 5 >= Target and distance + BreakingDistance - 5 <= Target and speed > 0 and state == TrainLightColor.red then
+    when Distance + BreakingDistance + 5 >= Target and Distance + BreakingDistance - 5 <= Target and speed > 0 and state == TrainLightColor.red then
       reinit(acceleration, -breakingDeceleration);
     end when;
   //the accelerates when the light turn to on
-    when distance < Target and state == TrainLightColor.on and Gate_Angle >= 90 and speed < maxSpeed then
+    when Distance < Target and state == TrainLightColor.on and Gate_Angle >= 90 and speed < maxSpeed then
       reinit(acceleration, maxAcceleration);
     end when;
   //car stop and wait
@@ -531,8 +501,8 @@ package TrainSimulation
       reinit(acceleration, 0.0);
     end when;
     //in case of the driver is clumsy the car stops on the traintracks
-    when isClumsy >= 1.0 and distance - Length <= Target and distance >= Target and speed > 0 then
-      reinit(acceleration, -50);
+    when isClumsy >= 1.0 and Distance - length <= Target and Distance >= Target and speed > 0 then
+      reinit(acceleration, -speed);
     end when;
   end Car;
 //class to represent a trainstation's lapsystem for trains
@@ -577,8 +547,6 @@ package TrainSimulation
     //all unused values should be 0
     VehicleCollection TrainCollection(Distance3=0, Distance4=0, Distance5=0, Distance6=0, Distance7=0, Distance8=0, Distance9=0, Distance10=0,
     Length3=0,Length4=0,Length5=0,Length6=0,Length7=0,Length8=0,Length9=0,Length10=0);
-    VehicleCollection CarCollection(Distance3=0, Distance4=0, Distance5=0, Distance6=0, Distance7=0, Distance8=0, Distance9=0, Distance10=0,
-    Length3=0,Length4=0,Length5=0,Length6=0,Length7=0,Length8=0,Length9=0,Length10=0);
     Sensor StationSensor(Sensor1Position = 3050, Sensor2Position = 3750);
     TrainStation station;
   
@@ -617,14 +585,10 @@ package TrainSimulation
     connect(train2.Sensor2Position, StationSensor.Sensor2PositionOut);
     connect(StationSensor.Intersection, train2.Station);
     
-    connect(Car1.Distance,CarCollection.Distance1);
-    connect(Car1.Length,CarCollection.Length1);
     connect(Car1.LightColor,trainLight.ColorState_output);
     connect(Car1.Gate_Angle,trainLight.Gate_Angle_output);
     connect(Car1.Target,trainLight.Intersection_output);
     
-    connect(Car2.Distance,CarCollection.Distance2);
-    connect(Car2.Length,CarCollection.Length2);
     connect(Car2.LightColor,trainLight.ColorState_output);
     connect(Car2.Gate_Angle,trainLight.Gate_Angle_output);
     connect(Car2.Target,trainLight.Intersection_output);
@@ -638,20 +602,20 @@ package TrainSimulation
     connect(TrainCollection.DistanceVec, h1.TrainDistance);
   //setting the corners speed for each train to their structure collection corner number
   //connect(cornername.CurveSpeed[number of the train], trains CurveCollection.Speed + number of corner
-    connect(c1.CurveSpeed[1], CurveCollection.Speed1);
-    connect(c1.CurveSpeed[2], CurveCollection2.Speed1);
+    connect(c1.CurveSpeed, CurveCollection.Speed1);
+    connect(c1.CurveSpeed, CurveCollection2.Speed1);
   //setting the corners activeness for each train to their structure collection corner number
   //connect(cornername.onCurve[number of the train], trains CurveCollection.OnStructure + number of corner
     connect(c1.onCurve[1], CurveCollection.OnStructure1);
     connect(c1.onCurve[2], CurveCollection2.OnStructure1);
     
-    connect(c2.CurveSpeed[1], CurveCollection.Speed2);
-    connect(c2.CurveSpeed[2], CurveCollection2.Speed2);
+    connect(c2.CurveSpeed, CurveCollection.Speed2);
+    connect(c2.CurveSpeed, CurveCollection2.Speed2);
     connect(c2.onCurve[1], CurveCollection.OnStructure2);
     connect(c2.onCurve[2], CurveCollection2.OnStructure2);
     
-    connect(h1.HillSpeedScale[1], UpHillCollection.Speed1);
-    connect(h1.HillSpeedScale[2], UpHillCollection2.Speed1);
+    connect(h1.HillSpeedScale, UpHillCollection.Speed1);
+    connect(h1.HillSpeedScale, UpHillCollection2.Speed1);
     connect(h1.onHill[1], UpHillCollection.OnStructure1);
     connect(h1.onHill[2], UpHillCollection2.OnStructure1);
     
