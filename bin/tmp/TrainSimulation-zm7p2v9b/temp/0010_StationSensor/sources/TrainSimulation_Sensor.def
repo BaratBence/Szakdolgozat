@@ -1,0 +1,54 @@
+EXPORTS
+  ;***************************************************
+  ;Common Functions
+  ;****************************************************
+  TrainSimulation_Sensor_fmiGetTypesPlatform @1
+  TrainSimulation_Sensor_fmiGetVersion @2
+  TrainSimulation_Sensor_fmiSetDebugLogging @3
+  TrainSimulation_Sensor_fmiInstantiate @4
+  TrainSimulation_Sensor_fmiFreeInstance @5
+  TrainSimulation_Sensor_fmiSetupExperiment @6
+  TrainSimulation_Sensor_fmiEnterInitializationMode @7
+  TrainSimulation_Sensor_fmiExitInitializationMode @8
+  TrainSimulation_Sensor_fmiTerminate @9
+  TrainSimulation_Sensor_fmiReset @10
+  TrainSimulation_Sensor_fmiGetReal @11
+  TrainSimulation_Sensor_fmiGetInteger @12
+  TrainSimulation_Sensor_fmiGetBoolean @13
+  TrainSimulation_Sensor_fmiGetString @14
+  TrainSimulation_Sensor_fmiSetReal @15
+  TrainSimulation_Sensor_fmiSetInteger @16
+  TrainSimulation_Sensor_fmiSetBoolean @17
+  TrainSimulation_Sensor_fmiSetString @18
+  TrainSimulation_Sensor_fmiGetFMUstate @19
+  TrainSimulation_Sensor_fmiSetFMUstate @20
+  TrainSimulation_Sensor_fmiFreeFMUstate @21
+  TrainSimulation_Sensor_fmiSerializedFMUstateSize @22
+  TrainSimulation_Sensor_fmiSerializeFMUstate @23
+  TrainSimulation_Sensor_fmiDeSerializeFMUstate @24
+  TrainSimulation_Sensor_fmiGetDirectionalDerivative @25
+  ;***************************************************
+  ;Functions for FMI for Model Exchange
+  ;****************************************************
+  TrainSimulation_Sensor_fmiEnterEventMode @26
+  TrainSimulation_Sensor_fmiNewDiscreteStates @27
+  TrainSimulation_Sensor_fmiEnterContinuousTimeMode @28
+  TrainSimulation_Sensor_fmiCompletedIntegratorStep @29
+  TrainSimulation_Sensor_fmiSetTime @30
+  TrainSimulation_Sensor_fmiSetContinuousStates @31
+  TrainSimulation_Sensor_fmiGetDerivatives @32
+  TrainSimulation_Sensor_fmiGetEventIndicators @33
+  TrainSimulation_Sensor_fmiGetContinuousStates @34
+  TrainSimulation_Sensor_fmiGetNominalsOfContinuousStates @35
+  ;***************************************************
+  ;Functions for FMI for Co-Simulation
+  ;****************************************************
+  TrainSimulation_Sensor_fmiSetRealInputDerivatives @36
+  TrainSimulation_Sensor_fmiGetRealOutputDerivatives @37
+  TrainSimulation_Sensor_fmiDoStep @38
+  TrainSimulation_Sensor_fmiCancelStep @39
+  TrainSimulation_Sensor_fmiGetStatus @40
+  TrainSimulation_Sensor_fmiGetRealStatus @41
+  TrainSimulation_Sensor_fmiGetIntegerStatus @42
+  TrainSimulation_Sensor_fmiGetBooleanStatus @43
+  TrainSimulation_Sensor_fmiGetStringStatus @44

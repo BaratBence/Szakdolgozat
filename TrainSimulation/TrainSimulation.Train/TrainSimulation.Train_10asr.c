@@ -6,15 +6,15 @@ extern "C" {
 
 
 /*
-equation index: 75
+equation index: 72
 type: ALGORITHM
 
   assert(state >= TrainSimulation.StationSignal.green and state <= TrainSimulation.StationSignal.red, "Variable violating min/max constraint: TrainSimulation.StationSignal.green <= state <= TrainSimulation.StationSignal.red, has value: " + String(state, "d"));
 */
-void TrainSimulation_Train_eqFunction_75(DATA *data, threadData_t *threadData)
+void TrainSimulation_Train_eqFunction_72(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
-  const int equationIndexes[2] = {1,75};
+  const int equationIndexes[2] = {1,72};
   modelica_boolean tmp0;
   modelica_boolean tmp1;
   static const MMC_DEFSTRINGLIT(tmp2,133,"Variable violating min/max constraint: TrainSimulation.StationSignal.green <= state <= TrainSimulation.StationSignal.red, has value: ");
@@ -30,7 +30,7 @@ void TrainSimulation_Train_eqFunction_75(DATA *data, threadData_t *threadData)
       tmp3 = modelica_integer_to_modelica_string_format(data->localData[0]->integerVars[2] /* state DISCRETE */, (modelica_string) mmc_strings_len1[100]);
       tmpMeta[0] = stringAppend(MMC_REFSTRINGLIT(tmp2),tmp3);
       {
-        FILE_INFO info = {"E:/Szakdoga/TrainSimulation.mo",79,5,79,24,0};
+        FILE_INFO info = {"E:/Szakdoga/TrainSimulation.mo",65,5,65,24,0};
         omc_assert_warning(info, "The following assertion has been violated %sat time %f\nstate >= TrainSimulation.StationSignal.green and state <= TrainSimulation.StationSignal.red", initial() ? "during initialization " : "", data->localData[0]->timeValue);
         omc_assert_warning_withEquationIndexes(info, equationIndexes, MMC_STRINGDATA(tmpMeta[0]));
       }
@@ -45,7 +45,7 @@ int TrainSimulation_Train_checkForAsserts(DATA *data, threadData_t *threadData)
 {
   TRACE_PUSH
 
-  TrainSimulation_Train_eqFunction_75(data, threadData);
+  TrainSimulation_Train_eqFunction_72(data, threadData);
   
   TRACE_POP
   return 0;

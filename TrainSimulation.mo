@@ -119,7 +119,7 @@ package TrainSimulation
     end when;
    
   //train behaviour on curve
-//when the train reaches curve slows down to the necessary speed
+  //when the train reaches curve slows down to the necessary speed
     when speed >= onCurveSpeed and ActiveCurve then
       reinit(acceleration, -breakingDeceleration);
     end when;
@@ -127,12 +127,12 @@ package TrainSimulation
     when speed <= onCurveSpeed and ActiveCurve then
       reinit(acceleration, 0.0);
     end when;
-//train accelerates after leaving the structures if its speed does not match the maxspeed
-    when speed <= maxSpeed and not ActiveCurve and not ActiveUpHill and not inStation then
+  //train accelerates after leaving the structures if its speed does not match the maxspeed
+    when speed < maxSpeed and not ActiveCurve and not ActiveUpHill and not inStation then
       reinit(acceleration, breakingDeceleration);
     end when;
-//train does not exceeds its max speed after hitting it
-    when speed >= maxSpeed and not inStation then
+  //train does not exceeds its max speed after hitting it
+    when speed >= maxSpeed then
       reinit(acceleration, 0.0);
     end when;
     
@@ -161,7 +161,7 @@ package TrainSimulation
       reinit(acceleration, 0.0);
     end when;
     //train starts moving when the station is free again
-    when inStation and speed < 45 and lapDistance + BreakingDistance + 5 >= Sensor1Position -10 and lapDistance + BreakingDistance - 5 <= Sensor1Position -10 and state == StationSignal.green then
+    when inStation and speed <= 0 and lapDistance + BreakingDistance + 5 >= Sensor1Position -10 and lapDistance + BreakingDistance - 5 <= Sensor1Position -10 and state == StationSignal.green then
       reinit(acceleration, breakingDeceleration);
     end when;
     //train stops when reaches the station
@@ -171,10 +171,6 @@ package TrainSimulation
     //after stopping the trains leaves the station
     when inStation and speed <= 0 and Arrived then
       reinit(acceleration, breakingDeceleration);
-    end when;
-    //train only goes with 45 m/s until the second sensor
-    when speed>=45 then 
-    reinit(acceleration,0.0);
     end when;
   end Train;
 
